@@ -21,18 +21,23 @@ mysql_query("INSERT INTO hitcount VALUES ( NULL, 'index.php', NOW() )");
 mysql_close();
 include("./module/login_greeting.php"); 
                 ?> 
-                <div class="box" style="text-align: center">
-                    <h1>
-                        <em>Music&nbsp;Database</em></h1>
-                </div>
-                <br />
-                <br />
-	<!-- Navagation Bar -->
-	<div id="nav_menu">
+				
+	<div class="box" style="text-align: center">
+		<h1>
+			<em>Music&nbsp;Database</em></h1>
+	</div>
+   
+	
   <?php 
   include("./module/top_toolbar.php"); 
 		?>
-	<hr />
+		
+		<hr />
+		
+	    $content
+				
+		
+		<hr />
 <?php
 include("./module/bottom_toolbar.php");
 include("./module/contact_info.php");
@@ -40,8 +45,8 @@ include("./module/contact_info.php");
 			
 			<br />
             <!-- verison info -->
-			<span style="font-size: smaller;"><em>Version 2.0.0.2 Sat Sep 8 11:23:37 CDT 2007 ~(Copyright
-                    © by Brian Preston (2007))</em></span>
+			<span style="font-size: smaller;"><em>Version $version $date ~(Copyright
+                    © 2008))</em></span>
 	</div>	
 	</body>
 </html>

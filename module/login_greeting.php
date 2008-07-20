@@ -1,7 +1,7 @@
 <table class="LogIcon"> 
 	<tr>
 		<td align="right">
-		<img src="/image/user.gif" alt="user" />
+		<img src="./image/user.gif" alt="user" />
 		</td>
 		<td>
 			<?php

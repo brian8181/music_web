@@ -2,35 +2,28 @@
   <tr>
     <td align="center">
       <div class="test">
-        <a class="Nav" href="../index.php">
+        <a class="Nav" href="index.php">
           Home
         </a>
       </div>
     </td>
     <td align="center">
       <div class="test">
-        <a class="Nav" href="../query/query.php">
-          Music DB
-        </a>
-      </div>
-    </td>
-    <td align="center">
-      <div class="test">
-        <a class="Nav" href="../query/query.php">
+        <a class="Nav" href="query.php">
           Search
         </a>
       </div>
     </td>
     <td align="center">
       <div class="test">
-        <a class="Nav" href="../query/adv_query.php">
+        <a class="Nav" href="adv_query.php">
          Advanced
 		</a>
       </div>
     </td>
     <td align="center">
       <div class="test">
-        <a class="Nav" href="/maintenance.html">
+        <a class="Nav" href="browse_albums.php">
           Browse
         </a>
       </div>
