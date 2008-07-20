@@ -1,0 +1,13 @@
+/* style2 "basic" */
+
+.center {
+    text-align: center;
+  }
+
+h1 {
+    color: #000000;
+    font-family: Comic Sans MS, Bold;
+ }
+
+p { font-family: sans-serif;  }
+
