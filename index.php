@@ -19,7 +19,7 @@ $db = mysql_connect('127.0.0.1', 'web','sas*.0125'); mysql_select_db('music', $d
 mysql_query("SET NAMES 'utf8'");
 mysql_query("INSERT INTO hitcount VALUES ( NULL, 'index.php', NOW() )"); 
 mysql_close();
-include("../module/login_greeting.php"); 
+include("./module/login_greeting.php"); 
                 ?> 
                 <div class="box" style="text-align: center">
                     <h1>
@@ -30,19 +30,12 @@ include("../module/login_greeting.php");
 	<!-- Navagation Bar -->
 	<div id="nav_menu">
   <?php 
-  include("../module/top_toolbar.php"); 
+  include("./module/top_toolbar.php"); 
 		?>
-	</div>
-  `
-    
-				
-<?php 
-include("../module/links.php"); 
-?>
-		<hr />
+	<hr />
 <?php
-include("../module/bottom_toolbar.php");
-include("../module/contact_info.php");
+include("./module/bottom_toolbar.php");
+include("./module/contact_info.php");
 			?>
 			
 			<br />
