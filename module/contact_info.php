@@ -1,4 +1,4 @@
-<!-- w3c: validate page -->
+<?php include_once("./config/config.php"); ?>
 <br />
 <div style="text-align: center">
 <a class="Logo" href="http://validator.w3.org/check?uri=referer">
@@ -9,7 +9,7 @@
 <br />
 <!-- contact info -->
 <div style="text-align: center">
-	$message
+	<?php echo($mail_message) ?>
 	<br />
-	<a href="mailto:brian@bkp-online.com?subject=Web Password">$email</a>
+	<a href="mailto:<?php echo($email) ?>?subject=Web Password"><?php echo($email) ?></a>
 </div>

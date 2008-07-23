@@ -17,6 +17,7 @@
 	
 	// server admin information, these do not affect actual functionality but they are disaplyed in several places
 	$server_address = "fire.dynalias.org";
+	$mail_message = "for further information please email us @";
 	$email = "brian8181@gmail.com";
 	
 	// global version 
