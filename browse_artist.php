@@ -38,7 +38,8 @@ $show_all  = isset($_GET['show_all']) ? $_GET['show_all'] : null;
 
 $filter = "";
 $filters = "";
-$mysqli = new mysqli( $db_address, $db_user_name, $db_password, $db_name );
+$db = mysql_connect($db_address, $db_user_name, $db_password);
+
 $letter = isset($letter) ? mysqli_real_escape_string($mysqli, $letter) : 'A';
 $view_state = "show_all=false";
 
@@ -88,10 +89,13 @@ else{
           <span style="font-size: larger;">
             <div style="text-align: center">
 <?php
+
 // including the navbar class
-include("./php/browse_functions.php");
-$nav = new navbar;
+include_once("./php/navbar.php");
+$nav = new navbar();
+
 $sql = "CALL get_artist_by_letter('$letter', '$filter');";
+ 
 $mysqli->multi_query("SET NAMES 'utf8'");
 //$res = $mysqli->multi_query($sql);
 $nav->numrowsperpage = 20;
