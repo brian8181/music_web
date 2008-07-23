@@ -40,7 +40,7 @@ class navbar {
       $result = pg_Exec($db, $sql);
       } 
       elseif ($type == "mysqli") 
-      {
+	  {
 		$result = mysqli_query($db, $sql);
 		$total_records = mysqli_num_rows($result);
 		$sql .= " LIMIT $start, $numtoshow";

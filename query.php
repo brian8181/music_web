@@ -1,7 +1,8 @@
 <?php
 //include_once("../php/sec_user.php");
 //include_once("../php/validate_login.php");
-?>
+include_once("./config/config.php");
+			    ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
@@ -50,7 +51,7 @@
 	</head>
 	<body>
 	<div class="text_area">
-		<?php //include("../module/login_greeting.php"); ?>
+		<?php include("./module/login_greeting.php"); ?>
 			<br />
 				<!-- Display Title -->
 			<div class="box" style="text-align: center">
@@ -59,11 +60,11 @@
 	
 			<!-- Navagation Bar -->
 			<br />
-			<?php include("../module/limited_top_toolbar.php"); ?>
+			<?php include("./module/top_toolbar.php"); ?>
 			<hr />
 	
 			<a class="Logo" href="httP://www.mysql.com">
-				<img src="../image/mysql_100x52-64.gif" width="100" height="52" alt="MySql" />
+				<img src="./image/mysql_100x52-64.gif" width="100" height="52" alt="MySql" />
 			</a>&nbsp;<sub><em>powered</em></sub>
 	
 			<!-- Submit Search String From -->
@@ -112,14 +113,13 @@
 			<hr />
 	
 <?php
-include("../module/bottom_toolbar.php");
-include("../module/contact_info.php");
+include("./module/bottom_toolbar.php");
+include("./module/contact_info.php");
 			?>
-			
 			<br />
-			<span style="font-size: smaller;">
-				<em>Version 2.1.0.5 Fri Jan 11 14:53:18 CST 2008 ~( Copyright © by Brian Preston (2007) )</em>
-			</span>
+<?php
+include("./module/version.php");
+			    ?>
 	</div>
 	</body>
 </html>

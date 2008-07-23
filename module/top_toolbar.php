@@ -1,4 +1,4 @@
-<script type="text/javascript" src="/script/validate.js"></script>
+<script type="text/javascript" src="./script/validate.js"></script>
 <table class="BMenu" align="center">
   <tr>
     <td align="center">

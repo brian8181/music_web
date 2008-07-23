@@ -15,7 +15,9 @@
 	<div class="text_area">
    
 <?php 
-$db = mysql_connect('127.0.0.1', 'web','sas*.0125'); mysql_select_db('music', $db);
+include_once("./config/config.php");
+
+$db = mysql_connect($db_address, $db_user_name, $db_password); mysql_select_db($db_name, $db);
 mysql_query("SET NAMES 'utf8'");
 mysql_query("INSERT INTO hitcount VALUES ( NULL, 'index.php', NOW() )"); 
 mysql_close();
@@ -26,27 +28,24 @@ include("./module/login_greeting.php");
 		<h1>
 			<em>Music&nbsp;Database</em></h1>
 	</div>
-   
-	
-  <?php 
-  include("./module/top_toolbar.php"); 
+<?php 
+include("./module/top_toolbar.php"); 
 		?>
 		
 		<hr />
-		
-	    $content
-				
+<?php		
+include("./module/index_body.php"); 		
+	    ?>			
 		
 		<hr />
 <?php
 include("./module/bottom_toolbar.php");
 include("./module/contact_info.php");
 			?>
-			
-			<br />
-            <!-- verison info -->
-			<span style="font-size: smaller;"><em>Version $version $date ~(Copyright
-                    © 2008))</em></span>
+		<br />
+         <?php
+include("./module/version.php");
+			    ?>
 	</div>	
 	</body>
 </html>

@@ -1,0 +1,1 @@
+<span style="font-size: smaller;"><em>Version <?php echo("$version $version_date"); ?> ~(Copyright © 2008)</em></span>

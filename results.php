@@ -1,24 +1,22 @@
 <?php
 //include_once("../php/sec_user.php");
 //include_once("../php/validate_login.php");
+include_once("./config/config.php");
 		?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<!-- Query Page -->
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-  <!-- Headers -->
-  <head>
-    <title>Your Query Results</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link rel="stylesheet" type="text/css" href="/css/main_web.css" />
-    <link rel="stylesheet" type="text/css" href="/css/query.css" />
-  </head>
-  <!-- Query html main body -->
-  <body>
-	  <div class="text_area">
+  	<head>
+		<title>Your Query Results</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="./css/<?php echo($style); ?>" />
+		<link rel="stylesheet" type="text/css" href="./css/query.css" />
+	</head>
+	<body>
+	<div class="text_area">
   
 <?php
-$db = mysql_connect('127.0.0.1', 'web', 'sas*.0125');
-mysql_select_db('music', $db);
+$db = mysql_connect($db_address, $db_user_name, $db_password); mysql_select_db($db_name, $db);
+mysql_query("SET NAMES 'utf8'");
 
 $query_type = isset($_GET['query_type']) ? $_GET['query_type'] : null;
 $album      = isset($_GET['album'])      ? $_GET['album']      : null;
@@ -52,28 +50,22 @@ $sql = "INSERT INTO `query3` (`query_type`, `album`, `artist`, `title`, `genre`,
 mysql_query($sql);
 		?>
 		
-	<?php //include("../module/login_greeting.php"); ?>
+	<?php include("./module/login_greeting.php"); ?>
 	<br />
 	<!-- Display Title -->
 	<div class="box" style="text-align: center">
-	<h1>
-		<em>Your Query Results</em>
-	</h1>
+		<h1>
+			<em>Your Query Results</em>
+		</h1>
 	</div>
 	<br />
-	<?php include("../module/top_toolbar.php"); ?>
-	<img src="/image/apache_pb.gif" align="right" width="259" height="32" alt="Apache" />
+	<?php include("./module/top_toolbar.php"); ?>
+	<img src="./image/apache_pb.gif" align="right" width="259" height="32" alt="Apache" />
 	<hr />
-	<!-- ######################### START BODY ###################################### -->
-	<a class="Logo" href="http://www.mysql.com">
-		<img src="../image/mysql_100x52-64.gif" width="100" height="52" alt="" />
-	</a>&nbsp;<sub>
-	<em>powered</em>
-	</sub>
 <?php
 if( !isset( $query_type ) ) $query_type = "default";
 $sql = "";
-// todo: chnage to stored procecudres (requires use of "MYSQLI") 
+// todo: change to stored procecudres (requires use of "MYSQLI") 
 switch( $query_type )
 {
 	case "all_lyrics":
@@ -171,40 +163,42 @@ switch( $query_type )
 		break;
 }
 $sql = "$sql";
+
+//debug
+//echo("<br /><br />SQL: $sql<br /><br />");
+
 // including the navbar class
-include("../php/browse_functions.php");
+include("./php/browse_functions.php");
 $nav = new navbar;
 $nav->numrowsperpage = 100;
 $result = $nav->execute($sql, $db, "mysql");
 $num_rows = mysql_num_rows($result);
-echo( "ROWS-$num_rows" );
 $result = mysql_query($sql, $db);
 if($result)
 {
 	$num_rows = mysql_num_rows($result);
-	echo( "<br /><br /><b>$numtoshow / $total_records</b>" . " results found." );
-	//echo( "<br /><br /><b>$num_rows</b>" . " results found." );
+	//echo( "<br /><br /><b>$numtoshow / $total_records</b>" . " results found." );
+	echo( "<br /><br /><b>$num_rows</b>" . " results found." );
 }
 //log the query
 $uri = $_SERVER['REQUEST_URI'];
 //$ip = $_SERVER['REMOTE_ADDR'];
 //$self = $_SERVER['PHP_SELF']
 //$query_string = $_SERVER['QUERY_STRING']
-				?>
+			?>
 				
-	<!-- Results table -->			
-	<table class="Result" align="center">
+		<!-- Results table -->			
+		<table class="Result" align="center">
 <?php
 // Remove "sortby" from URI
 $pos = strrpos($uri, "sortby");
-if ( ! ($pos === false) ) // note: three equal signs
-{  
+if ( ! ($pos === false) ) {  
 	// found...
 	$len = strlen($uri);
 	$len -= $pos-1;
 	$uri = substr( $uri, 0, -$len );
 }
-					?>
+			?>
 		<tr bgcolor="#0A6653">
 		<th align="center">Cover</th>
 		<th align="center"><a class="Header" href=<?php echo( "\"$uri&amp;sortby=track\"" ) ?>>Track</a></th>
@@ -214,7 +208,7 @@ if ( ! ($pos === false) ) // note: three equal signs
 		<a class="Header" href=<?php echo( "\"$uri&amp;sortby=artist.artist\"" ) ?>>Artist</a></th>
 		<th align="center">Download</th>
 		</tr>
-					<!-- Fill table from query -->
+
 <?php
 if($result)
 {
@@ -227,26 +221,26 @@ if($result)
 				//cover
 				"\t<td align='center' bgcolor='#FFFFFF'>
 					<a class=\"Logo\" href=\"/query/results.php?album=$record[3]&artist=$record[4]&amp;sortby=track\">
-					<img src=\"/music/.album_art/xsmall/$record[0]\" width=\"50\" height=\"50\" alt=\"NA\"/>
+					<img src=\"$art_location/xsmall/$record[0]\" width=\"50\" height=\"50\" alt=\"NA\"/>
 					</a>
 					</td>\n" .
 				// track
 				"\t<td align='center'>$record[1]</td>\n" .
 				// title
 				"\t<td class='Padded' align='left'>
-					<a href=\"/query/details.php?sid=$record[6]\">$record[2]</a>
+					<a href=\"details.php?sid=$record[6]\">$record[2]</a>
 					</td>\n" .
 				// album
 				"\t<td class='Padded' align='left'>
-					<a href=\"/query/results.php?album=$record[3]&amp;sortby=track\">$record[3]</a>
+					<a href=\"results.php?album=$record[3]&amp;sortby=track\">$record[3]</a>
 					</td>\n" .
 				// artist
 				"\t<td class='Padded' align='left'>
-					<a href=\"/query/results.php?artist=$record[4]&amp;sortby=album.album,track\">$record[4]</a>
+					<a href=\"results.php?artist=$record[4]&amp;sortby=album.album,track\">$record[4]</a>
 					</td>\n" .
 				// download link
 				"\t<td align='center'>
-					<a href=\"/music$record[5]\">download</a>
+					<a href=\"$music_location$record[5]\">download</a>
 					</td>\n" .
 				"</tr>\n" 
 				);
@@ -255,10 +249,9 @@ if($result)
 	mysql_free_result($result);
 }
 mysql_close($db);
-?>
-	<!--  end of Results table -->
-	</table>
-	<!--  todo: navigation links  -->
+			?>
+		</table>
+	
 	<center>
 	<table>
 		<tr>
@@ -267,20 +260,17 @@ mysql_close($db);
 		</tr>
 	</table>
 	</center>
-	
 	<br />
-	<!-- ######################### END BODY ######################################## -->
 	<hr />
-          
-<?php
-include("../module/bottom_toolbar.php");
-include("../module/contact_info.php");
-		?>
+
+	<?php
+include("./module/bottom_toolbar.php");
+include("./module/contact_info.php");
+			?>
 		<br />
-		<span style="font-size: smaller;">
-			<em>Version 2.0.0.7 Sat Sep  8 11:23:37 CDT 2007 ~( Copyright © by Brian Preston (2007) )</em>
-		</span>
-		
+<?php
+include("./module/version.php");
+			?>
 	</div>	
 	<body>
 </html>

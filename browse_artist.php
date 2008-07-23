@@ -9,11 +9,7 @@
   </head>
   <body>
 	<div class="text_area">
-    <center>
-	   <table class="Main" width="100%">
-        <tr>
-		<td>
-          <?php include("../module/login_greeting.php"); ?>
+		<?php include("./module/login_greeting.php"); ?>
           <br />
           <div class="box" style="text-align: center">
             <center>
@@ -23,11 +19,13 @@
             </center>
           </div>
           <br />
-          <?php include("../module/top_toolbar.php"); ?>
+          <?php include("./module/top_toolbar.php"); ?>
           
           <br />
           <div align="center">
 <?php
+include_once("./config/config.php");
+
 //get set variables
 $letter   = isset($_GET['letter'])    ? $_GET['letter']   : null;
 $row      = isset($_GET['row'])       ? $_GET['row']      : null;
@@ -35,18 +33,17 @@ $show_all  = isset($_GET['show_all']) ? $_GET['show_all'] : null;
 
 $filter = "";
 $filters = "";
-$mysqli = new mysqli( "127.0.0.1", "web", "sas*.0125", "music" );
+$mysqli = new mysqli( $db_address, $db_user_name, $db_password, $db_name );
 $letter = isset($letter) ? mysqli_real_escape_string($mysqli, $letter) : 'A';
 $view_state = "show_all=false";
-if(isset($show_all) && $show_all != "true")
-{
+
+if(isset($show_all) && $show_all != "true") {
        	        ?>
                     <a href="/query/browse_artist.php?row=0&letter=<?php echo($letter) ?>&show_all=true">Full Albums</a>&nbsp;|&nbsp;
                     Show All<br /><br />
 	<?php
 }
-else
-{
+else{
 					?>
 						Full Albums&nbsp;|&nbsp;
                     <a href="/query/browse_artist.php?row=0&letter=<?php echo($letter) ?>&show_all=false">Show All</a><br /><br />
@@ -87,7 +84,7 @@ else
             <div style="text-align: center">
 <?php
 // including the navbar class
-include("../php/browse_functions.php");
+include("./php/browse_functions.php");
 $nav = new navbar;
 $sql = "CALL get_artist_by_letter('$letter', '$filter');";
 $mysqli->multi_query("SET NAMES 'utf8'");
@@ -136,17 +133,14 @@ $mysqli->close();
           <br />
          
 <?php
-include("../module/bottom_toolbar.php");
-include("../module/contact_info.php");
+include("./module/bottom_toolbar.php");
+include("./module/contact_info.php");
 			    ?>
           <br />
-          <em>
-            Version 1.0.0.1 Sat Sep  8 11:23:37 CDT 2007 ~( Copyright © by Brian Preston (2007) )
-          </em>
-          </td>
-        </tr>
-      </table>
-    </center>
+<?php
+include("./module/version.php");
+			    ?>
+         
 	</div>
   </body>
 </html>
