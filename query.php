@@ -1,14 +1,14 @@
 <?php
-//include_once("../php/sec_user.php");
-//include_once("../php/validate_login.php");
+//include_once("./php/sec_user.php");
+//include_once("./php/validate_login.php");
 include_once("./config/config.php");
 			    ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
     <title>Query Page</title>
-    <link rel="stylesheet" type="text/css" href="/css/main_web.css" />
-    <link rel="stylesheet" type="text/css" href="/css/query.css" />
+    <link rel="stylesheet" type="text/css" href="./css/<?php echo($style); ?>" />
+    <link rel="stylesheet" type="text/css" href="./css/query.css" />
     <script type="text/javascript">
       function on_submit(form)  // intialize all values
       {
