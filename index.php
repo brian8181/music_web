@@ -1,6 +1,7 @@
 <?php 
-//include_once("../php/sec_user.php"); 
-//include_once("../php/validate_login.php");
+include_once("./php/sec_user.php"); 
+//include_once("./php/validate_login.php");
+include_once("./config/config.php");
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -15,7 +16,7 @@
 	<div class="text_area">
    
 <?php 
-include_once("./config/config.php");
+
 
 $db = mysql_connect($db_address, $db_user_name, $db_password); mysql_select_db($db_name, $db);
 mysql_query("SET NAMES 'utf8'");
@@ -26,8 +27,10 @@ include("./module/login_greeting.php");
 				
 	<div class="box" style="text-align: center">
 		<h1>
-			<em>Music&nbsp;Database</em></h1>
+			<em>Music&nbsp;Database</em>
+		</h1>
 	</div>
+	
 <?php 
 include("./module/top_toolbar.php"); 
 		?>
@@ -36,13 +39,15 @@ include("./module/top_toolbar.php");
 <?php		
 include("./module/index_body.php"); 		
 	    ?>			
-		
+	
 		<hr />
 <?php
 include("./module/bottom_toolbar.php");
 include("./module/contact_info.php");
 			?>
+
 		<br />
+
          <?php
 include("./module/version.php");
 			    ?>
