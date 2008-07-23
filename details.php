@@ -1,3 +1,8 @@
+<?php
+include_once("./php/sec_user.php");
+//include_once("../php/validate_login.php");
+include_once("./config/config.php");
+		?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
@@ -9,8 +14,8 @@
 <body>
 	<div class="text_area">
 <?php
-$db = mysql_connect('127.0.0.1', 'web', 'sas*.0125');
-mysql_select_db('music', $db);
+$db = mysql_connect($db_address, $db_user_name, $db_password);
+mysql_select_db($db_name, $db);
 mysql_query("SET NAMES 'utf8'");
 
 $sid = isset($_GET['sid']) ? $_GET['sid'] : null;
@@ -25,7 +30,7 @@ $sid = isset($_GET['sid']) ? $_GET['sid'] : null;
 			<br />			
 
 <?php
-include("../module/top_toolbar.php"); 
+include("./module/top_toolbar.php"); 
 $sql = "SELECT track, title, album.album, artist.artist, genre, bitrate," .
 		"length, file_size, year, encoder, song.file, comments, art.file, lyrics FROM song " .
 		"INNER JOIN artist ON artist.id = song.artist_id " .
@@ -35,6 +40,8 @@ $sql = "SELECT track, title, album.album, artist.artist, genre, bitrate," .
 	$result = mysql_query($sql);
 	$row = mysql_fetch_array($result, MYSQL_NUM);
 	//$helper = new Helper();
+	echo( $sql ); 
+	mysql_close($db); 
 			?>
 			
 			<hr>
@@ -58,6 +65,7 @@ $sql = "SELECT track, title, album.album, artist.artist, genre, bitrate," .
 				<li><strong>File:&nbsp;</strong> 
 				<em><?php echo ( "<a href=\"/music" . $row[10] . "\">" . basename($row[10]) . "</a>" ); ?></em></li>
 				<li><strong>Lyrics:</strong>
+				
 <?php
 	if($row[13] != NULL)
 	{
@@ -121,16 +129,14 @@ else
 			</td>
 			</tr></table>
 			<hr />
-<?php
-include("../module/bottom_toolbar.php");
-include("../module/contact_info.php");
-		?>
+	<?php
+include("./module/bottom_toolbar.php");
+include("./module/contact_info.php");
+			?>
 		<br />
-		<span style="font-size: smaller;">
-			<em>Version 2.0.0.7 Sat Sep  8 11:23:37 CDT 2007 ~( Copyright © by Brian Preston (2007) )</em>
-		</span>
-		
-		<?php mysql_close($db); ?>
-		</div>
-	</body>
+<?php
+include("./module/version.php");
+			?>
+	</div>
+</body>
 </html>

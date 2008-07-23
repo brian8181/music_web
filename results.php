@@ -15,7 +15,8 @@ include_once("./config/config.php");
 	<div class="text_area">
   
 <?php
-$db = mysql_connect($db_address, $db_user_name, $db_password); mysql_select_db($db_name, $db);
+$db = mysql_connect($db_address, $db_user_name, $db_password);
+mysql_select_db($db_name, $db);
 mysql_query("SET NAMES 'utf8'");
 
 $query_type = isset($_GET['query_type']) ? $_GET['query_type'] : null;
