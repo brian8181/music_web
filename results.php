@@ -1,5 +1,5 @@
 <?php
-//include_once("../php/sec_user.php");
+include_once("../php/sec_user.php");
 //include_once("../php/validate_login.php");
 include_once("./config/config.php");
 		?>
