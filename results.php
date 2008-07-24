@@ -1,6 +1,6 @@
 <?php
 include_once("./php/sec_user.php");
-//include_once("../php/validate_login.php");
+//include_once("./php/validate_login.php");
 include_once("./config/config.php");
 		?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -168,26 +168,13 @@ $sql = "$sql";
 //debug
 //echo("<br /><br />SQL: $sql<br /><br />");
 
-// including the navbar class
-include("./php/browse_functions.php");
-$nav = new navbar;
-$nav->numrowsperpage = 100;
-$result = $nav->execute($sql, $db, "mysql");
-$num_rows = mysql_num_rows($result);
 $result = mysql_query($sql, $db);
-if($result)
-{
+if($result) {
 	$num_rows = mysql_num_rows($result);
-	//echo( "<br /><br /><b>$numtoshow / $total_records</b>" . " results found." );
 	echo( "<br /><br /><b>$num_rows</b>" . " results found." );
 }
-//log the query
 $uri = $_SERVER['REQUEST_URI'];
-//$ip = $_SERVER['REMOTE_ADDR'];
-//$self = $_SERVER['PHP_SELF']
-//$query_string = $_SERVER['QUERY_STRING']
 			?>
-				
 		<!-- Results table -->			
 		<table class="Result" align="center">
 <?php
@@ -200,6 +187,7 @@ if ( ! ($pos === false) ) {
 	$uri = substr( $uri, 0, -$len );
 }
 			?>
+			
 		<tr bgcolor="#0A6653">
 		<th align="center">Cover</th>
 		<th align="center"><a class="Header" href=<?php echo( "\"$uri&amp;sortby=track\"" ) ?>>Track</a></th>
@@ -214,53 +202,42 @@ if ( ! ($pos === false) ) {
 if($result)
 {
 	echo("\n");
-	while ( $record = mysql_fetch_row($result) )
+	while ( $row = mysql_fetch_row($result) )
 	{
 		// process the row...
 		echo(
 				"<tr bgcolor='#BFBFBF'>\n" .
 				//cover
 				"\t<td align='center' bgcolor='#FFFFFF'>
-					<a class=\"Logo\" href=\"/query/results.php?album=$record[3]&artist=$record[4]&amp;sortby=track\">
-					<img src=\"$art_location/xsmall/$record[0]\" width=\"50\" height=\"50\" alt=\"NA\"/>
+					<a class=\"Logo\" href=\"/query/results.php?album=$row[3]&artist=$row[4]&amp;sortby=track\">
+					<img src=\"$art_location/xsmall/$row[0]\" width=\"50\" height=\"50\" alt=\"NA\"/>
 					</a>
 					</td>\n" .
 				// track
-				"\t<td align='center'>$record[1]</td>\n" .
+				"\t<td align='center'>$row[1]</td>\n" .
 				// title
 				"\t<td class='Padded' align='left'>
-					<a href=\"details.php?sid=$record[6]\">$record[2]</a>
+					<a href=\"details.php?sid=$row[6]\">$row[2]</a>
 					</td>\n" .
 				// album
 				"\t<td class='Padded' align='left'>
-					<a href=\"results.php?album=$record[3]&amp;sortby=track\">$record[3]</a>
+					<a href=\"results.php?album=$row[3]&amp;sortby=track\">$row[3]</a>
 					</td>\n" .
 				// artist
 				"\t<td class='Padded' align='left'>
-					<a href=\"results.php?artist=$record[4]&amp;sortby=album.album,track\">$record[4]</a>
+					<a href=\"results.php?artist=$row[4]&amp;sortby=album.album,track\">$row[4]</a>
 					</td>\n" .
 				// download link
 				"\t<td align='center'>
-					<a href=\"$music_location$record[5]\">download</a>
+					<a href=\"$music_location$row[5]\">download</a>
 					</td>\n" .
 				"</tr>\n" 
 				);
 	}
-	// free results, this doesn't hurt
-	mysql_free_result($result);
 }
 mysql_close($db);
-			?>
-		</table>
+		?>
 	
-	<center>
-	<table>
-		<tr>
-			<td align="center">	
-			</td>
-		</tr>
-	</table>
-	</center>
 	<br />
 	<hr />
 

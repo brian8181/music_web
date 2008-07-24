@@ -26,7 +26,9 @@ include_once("./config/config.php");
           <br />
           <?php include("./module/top_toolbar.php"); ?>
           
+		  <hr />
           <br />
+		
           <div align="center">
 <?php
 include_once("./config/config.php");
@@ -38,7 +40,8 @@ $show_all  = isset($_GET['show_all']) ? $_GET['show_all'] : null;
 
 $filter = "";
 $filters = "";
-$db = mysql_connect($db_address, $db_user_name, $db_password);
+$db = mysql_connect( $db_address, $db_user_name, $db_password );
+mysql_select_db( $db_name, $db );
 
 $letter = isset($letter) ? mysqli_real_escape_string($mysqli, $letter) : 'A';
 $view_state = "show_all=false";
@@ -94,53 +97,45 @@ else{
 include_once("./php/navbar.php");
 $nav = new navbar();
 
-$sql = "CALL get_artist_by_letter('$letter', '$filter');";
- 
-$mysqli->multi_query("SET NAMES 'utf8'");
-//$res = $mysqli->multi_query($sql);
+$sql = '';
+if( $letter != 'T' )
+{
+	$sql = "SELECT DISTINCT artist.id, artist FROM artist INNER JOIN song ON artist_id=artist.id " .
+		"WHERE artist like CONCAT('$letter', '%') AND song.file LIKE CONCAT('$filter', '%') " .
+		"UNION " .
+		"SELECT artist.id, SUBSTRING(artist.artist, 5, LENGTH(artist.artist) - 1) FROM artist INNER JOIN song ON artist_id=artist.id " .
+		"WHERE artist like CONCAT('The ', '$letter', '%') AND song.file LIKE CONCAT('$filter', '%') ORDER BY artist";
+}
+else
+{
+	$sql = "SELECT DISTINCT artist.id, artist FROM  artist INNER JOIN song ON artist_id=artist.id " .
+		"WHERE ((artist LIKE 'T%' AND artist NOT LIKE 'The %') OR (artist LIKE 'The T%')) " .
+		"AND song.file LIKE CONCAT('$filter', '%') ORDER BY artist";
+}
+
+//$result = mysql_query($sql, $db);
 $nav->numrowsperpage = 20;
-$res = $nav->execute($sql, $mysqli, "mysqli");
-$rows = mysqli_affected_rows($mysqli);
-for ($y = 0; $y < $rows; $y++) 
+$result = $nav->execute($sql, $db, 'mysql'); 
+
+while( $row = mysql_fetch_row( $result ) )
 {
-	//$data = mysql_fetch_object($result);
-	$data = "TEST";
-	//echo $data->url . "<br>\n";
+	echo("<a href=\"browse_artist_albums.php?aid=$row[0]&filter=$filters\">$row[1]</a><br />");
 }
-echo("-0-");
-echo("$sql<br />");
-if( $res )
-{
-	echo("-1-");
-	$results = 0;
-	do {
-		echo("-2-");
-		if ($result = $mysqli->store_result())
-		{
-		echo("-3-");
-			while( $row = $result->fetch_row() )
-			{
-			echo("-4-");
-				echo("<a href=\"browse_artist_albums.php?aid=$row[0]&filter=$filters\">$row[1]</a><br />");
-			}
-			$result->close();
-			if( $mysqli->more_results() ) echo "<br/>";
-		}
-	} while( $mysqli->next_result() );
-}
-echo "<hr>\n";
-// didplay links
+
+echo '<br />';
+
+// display links
 $links = $nav->getlinks("all", "on");
 for ($y = 0; $y < count($links); $y++)
 {
 	echo $links[$y] . "&nbsp;&nbsp;";
 }
-$mysqli->close();
+mysql_close( $db );
 				?>
             </div>
           </span>
           <br />
-         
+		 <hr />	         
 <?php
 include("./module/bottom_toolbar.php");
 include("./module/contact_info.php");

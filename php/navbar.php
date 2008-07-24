@@ -1,5 +1,6 @@
 
 <?php
+
 class navbar {
 
   var $numrowsperpage = 10;

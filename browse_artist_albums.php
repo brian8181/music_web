@@ -85,8 +85,8 @@ if(isset($aid))
 			</center>
 			<!-- ######################### END BODY ######################################## -->
 <?php
-include("../module/bottom_toolbar.php");
-include("../module/contact_info.php");
+include("./module/bottom_toolbar.php");
+include("./module/contact_info.php");
 			?>
 			<br />
 			<!-- verison info -->

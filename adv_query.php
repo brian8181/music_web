@@ -3,16 +3,16 @@ include_once("./config/config.php");
 		?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-  <!-- Headers -->
+
   <head>
     <title>Advanced Query Page</title>
-    <link rel="stylesheet" type="text/css" href="/css/main_web.css" />
-    <link rel="stylesheet" type="text/css" href="/css/query.css" />
+    <link rel="stylesheet" type="text/css" href="./css/<?php echo($style); ?>" />
+    <link rel="stylesheet" type="text/css" href="./css/query.css" />
   </head>
 
   <!-- Query html main body -->
   <body>
-    <!-- Hit Counter -->
+  <!-- Hit Counter -->
 <?php
 $db = mysql_connect($db_address, $db_user_name, $db_password);
 mysql_query("INSERT INTO hitcount VALUES ( NULL, 'all_lyrics.php', NOW() )");
@@ -31,9 +31,6 @@ mysql_close( $db );5
 		<br />
 		<?php include("./module/top_toolbar.php"); ?>
 		<hr>
-		<a class="Logo" href="http://www.mysql.com">
-			<img src="../image/mysql_100x52-64.gif" width="100" height="52" alt="" />
-		</a>&nbsp;<sub><em>powered</em></sub>
 		<br />
 		<center>
 		<form action="results.php" method="get">

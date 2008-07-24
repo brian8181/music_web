@@ -9,7 +9,7 @@ include_once("./config/config.php");
     <title>Details</title>
     <meta name="generator" content="Bluefish 1.0.7" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link rel="stylesheet" type="text/css" href="/css/main_web.css" />
+    <link rel="stylesheet" type="text/css" href="./css/<?php echo($style); ?>" />
 </head>
 <body>
 	<div class="text_area">
@@ -40,7 +40,7 @@ $sql = "SELECT track, title, album.album, artist.artist, genre, bitrate," .
 	$result = mysql_query($sql);
 	$row = mysql_fetch_array($result, MYSQL_NUM);
 	//$helper = new Helper();
-	echo( $sql ); 
+	//echo( $sql ); 
 	mysql_close($db); 
 			?>
 			

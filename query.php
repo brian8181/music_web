@@ -1,5 +1,5 @@
 <?php
-//include_once("./php/sec_user.php");
+include_once("./php/sec_user.php");
 //include_once("./php/validate_login.php");
 include_once("./config/config.php");
 			    ?>
@@ -7,8 +7,10 @@ include_once("./config/config.php");
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
     <title>Query Page</title>
-    <link rel="stylesheet" type="text/css" href="./css/<?php echo($style); ?>" />
+    
+	<link rel="stylesheet" type="text/css" href="./css/<?php echo($style); ?>" />
     <link rel="stylesheet" type="text/css" href="./css/query.css" />
+	
     <script type="text/javascript">
       function on_submit(form)  // intialize all values
       {
@@ -51,7 +53,9 @@ include_once("./config/config.php");
 	</head>
 	<body>
 	<div class="text_area">
-		<?php include("./module/login_greeting.php"); ?>
+
+<?php include("./module/login_greeting.php"); ?>
+
 			<br />
 				<!-- Display Title -->
 			<div class="box" style="text-align: center">
@@ -60,13 +64,13 @@ include_once("./config/config.php");
 	
 			<!-- Navagation Bar -->
 			<br />
-			<?php include("./module/top_toolbar.php"); ?>
+						
+<?php // this fucks up js on_sumbmit!!! (ambig!!!) include("./module/top_toolbar.php"); ?>
+
 			<hr />
-	
-			<a class="Logo" href="httP://www.mysql.com">
-				<img src="./image/mysql_100x52-64.gif" width="100" height="52" alt="MySql" />
-			</a>&nbsp;<sub><em>powered</em></sub>
-	
+			<br />
+			<br />
+			
 			<!-- Submit Search String From -->
 			<form name="search_form" onsubmit="return on_submit(search_form)" action="results.php" method="get">
 				<div style="text-align: center">

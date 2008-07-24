@@ -1,6 +1,6 @@
 <table class="LogIcon"> 
 	<tr>
-		<td align="right">
+		<td align="left">
 		<img src="./image/user.gif" alt="user" />
 		</td>
 		<td>

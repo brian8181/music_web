@@ -1,33 +1,31 @@
+<?php
+include_once("./config/config.php"); 
+?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 	
 	<head>
 		<title>Query Page</title>
-		<link rel="stylesheet" type="text/css" href="/css/main_web.css" />
-		<link rel="stylesheet" type="text/css" href="/css/query.css" />
+		<link rel="stylesheet" type="text/css" href="./css/<?php echo($style); ?>" />
+		<link rel="stylesheet" type="text/css" href="./css/query.css" />
 	</head>
 	<body>
-		
+	<div class="text_area">	
 <?php
-include("../php/sql_conn.php");
 $db = mysql_connect('127.0.0.1', 'web', 'sas*.0125');
 mysql_select_db('music', $db);
 mysql_query("SET NAMES 'utf8'");
 mysql_query("INSERT INTO hitcount VALUES ( NULL, 'playlist.php', NOW() )");
 		?>
-				
-		<table class="Main"><tr><td class="Padded">
-		<?php include("../module/login_greeting.php"); ?>
+	
+<?php include("./module/login_greeting.php"); ?>
 		<br />
 		<div class="box" style="text-align: center">
 		<h1><em>Playlist</em></h1>
 		</div>
 		<br />
-			<?php include("../module/limited_top_toolbar.php"); ?>
+<?php include("./module/limited_top_toolbar.php"); ?>
 		<hr />
-		<a class="Logo" href="http://www.mysql.com">
-			<img src="../image/mysql_100x52-64.gif" width="100" height="52" alt="" />
-		</a>&nbsp;<sub><em>powered</em></sub>
 		
 <?php
 if( isset( $id ) )
@@ -53,7 +51,6 @@ if( isset( $id ) )
 				<a class="Header" href=<?php echo( "\"$url&amp;sortby=artist.artist, track\"" ) ?>>Artist</a></th>
 				<th align="center">Download</th>
 			</tr>
-			<!-- Fill table from query -->
 <?php
 echo("\n");
 while ( $row = mysql_fetch_array($result, MYSQL_NUM) )
@@ -86,14 +83,14 @@ mysql_close($db);
 		<br />
 		<hr>
 		<!-- Navagation Bar -->
-<?php
-include("../module/bottom_toolbar.php");
-include("../module/contact_info.php");
-		?>
+	<?php
+include("./module/bottom_toolbar.php");
+include("./module/contact_info.php");
+			?>
 		<br />
-		<span style="font-size: smaller;">
-			<em>Version 1.5.0.1 Sat Sep  8 11:23:37 CDT 2007 ~( Copyright © (2008) )</em>
-		</span>
-		</td></tr></table>
+<?php
+include("./module/version.php");
+			?>
+	</div>		
 	</body>
 </html>

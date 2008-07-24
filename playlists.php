@@ -1,7 +1,8 @@
 <?php 
 //session_start();
 //$_SESSION['_PAGE'] = $_SERVER['PHP_SELF'];
-//include_once("../php/intialize.php" );
+//include_once("./php/intialize.php" );
+include_once("./config/config.php");
 $db = mysql_connect('127.0.0.1', 'web', 'sas*.0125');
 mysql_select_db('music', $db);
 			?>
@@ -11,12 +12,12 @@ mysql_select_db('music', $db);
 		<title>Playlists</title>
 		<meta name="generator" content="Bluefish 1.0.7"/>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<link rel="stylesheet" type="text/css" href="/css/main_web.css" />
+		<link rel="stylesheet" type="text/css" href="./css/<?php echo($style); ?>" />
 	</head>
 	<body>
 	<div class="text_area">
 		<center>
-		<?php //include("../module/login_greeting.php"); ?>
+<?php include("./module/login_greeting.php"); ?>
 		<br />
 			<div class="box" style="text-align: center">
 			<center>
@@ -24,7 +25,8 @@ mysql_select_db('music', $db);
 			</center>
 			</div>
 			<br />	
-			<?php include("../module/top_toolbar.php"); ?>
+<?php include("./module/top_toolbar.php"); ?>
+			<hr />
 			<center>
 <?php
 $sql = "SELECT id, name from playlists ORDER BY name";
@@ -39,13 +41,13 @@ mysql_close($db);
 			</center>
 			<hr />
 <?php
-include("../module/bottom_toolbar.php");
-include("../module/contact_info.php");
+include("./module/bottom_toolbar.php");
+include("./module/contact_info.php");
 			?>
-			<br />
-			<em>
-			Version 1.0.0.1 Sat Sep  8 11:23:37 CDT 2007 ~( Copyright © by Brian Preston (2007) )
-			</em>
+		<br />
+<?php
+include("./module/version.php");
+			?>
 		</center>
 	</div>	
 	</body>
