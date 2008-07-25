@@ -29,7 +29,13 @@ $version_date = "Sunday July 20 4:37 AM CDT 2008";
 $enable_advanced = true;
 $enable_statistics = true;
 $enable_playlist = false;
+$enable_logging = false;
+
+// this features are unimplemneted and should remain off (false)
 $enable_browse = false;
 $enable_security = false;
+
+// 0 or less = umlimited
+$page_result_limit = 10;
 	
 ?>

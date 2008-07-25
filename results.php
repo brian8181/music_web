@@ -30,13 +30,17 @@ $lyrics     = isset($_GET['lyrics'])     ? $_GET['lyrics']     : null;
 $and        = isset($_GET['and'])        ? $_GET['and']        : null;
 $wildcard   = isset($_GET['wildcard'])   ? $_GET['wildcard']   : null;
 $sortby     = isset($_GET['sortby'])     ? $_GET['sortby']     : null;
-// palylist id
+// playlist
 $id         = isset($_GET['id'])         ? $_GET['id']         : null;
 // deprecated!! used with - case "quick_search" 
 $txtSearch  = isset($_GET['txtSearch'])  ? $_GET['txtSearch']  : null;
-  
-mysql_query("SET NAMES 'utf8'");
-$sql = "INSERT INTO `query3` (`query_type`, `album`, `artist`, `title`, `genre`, `file`, `comments`, `lyrics`, `and`, `wildcard`, `sortby`) VALUES(" .
+ 
+// logging
+$remote_ip = $_SERVER['REMOTE_ADDR'];
+
+echo( "<h3>$remote_ip</h3>" );
+ 
+$sql = "INSERT INTO `query_log` (`query_type`, `album`, `artist`, `title`, `genre`, `file`, `comments`, `lyrics`, `and`, `wildcard`, `sortby`, `ip`) VALUES(" .
 	(!empty($query_type) ? "'$query_type'" : "NULL") . ", " . 
 	(!empty($album) ? "'$album'" : "NULL") . ", " . 
 	(!empty($artist) ? "'$artist'" : "NULL") . ", " . 
@@ -47,11 +51,14 @@ $sql = "INSERT INTO `query3` (`query_type`, `album`, `artist`, `title`, `genre`,
 	(!empty($lyrics) ? "'$lyrics'" : "NULL") . ", " .
 	(!empty($and) ? "'$and'" : "NULL") . ", " .
 	(!empty($wildcard) ? "'$wildcard'" : "NULL") . ", " .
-	(!empty($sortby) ? "'$sortby'" : "NULL") . ")";
+	(!empty($sortby) ? "'$sortby'" : "NULL") . ", " .
+	"'$remote_ip'" . ")";
 mysql_query($sql);
+
 		?>
 		
 	<?php include("./module/login_greeting.php"); ?>
+	
 	<br />
 	<!-- Display Title -->
 	<div class="box" style="text-align: center">
@@ -60,9 +67,12 @@ mysql_query($sql);
 		</h1>
 	</div>
 	<br />
+	
 	<?php include("./module/top_toolbar.php"); ?>
+	
 	<img src="./image/apache_pb.gif" align="right" width="259" height="32" alt="Apache" />
 	<hr />
+	
 <?php
 if( !isset( $query_type ) ) $query_type = "default";
 $sql = "";
@@ -163,7 +173,7 @@ switch( $query_type )
 		}
 		break;
 }
-$sql = "$sql";
+$sql = "$sql LIMIT $page_result_limit";
 
 //debug
 //echo("<br /><br />SQL: $sql<br /><br />");
@@ -175,6 +185,7 @@ if($result) {
 }
 $uri = $_SERVER['REQUEST_URI'];
 			?>
+		<br /><br />	
 		<!-- Results table -->			
 		<table class="Result" align="center">
 <?php
@@ -188,6 +199,7 @@ if ( ! ($pos === false) ) {
 }
 			?>
 			
+<table class="Result">		
 		<tr bgcolor="#0A6653">
 		<th align="center">Cover</th>
 		<th align="center"><a class="Header" href=<?php echo( "\"$uri&amp;sortby=track\"" ) ?>>Track</a></th>
@@ -197,7 +209,7 @@ if ( ! ($pos === false) ) {
 		<a class="Header" href=<?php echo( "\"$uri&amp;sortby=artist.artist\"" ) ?>>Artist</a></th>
 		<th align="center">Download</th>
 		</tr>
-
+		<!-- Start Table Rows -->
 <?php
 if($result)
 {
@@ -237,18 +249,23 @@ if($result)
 }
 mysql_close($db);
 		?>
+        <!-- End Table Rows   -->		
+</table>	
 	
-	<br />
+	<br /><br />
 	<hr />
 
-	<?php
+<?php
 include("./module/bottom_toolbar.php");
 include("./module/contact_info.php");
 			?>
+			
 		<br />
+		
 <?php
 include("./module/version.php");
 			?>
+			
 	</div>	
-	<body>
+	<body>	
 </html>

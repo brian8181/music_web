@@ -16,7 +16,7 @@ include_once("./config/config.php");
 <?php
 $db = mysql_connect($db_address, $db_user_name, $db_password);
 mysql_query("INSERT INTO hitcount VALUES ( NULL, 'all_lyrics.php', NOW() )");
-mysql_close( $db );5
+mysql_close( $db );
 		?>
 	
 	<?php include("./module/login_greeting.php"); ?>

@@ -1,0 +1,318 @@
+"General"
+{
+"ProjectType" = "local"
+"AutoLoadTemplate" = "%s.php;class.%s.php;"
+"ProjectIdGuid" = "{EE6CAE47-814C-477B-BDDE-90FCA90039D1}"
+"ProjectVersion" = "2.5.3.4870"
+}
+"Configurations"
+{
+    "Local|PHP 5"
+    {
+    "IncludeDirs" = ""
+    }
+    "Staging|PHP 5"
+    {
+    "IncludeDirs" = ""
+    }
+    "Production|PHP 5"
+    {
+    "IncludeDirs" = ""
+    }
+}
+"Files"
+{
+    "admin\\script_out.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "admin\\update_users.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "admin\\user_admin.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "config\\config.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "config\\config.php.tmpl"
+    {
+    "ProjRelPath" = "T"
+    }
+    "css\\main_web.css"
+    {
+    "ProjRelPath" = "T"
+    }
+    "css\\menu-2007.css"
+    {
+    "ProjRelPath" = "T"
+    }
+    "css\\query.css"
+    {
+    "ProjRelPath" = "T"
+    }
+    "css\\style0.css"
+    {
+    "ProjRelPath" = "T"
+    }
+    "css\\style1.css"
+    {
+    "ProjRelPath" = "T"
+    }
+    "css\\style2.css"
+    {
+    "ProjRelPath" = "T"
+    }
+    "css\\style3.css"
+    {
+    "ProjRelPath" = "T"
+    }
+    "css\\style4.css"
+    {
+    "ProjRelPath" = "T"
+    }
+    "image\\180px-tux.png"
+    {
+    "ProjRelPath" = "T"
+    }
+    "image\\200px-xhtml.svg.png"
+    {
+    "ProjRelPath" = "T"
+    }
+    "image\\apache_pb.gif"
+    {
+    "ProjRelPath" = "T"
+    }
+    "image\\cdrop-20x20.white.jpg"
+    {
+    "ProjRelPath" = "T"
+    }
+    "image\\fedoralogo-224x80.jpg"
+    {
+    "ProjRelPath" = "T"
+    }
+    "image\\fish_xiph_org.png"
+    {
+    "ProjRelPath" = "T"
+    }
+    "image\\google.gif"
+    {
+    "ProjRelPath" = "T"
+    }
+    "image\\hdrop-1024x20.white.jpg"
+    {
+    "ProjRelPath" = "T"
+    }
+    "image\\lside-10x1024.white.jpg"
+    {
+    "ProjRelPath" = "T"
+    }
+    "image\\messages_email_042.gif"
+    {
+    "ProjRelPath" = "T"
+    }
+    "image\\mysql_100x52-64.gif"
+    {
+    "ProjRelPath" = "T"
+    }
+    "image\\taglib.logo.png"
+    {
+    "ProjRelPath" = "T"
+    }
+    "image\\topicapache.gif"
+    {
+    "ProjRelPath" = "T"
+    }
+    "image\\topicphp.gif"
+    {
+    "ProjRelPath" = "T"
+    }
+    "image\\user.gif"
+    {
+    "ProjRelPath" = "T"
+    }
+    "image\\valid-html401-blue.png"
+    {
+    "ProjRelPath" = "T"
+    }
+    "image\\valid-html401.png"
+    {
+    "ProjRelPath" = "T"
+    }
+    "image\\valid-xhtml10-blue.png"
+    {
+    "ProjRelPath" = "T"
+    }
+    "image\\valid-xhtml10.png"
+    {
+    "ProjRelPath" = "T"
+    }
+    "image\\vdrop-20x1024.white.jpg"
+    {
+    "ProjRelPath" = "T"
+    }
+    "image\\vorbisdotcom.png"
+    {
+    "ProjRelPath" = "T"
+    }
+    "module\\bottom_toolbar.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "module\\contact_info.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "module\\index_body.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "module\\login_greeting.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "module\\toolbar_items.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "module\\top_toolbar.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "module\\version.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "php\\function.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "php\\functions.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "php\\kill.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "php\\navbar.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "php\\phpinfo.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "php\\sec_admin.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "php\\sec_level.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "php\\sec_power.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "php\\sec_user.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "php\\validate_insert_account.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "php\\validate_login.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "script\\ajax.js"
+    {
+    "ProjRelPath" = "T"
+    }
+    "script\\cookies.js"
+    {
+    "ProjRelPath" = "T"
+    }
+    "script\\validate.js"
+    {
+    "ProjRelPath" = "T"
+    }
+    "template\\default.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    ".vsphpignore"
+    {
+    "ProjRelPath" = "T"
+    }
+    "adv_query.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "auth_user.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "browse_artist.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "browse_artist_albums.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "contact_info.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "details.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "error.html"
+    {
+    "ProjRelPath" = "T"
+    }
+    "index.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lyrics.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "music_stats.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "playlist.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "playlists.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "query.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "results.php"
+    {
+    "ProjRelPath" = "T"
+    }
+}
+"ProjStartupServices"
+{
+}
+"Globals"
+{
+}
+"References"
+{
+}
