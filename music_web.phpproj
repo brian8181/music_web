@@ -198,6 +198,10 @@
     {
     "ProjRelPath" = "T"
     }
+    "php\\login.php"
+    {
+    "ProjRelPath" = "T"
+    }
     "php\\navbar.php"
     {
     "ProjRelPath" = "T"
