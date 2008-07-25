@@ -1,6 +1,6 @@
 <?php
-include_once("../php/functions.php");
-include_once("../tools/kill.php"); // kill previuos sessions
+include_once("./php/functions.php");
+include_once("./tools/kill.php"); // kill previuos sessions
 session_start();
 if( !isset( $_SESSION['_USER'] ) || !isset( $_SESSION['_GROUPS'] ) )
 {

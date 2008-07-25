@@ -9,17 +9,13 @@ include_once("./config/config.php");
     <link rel="stylesheet" type="text/css" href="./css/<?php echo($style); ?>" />
     <link rel="stylesheet" type="text/css" href="./css/query.css" />
   </head>
-
-  <!-- Query html main body -->
   <body>
-  <!-- Hit Counter -->
-<?php
-$db = mysql_connect($db_address, $db_user_name, $db_password);
-mysql_query("INSERT INTO hitcount VALUES ( NULL, 'all_lyrics.php', NOW() )");
-mysql_close( $db );
-		?>
+  <div class="text_area">
 	
-	<?php include("./module/login_greeting.php"); ?>
+<?php 
+include("./module/login_greeting.php"); 
+		?>
+		
 		<br />
 
 		<!-- Display Title -->
@@ -29,7 +25,10 @@ mysql_close( $db );
 
 		<!-- Navagation Bar -->
 		<br />
-		<?php include("./module/top_toolbar.php"); ?>
+<?php 
+//include("./module/top_toolbar.php");
+		 ?>
+		
 		<hr>
 		<br />
 		<center>
@@ -87,15 +86,17 @@ mysql_close( $db );
 		</center>
 
 		<hr>
-		<!-- Navagation Bar -->
+
 <?php
 include("./module/bottom_toolbar.php");
 include("./module/contact_info.php");
 		?>
 		<br />
 <?php
-		include("./module/version.php");
+include("./module/version.php");
 		?>
+		
+	</div>	
 	</body>
 </html>
 

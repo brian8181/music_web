@@ -22,7 +22,7 @@
     of this but the artistic side is beyond me. So it may take awhile and some experimenting
     to get right. I plan on getting a few friends that are good in this area and give
     them access to site. If your one of them let me know 
-	(<a href="mailto:brian@bkp-online.com?subject=I%20can%20do%20it,%20give%20me%20access!">brian@bkp-online.com</a>).
+	(<a href="mailto:<?php echo($email) ?>?subject=I%20can%20do%20it,%20give%20me%20access!"><?php echo($email) ?></a>).
 </p>
 <!-- Rules Section -->
 <h3>
@@ -91,11 +91,11 @@
     on all my music importing. It looks great so so I think that it is going to make
     things much easier. It supports .mp3 .wma, .ogg, .flac, .ape &amp; more. So now
     I after I ramp up on the library I should be able to get close to 100% importing.
-    <a href="http://www.bkp-online.com/music/albums/Blur/Blur%20-%20Blur/02%20-%20Song%202.mp3">
+    <a href="http://fire.dynalias.org/music/albums/Blur/Blur%20-%20Blur/02%20-%20Song%202.mp3">
         WhooHoo!</a>.
 </p>
 <a href="http://www.taglib-sharp.com/Main_Page" class="Logo">
-    <img src="../image/taglib.logo.png" alt="(TagLib#)" /></a>
+    <img src="./image/taglib.logo.png" alt="(TagLib#)" /></a>
 <!-- Date -->
 <table cellpadding="0" cellspacing="0" border="0" align="center" width="80%">
     <tr align="left">
@@ -109,9 +109,9 @@
     Special Pages</h3>
 <hr />
 <ul>
-    <li><a href="/query/music_stats.php">Music Statistics</a></li>
-    <li><a href="/query/results.php?query_type=all_lyrics">Show All Songs With Lyrics</a></li>
-    <li><a href="/pics/">Pictures &amp; Images</a></li>
+    <li><a href="./music_stats.php">Music Statistics</a></li>
+    <li><a href="./results.php?query_type=all_lyrics">Show All Songs With Lyrics</a></li>
+    <li><a href="./pics/">Pictures &amp; Images</a></li>
 </ul>
 <br />
 

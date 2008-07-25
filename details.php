@@ -1,6 +1,6 @@
 <?php
 include_once("./php/sec_user.php");
-//include_once("../php/validate_login.php");
+//include_once("./php/validate_login.php");
 include_once("./config/config.php");
 		?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -112,31 +112,34 @@ else
 				<tbody>
 				<!-- <caption align=bottom>TODO</caption> -->
 				<tr>
-					<td background="../image/lside-10x1024.white.jpg" width="10">&nbsp;</td>
+					<td background="./image/lside-10x1024.white.jpg" width="10">&nbsp;</td>
 					<td>
-						<img src=<?php echo("\"/music/.album_art/large/$row[12]\"") ?> 
+						<?php echo("<img src=\"$art_location/large/" .$row[12]) . "\" " ?> 
 						alt="Cover Art" align="right" border="0" height="225" hspace="0" vspace="0" width="225">
 					</td>
-					<td background="../image/vdrop-20x1024.white.jpg" width="20">&nbsp;</td>
+					<td background="./image/vdrop-20x1024.white.jpg" width="20">&nbsp;</td>
 				</tr>
 				<tr>
 					<td width="10"></td>
-					<td background="../image/hdrop-1024x20.white.jpg" height="20"></td>
-					<td background="../image/cdrop-20x20.white.jpg" height="20"></td>
+					<td background="./image/hdrop-1024x20.white.jpg" height="20"></td>
+					<td background="./image/cdrop-20x20.white.jpg" height="20"></td>
 				</tr>
 				</tbody>
 			</table>
 			</td>
 			</tr></table>
 			<hr />
-	<?php
+<?php
 include("./module/bottom_toolbar.php");
 include("./module/contact_info.php");
 			?>
+		
 		<br />
+		
 <?php
 include("./module/version.php");
 			?>
+			
 	</div>
 </body>
 </html>
