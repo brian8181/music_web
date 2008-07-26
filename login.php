@@ -1,6 +1,5 @@
 <?php
 include_once("./php/functions.php");
-include_once("./tools/kill.php"); // kill previuos sessions
 session_start();
 if( !isset( $_SESSION['_USER'] ) || !isset( $_SESSION['_GROUPS'] ) )
 {
@@ -12,7 +11,7 @@ if( !isset( $_SESSION['_USER'] ) || !isset( $_SESSION['_GROUPS'] ) )
 		$pass = $_GET['_PASSWORD'];
 		if( validate_pass( $pass ) ) //BKP: move to java?
 		{
-			$db = mysql_connect('bkp-online.homelinux.org', 'brian', 'sas*0125');
+			$db = mysql_connect('192.168.81.50', 'brian', 'sas*0125');
 			mysql_select_db('web_admin', $db);
 			$sql = "SELECT user.id, `user`, `group`, `password` FROM `user` " . 
 				"INNER JOIN `user_group` ON `user`.id=`user_id` " . 
@@ -31,13 +30,13 @@ if( !isset( $_SESSION['_USER'] ) || !isset( $_SESSION['_GROUPS'] ) )
 				$_SESSION['_GROUPS'] = $groups;
 				if( isset($_SESSION['_PAGE']) ) {
 					$page = $_SESSION['_PAGE'];
-					header( "Location: $_page" ); } else {
-					header( "Location: index.php" ); } } else {
+					header( "Location: ./$_page" ); } else {
+					header( "Location: ./index.php" ); } } else {
 				$message = "<b>No matching user / password</b>"; }
 			mysql_close($db); } else {
 			$message = "<b>Invalid user or password.</b>"; }} else {
 		$message = "<b>Please enter user & password.</b>";} } else {
-	header( "Location: index.php" ); }
+	header( "Location: ./index.php" ); }
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -66,13 +65,21 @@ if( !isset( $_SESSION['_USER'] ) || !isset( $_SESSION['_GROUPS'] ) )
 			}
 		}
 	</script>
+	<style type="text/css">
+	body 
+	{
+		margin-left:30%;
+		margin-right:30%;
+	}
+	</style>
 </head>
 <body>
+	<center>
 	<form action="login.php" method="get" name="login_frm" onsubmit="on_submit(login_frm)">
 			<fieldset>
 			<legend>User Login:</legend>
-			<p><label for="user">User</label><input type="text" name="_USER" value="<?php if (isset($user)) { echo $user; } ?>" /></p>
-			<p><label for="password">Password</label><input type="password" name="_PASSWORD" value="<?php if (isset($password)) { echo $password; } ?>" /></p>
+			<p><label for="user">User&nbsp;</label><input type="text" name="_USER" value="<?php if (isset($user)) { echo $user; } ?>" /></p>
+			<p><label for="password">Password&nbsp;</label><input type="password" name="_PASSWORD" value="<?php if (isset($password)) { echo $password; } ?>" /></p>
 			<p><label for="save">Save</label><input type="checkbox" name="_SAVE" /></p>
 			<p class="submit"><input type="submit" value="Submit" /></p>
 			<p><label for="msg">
@@ -92,5 +99,6 @@ if( !isset( $_SESSION['_USER'] ) || !isset( $_SESSION['_GROUPS'] ) )
 				}
 			</script>
 	</form>
+	</center>
 </body>
 </html>

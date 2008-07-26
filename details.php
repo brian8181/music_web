@@ -40,7 +40,7 @@ $sql = "SELECT track, title, album.album, artist.artist, genre, bitrate," .
 	$result = mysql_query($sql);
 	$row = mysql_fetch_array($result, MYSQL_NUM);
 	//$helper = new Helper();
-	//echo( $sql ); 
+	echo( $sql ); 
 	mysql_close($db); 
 			?>
 			
@@ -69,7 +69,7 @@ $sql = "SELECT track, title, album.album, artist.artist, genre, bitrate," .
 <?php
 	if($row[13] != NULL)
 	{
-				echo( "<a href=\"/query/lyrics.php?sid='" . $sid . "'\"><em>see</em></a>" );
+				echo( "<a href=\"lyrics.php?sid='" . $sid . "'\"><em>see</em></a>" );
 	}
 	else
 	{
@@ -95,13 +95,13 @@ if( isset($edit_mode) )
 		<form>
           	<input type="text" name="tags">
 		</form>
-		<?php
+<?php
 }
 else
 {
 		?>
 		None&nbsp;<a href="details.php?sid=<?php echo($sid) ?>&edit_mode=1" name="edit_tags">Edit</a>
-		<?php
+<?php
 }
 		?>
 			</dd>

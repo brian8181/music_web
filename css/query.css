@@ -1,8 +1,53 @@
 
-table.Result {
-    border-spacing: 5px;
-    padding: 3px;	
+/*body
+{
+	margin-left:12%;
+	margin-right:12%;
+}*/
+
+div#result_table
+{
+	display:block;
+	text-align:justify;
+	margin-left:12%;
+	margin-right:12%;
+}	
+
+table#result 
+{
+	border-spacing: 5px;
+    padding: 5px;	
     border-color: #FFFFFF;
     background-color: #FFFFFF;
-    width: 100%;
-  }
+    width:80%;
+    margin-left:auto;
+    margin-right:auto
+}
+ 
+/* all rows */ 
+/*table#result tr 
+{
+	background-color:#BFBFBF;
+}*/ 
+
+/* all cells */
+/*table#result td 
+{
+	background-color:#FFFFFF;
+}*/
+
+td#art_col
+{
+	text-align:center;
+	background-color:#FFFFFF;
+}
+
+tr#header_row
+{
+	background-color:#0A6653;
+}
+
+tr#table_row
+{
+	background-color:#BFBFBF;
+}

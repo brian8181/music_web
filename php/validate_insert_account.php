@@ -1,6 +1,7 @@
 <?php
-
+include_once("../config/config.php");
 include("functions.php");
+
 if( !empty($user) && !empty($password) && !empty($password2) && !empty($full_name) && !empty($email) )
 {
 	// TODO! validate user, password, email for leneght spaces & invalid chars
@@ -8,8 +9,9 @@ if( !empty($user) && !empty($password) && !empty($password2) && !empty($full_nam
 	{
 		if( validate_pass( $password ) )
 		{
-			$db = mysql_connect('127.0.0.1', 'web', 'sas*.0125');
-			mysql_select_db('web_admin', $db);
+			$db = mysql_connect($db_address, $db_user_name, $db_password);
+			mysql_select_db($db_name, $db);
+			mysql_query("SET NAMES 'utf8'");
 
 			mysql_real_escape_string($user);
 	        	mysql_real_escape_string($password);

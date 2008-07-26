@@ -6,10 +6,13 @@ include_once("./config/config.php");
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   	<head>
-		<title>Your Query Results</title>
+		<title>
+<?php 
+echo($results_title); 
+		?>
+		</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<link rel="stylesheet" type="text/css" href="./css/<?php echo($style); ?>" />
-		<link rel="stylesheet" type="text/css" href="./css/query.css" />
 	</head>
 	<body>
 	<div class="text_area">
@@ -37,9 +40,6 @@ $txtSearch  = isset($_GET['txtSearch'])  ? $_GET['txtSearch']  : null;
  
 // logging
 $remote_ip = $_SERVER['REMOTE_ADDR'];
-
-echo( "<h3>$remote_ip</h3>" );
- 
 $sql = "INSERT INTO `query_log` (`query_type`, `album`, `artist`, `title`, `genre`, `file`, `comments`, `lyrics`, `and`, `wildcard`, `sortby`, `ip`) VALUES(" .
 	(!empty($query_type) ? "'$query_type'" : "NULL") . ", " . 
 	(!empty($album) ? "'$album'" : "NULL") . ", " . 
@@ -54,16 +54,17 @@ $sql = "INSERT INTO `query_log` (`query_type`, `album`, `artist`, `title`, `genr
 	(!empty($sortby) ? "'$sortby'" : "NULL") . ", " .
 	"'$remote_ip'" . ")";
 mysql_query($sql);
-
 		?>
 		
-	<?php include("./module/login_greeting.php"); ?>
-	
-	<br />
-	<!-- Display Title -->
+<?php 
+include("./module/login_greeting.php"); 
+		?>
+		
 	<div class="box" style="text-align: center">
 		<h1>
-			<em>Your Query Results</em>
+<?php 
+echo($results_title); 
+		?>
 		</h1>
 	</div>
 	<br />
@@ -173,7 +174,9 @@ switch( $query_type )
 		}
 		break;
 }
-$sql = "$sql LIMIT $page_result_limit";
+if( $page_result_limit > 0 ) {
+	$sql = "$sql LIMIT $page_result_limit";
+}
 
 //debug
 //echo("<br /><br />SQL: $sql<br /><br />");
@@ -199,8 +202,10 @@ if ( ! ($pos === false) ) {
 }
 			?>
 			
-<table class="Result">		
-		<tr bgcolor="#0A6653">
+<div style="margin-left:20%; margin-right:20%; text-align:justify;">
+			
+<table id="result">		
+		<tr id ="header_row">
 		<th align="center">Cover</th>
 		<th align="center"><a class="Header" href=<?php echo( "\"$uri&amp;sortby=track\"" ) ?>>Track</a></th>
 		<th align="center"><a class="Header" href=<?php echo( "\"$uri&amp;sortby=title\"" ) ?>>Title</a></th>
@@ -218,9 +223,9 @@ if($result)
 	{
 		// process the row...
 		echo(
-				"<tr bgcolor='#BFBFBF'>\n" .
+				"<tr id=\"table_row\">\n" .
 				//cover
-				"\t<td align='center' bgcolor='#FFFFFF'>
+				"\t<td id=\"art_col\">
 					<a class=\"Logo\" href=\"/query/results.php?album=$row[3]&artist=$row[4]&amp;sortby=track\">
 					<img src=\"$art_location/xsmall/$row[0]\" width=\"50\" height=\"50\" alt=\"NA\"/>
 					</a>
@@ -251,6 +256,8 @@ mysql_close($db);
 		?>
         <!-- End Table Rows   -->		
 </table>	
+
+</div>
 	
 	<br /><br />
 	<hr />

@@ -1,3 +1,6 @@
+<?php
+include_once("./config/config.php");
+		?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 	<!-- headers -->
@@ -8,10 +11,9 @@
 		<link rel="stylesheet" type="text/css" href="/css/main_web.css" />
 	</head>
 	<body>
-		<!-- Start - Whole Page Table -->
-		<center>
-		<table class="Main" width="100%"><tr>
-		<?php include("../module/login_greeting.php"); ?>
+		<div class="text_area">
+		
+		<?php include("./module/login_greeting.php"); ?>
 		<br />
 			<div class="box" style="text-align: center">
 			<center>
@@ -20,14 +22,16 @@
 			</div>
 			<br />	
 			<!-- Navagation Bar -->
-			<?php include("../module/top_toolbar.php"); ?>
+			<?php include("./module/top_toolbar.php"); ?>
 			<br />
 			<table align="center">
 <?php
 if(isset($aid))
 {
-	$db = mysql_connect("127.0.0.1", "web", "sas*.0125");
-	mysql_select_db("music", $db) or die(mysql_errno() . ": " . mysql_error() . "<br>");
+	$db = mysql_connect($db_address, $db_user_name, $db_password);
+	mysql_select_db($db_name, $db);
+	mysql_query("SET NAMES 'utf8'");
+	
 	if(isset($filter) && strlen($filter) > 0)
 	{
 		$filter = mysql_real_escape_string( $filter );
@@ -73,27 +77,26 @@ if(isset($aid))
 					</tr>
 					</table>
 				</td>
-			<?php
+<?php
 			$row = mysql_fetch_row($result);
 			$col++;
 		} 
 		echo("</tr>");	
 	} 
 }  
-			?>  
+		?>  
 			</table>
 			</center>
-			<!-- ######################### END BODY ######################################## -->
+
 <?php
 include("./module/bottom_toolbar.php");
 include("./module/contact_info.php");
 			?>
 			<br />
 			<!-- verison info -->
-			<em>
-			Version 1.0.0.3 Sat Sep  8 11:23:37 CDT 2007 ~( Copyright © by Brian Preston (2007) )
-			</em>
-			</td></tr></table>
-		</center>
+<?php
+include("./module/version.php");
+			?>
+		</div>
 	</body>
 </html>

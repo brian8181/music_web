@@ -1,6 +1,6 @@
 <?php
 include_once("./config/config.php"); 
-?>
+		?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 	
@@ -12,8 +12,8 @@ include_once("./config/config.php");
 	<body>
 	<div class="text_area">	
 <?php
-$db = mysql_connect('127.0.0.1', 'web', 'sas*.0125');
-mysql_select_db('music', $db);
+$db = mysql_connect($db_address, $db_user_name, $db_password);
+mysql_select_db($db_name, $db);
 mysql_query("SET NAMES 'utf8'");
 mysql_query("INSERT INTO hitcount VALUES ( NULL, 'playlist.php', NOW() )");
 		?>
@@ -24,7 +24,7 @@ mysql_query("INSERT INTO hitcount VALUES ( NULL, 'playlist.php', NOW() )");
 		<h1><em>Playlist</em></h1>
 		</div>
 		<br />
-<?php include("./module/limited_top_toolbar.php"); ?>
+<?php include("./module/top_toolbar.php"); ?>
 		<hr />
 		
 <?php

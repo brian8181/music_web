@@ -1,6 +1,15 @@
 <?php
-include_once("./php/sec_user.php");
-//include_once("./php/validate_login.php");
+session_start(); 
+if( isset( $enable_security ) && $enable_security == true )
+{
+	include_once("./php/sec_user.php"); 
+	
+	if( !isset( $_SESSION['_USER']) || !isset( $_SESSION['_GROUPS']) )
+	{
+		$_SESSION['_PAGE'] = 'index.php';
+		header( "Location: login.php" );
+	}
+}
 include_once("./config/config.php");
 			    ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -9,8 +18,7 @@ include_once("./config/config.php");
     <title>Query Page</title>
     
 	<link rel="stylesheet" type="text/css" href="./css/<?php echo($style); ?>" />
-    <link rel="stylesheet" type="text/css" href="./css/query.css" />
-	
+    	
     <script type="text/javascript">
       function on_submit(form)  // intialize all values
       {
@@ -56,15 +64,13 @@ include_once("./config/config.php");
 
 <?php include("./module/login_greeting.php"); ?>
 
-			<br />
-				<!-- Display Title -->
+			<!-- Display Title -->
 			<div class="box" style="text-align: center">
 				<h1><em>Music Query</em></h1>
 			</div>
 	
 			<!-- Navagation Bar -->
-			<br />
-						
+				
 <?php // this fucks up js on_sumbmit!!! (ambig!!!) include("./module/top_toolbar.php"); ?>
 
 			<hr />

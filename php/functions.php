@@ -39,4 +39,23 @@ function validate_pass($password)
 	} 
 }
 
+
+function selfURL() 
+{ 
+	$s = empty($_SERVER["HTTPS"]) ? '' : ($_SERVER["HTTPS"] == "on") ? "s" : ""; 
+	$protocol = strleft(strtolower($_SERVER["SERVER_PROTOCOL"]), "/").$s; 
+	$port = ($_SERVER["SERVER_PORT"] == "80") ? "" : (":".$_SERVER["SERVER_PORT"]); 
+	return $protocol."://".$_SERVER['SERVER_NAME'].$port.$_SERVER['REQUEST_URI']; 
+} 
+
+function strleft($s1, $s2) 
+{ 
+	return substr($s1, 0, strpos($s1, $s2)); 
+}
+
+function sql_value($var)
+{
+	return isset($var) ? $var : "NULL";
+}
+
 ?>

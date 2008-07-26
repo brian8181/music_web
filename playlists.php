@@ -1,10 +1,5 @@
 <?php 
-//session_start();
-//$_SESSION['_PAGE'] = $_SERVER['PHP_SELF'];
-//include_once("./php/intialize.php" );
 include_once("./config/config.php");
-$db = mysql_connect('127.0.0.1', 'web', 'sas*.0125');
-mysql_select_db('music', $db);
 			?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -29,6 +24,9 @@ mysql_select_db('music', $db);
 			<hr />
 			<center>
 <?php
+$db = mysql_connect('127.0.0.1', 'web', 'sas*.0125');
+mysql_select_db('music', $db);
+
 $sql = "SELECT id, name from playlists ORDER BY name";
 $result = mysql_query($sql);
 while ( $row = mysql_fetch_array($result, MYSQL_NUM) )

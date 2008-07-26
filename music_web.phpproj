@@ -46,11 +46,11 @@
     {
     "ProjRelPath" = "T"
     }
-    "css\\menu-2007.css"
+    "css\\query.css"
     {
     "ProjRelPath" = "T"
     }
-    "css\\query.css"
+    "css\\style.css"
     {
     "ProjRelPath" = "T"
     }
@@ -186,19 +186,7 @@
     {
     "ProjRelPath" = "T"
     }
-    "php\\function.php"
-    {
-    "ProjRelPath" = "T"
-    }
     "php\\functions.php"
-    {
-    "ProjRelPath" = "T"
-    }
-    "php\\kill.php"
-    {
-    "ProjRelPath" = "T"
-    }
-    "php\\login.php"
     {
     "ProjRelPath" = "T"
     }
@@ -258,10 +246,6 @@
     {
     "ProjRelPath" = "T"
     }
-    "auth_user.php"
-    {
-    "ProjRelPath" = "T"
-    }
     "browse_artist.php"
     {
     "ProjRelPath" = "T"
@@ -270,19 +254,23 @@
     {
     "ProjRelPath" = "T"
     }
-    "contact_info.php"
-    {
-    "ProjRelPath" = "T"
-    }
     "details.php"
     {
     "ProjRelPath" = "T"
     }
-    "error.html"
+    "error.php"
     {
     "ProjRelPath" = "T"
     }
     "index.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "login.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "logout.php"
     {
     "ProjRelPath" = "T"
     }

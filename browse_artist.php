@@ -1,8 +1,7 @@
 <?php 
 include_once("./php/sec_user.php"); 
-//include_once("./php/validate_login.php");
 include_once("./config/config.php");
-?>
+		?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 
@@ -53,7 +52,7 @@ if(isset($show_all) && $show_all != "true") {
 	<?php
 }
 else{
-					?>
+	?>
 						Full Albums&nbsp;|&nbsp;
                     <a href="/query/browse_artist.php?row=0&letter=<?php echo($letter) ?>&show_all=false">Show All</a><br /><br />
 	<?php
@@ -133,14 +132,14 @@ for ($y = 0; $y < count($links); $y++)
 mysql_close( $db );
 				?>
             </div>
-          </span>
-          <br />
+         </span>
+         <br />
 		 <hr />	         
 <?php
 include("./module/bottom_toolbar.php");
 include("./module/contact_info.php");
 			    ?>
-          <br />
+         <br />
 <?php
 include("./module/version.php");
 			    ?>

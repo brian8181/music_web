@@ -1,5 +1,7 @@
 <?php
 session_start(); 
+include_once("../config/config.php");
+
 if( !isset( $_SESSION['_USER'] ) || !isset( $_SESSION['_GROUPS'] ) )
 {
 	$_SESSION['_PAGE'] = $PHP_SELF;
@@ -87,8 +89,9 @@ if(!array_key_exists('user', $groups_loc))
 		<table class="Admin" align="center">
 		
 <?php 
-$db = mysql_connect('127.0.0.1', 'web', 'sas*.0125');
-mysql_select_db('web_admin', $db);
+$db = mysql_connect($db_address, $db_user_name, $db_password);
+mysql_select_db($db_name, $db);
+mysql_query("SET NAMES 'utf8'");
 
 $usr_grp = array();
 $users = array();

@@ -1,4 +1,6 @@
 <?php
+include_once("../config/config.php");
+
 	//if not logged in goto login page 
 	session_start(); 
 	if( !isset( $_SESSION['_USER'] ) )
@@ -15,8 +17,9 @@
 			echo( "<div style=\"text-align: center\"><a href=\"/index.php\"><i>www.bkp-online.com</i></a></div>" );
 		}
 		
-		$db = mysql_connect('127.0.0.1', 'web', 'sas*.0125');
-		mysql_select_db('web_admin', $db);
+		$db = mysql_connect($db_address, $db_user_name, $db_password);
+		mysql_select_db($db_name, $db);
+		mysql_query("SET NAMES 'utf8'");
 	
 		$user_array = explode('-', $usr_grps);
 		foreach($user_array as $usr)

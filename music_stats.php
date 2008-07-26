@@ -14,8 +14,6 @@ include_once("./config/config.php");
   <body>
 	<div class="text_area">
 		<?php include("./module/login_greeting.php"); ?>
-		<br />
-
 		<div class="box" style="text-align: center">
 			<h1>
 			  <em>Music Statistics</em>
