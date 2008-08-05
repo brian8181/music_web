@@ -26,6 +26,9 @@ include_once("./config/config.php");
 			<br />
 			<table align="center">
 <?php
+$aid   = isset($_GET['aid'])    ? $_GET['aid'] : null;
+$filter = isset($_GET['filter']) ? $_GET['filter']: null;
+
 if(isset($aid))
 {
 	$db = mysql_connect($db_address, $db_user_name, $db_password);
@@ -48,7 +51,7 @@ if(isset($aid))
 	//echo($sql);			
 	$result = mysql_query($sql, $db);
 	$row = mysql_fetch_row($result);
-	//echo("<div align="center"><h3>$row[3]</h3></div>");
+	echo("<div align=\"center\"><h3>$row[3]</h3></div>");
 	while( $row )
 	{
 		$col = 1;
@@ -63,7 +66,7 @@ if(isset($aid))
 						<td background="../image/lside-10x1024.white.jpg" width="10">&nbsp;</td>
 						<td>
 						<a href="results.php?query_type=album&album_id=<?php echo("\"$album_id\"") ?>>
-							<img src=<?php echo("\"/music/.album_art/large/$row[1]\" alt=\"$row[0]\"") ?> 
+							<img src=<?php echo("\".album_art/large/$row[1]\" alt=\"$row[0]\"") ?> 
 							title=<?php echo("\"$row[0]\""); ?> alt="Cover Art" align="right" 
 							border="0" height="200" hspace="0" vspace="0" width="200">
 						</a>

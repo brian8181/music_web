@@ -30,11 +30,10 @@ include_once("./config/config.php");
 		
           <div align="center">
 <?php
-include_once("./config/config.php");
 
 //get set variables
 $letter   = isset($_GET['letter'])    ? $_GET['letter']   : null;
-$row      = isset($_GET['row'])       ? $_GET['row']      : null;
+$nav_row      = isset($_GET['nav_row'])       ? $_GET['nav_row']      : null;
 $show_all  = isset($_GET['show_all']) ? $_GET['show_all'] : null;
 
 $filter = "";
@@ -42,50 +41,50 @@ $filters = "";
 $db = mysql_connect( $db_address, $db_user_name, $db_password );
 mysql_select_db( $db_name, $db );
 
-$letter = isset($letter) ? mysqli_real_escape_string($mysqli, $letter) : 'A';
+$letter = isset($letter) ? mysql_real_escape_string($letter, $db) : 'A';
 $view_state = "show_all=false";
 
 if(isset($show_all) && $show_all != "true") {
        	        ?>
-                    <a href="/query/browse_artist.php?row=0&letter=<?php echo($letter) ?>&show_all=true">Full Albums</a>&nbsp;|&nbsp;
+                    <a href="./browse_artist.php?nav_row=0&letter=<?php echo($letter) ?>&show_all=true">Full Albums</a>&nbsp;|&nbsp;
                     Show All<br /><br />
 	<?php
 }
 else{
 	?>
 						Full Albums&nbsp;|&nbsp;
-                    <a href="/query/browse_artist.php?row=0&letter=<?php echo($letter) ?>&show_all=false">Show All</a><br /><br />
+                    <a href="./browse_artist.php?nav_row=0&letter=<?php echo($letter) ?>&show_all=false">Show All</a><br /><br />
 	<?php
 	$filter = "/albums/";
 	$view_state = "show_all=true";
 } 
 			      ?>
-            <a href="/query/browse_artist.php?row=0&letter=A&<?php echo($view_state) ?>">A</a>&nbsp;&nbsp;
-            <a href="/query/browse_artist.php?row=0&letter=B&<?php echo($view_state) ?>">B</a>&nbsp;&nbsp;
-            <a href="/query/browse_artist.php?row=0&letter=C&<?php echo($view_state) ?>">C</a>&nbsp;&nbsp;
-            <a href="/query/browse_artist.php?row=0&letter=D&<?php echo($view_state) ?>">D</a>&nbsp;&nbsp;
-            <a href="/query/browse_artist.php?row=0&letter=E&<?php echo($view_state) ?>">E</a>&nbsp;&nbsp;
-            <a href="/query/browse_artist.php?row=0&letter=F&<?php echo($view_state) ?>">F</a>&nbsp;&nbsp;
-            <a href="/query/browse_artist.php?row=0&letter=G&<?php echo($view_state) ?>">G</a>&nbsp;&nbsp;
-            <a href="/query/browse_artist.php?row=0&letter=H&<?php echo($view_state) ?>">H</a>&nbsp;&nbsp;
-            <a href="/query/browse_artist.php?row=0&letter=I&<?php echo($view_state) ?>">I</a>&nbsp;&nbsp;
-            <a href="/query/browse_artist.php?row=0&letter=J&<?php echo($view_state) ?>">J</a>&nbsp;&nbsp;
-            <a href="/query/browse_artist.php?row=0&letter=K&<?php echo($view_state) ?>">K</a>&nbsp;&nbsp;
-            <a href="/query/browse_artist.php?row=0&letter=L&<?php echo($view_state) ?>">L</a>&nbsp;&nbsp;
-            <a href="/query/browse_artist.php?row=0&letter=M&<?php echo($view_state) ?>">M</a>&nbsp;&nbsp;
-            <a href="/query/browse_artist.php?row=0&letter=N&<?php echo($view_state) ?>">N</a>&nbsp;&nbsp;
-            <a href="/query/browse_artist.php?row=0&letter=O&<?php echo($view_state) ?>">O</a>&nbsp;&nbsp;
-            <a href="/query/browse_artist.php?row=0&letter=P&<?php echo($view_state) ?>">P</a>&nbsp;&nbsp;
-            <a href="/query/browse_artist.php?row=0&letter=Q&<?php echo($view_state) ?>">Q</a>&nbsp;&nbsp;
-            <a href="/query/browse_artist.php?row=0&letter=R&<?php echo($view_state) ?>">R</a>&nbsp;&nbsp;
-            <a href="/query/browse_artist.php?row=0&letter=S&<?php echo($view_state) ?>">S</a>&nbsp;&nbsp;
-            <a href="/query/browse_artist.php?row=0&letter=T&<?php echo($view_state) ?>">T</a>&nbsp;&nbsp;
-            <a href="/query/browse_artist.php?row=0&letter=U&<?php echo($view_state) ?>">U</a>&nbsp;&nbsp;
-            <a href="/query/browse_artist.php?row=0&letter=V&<?php echo($view_state) ?>">V</a>&nbsp;&nbsp;
-            <a href="/query/browse_artist.php?row=0&letter=W&<?php echo($view_state) ?>">W</a>&nbsp;&nbsp;
-            <a href="/query/browse_artist.php?row=0&letter=X&<?php echo($view_state) ?>">X</a>&nbsp;&nbsp;
-            <a href="/query/browse_artist.php?row=0&letter=Y&<?php echo($view_state) ?>">Y</a>&nbsp;&nbsp;
-            <a href="/query/browse_artist.php?row=0&letter=Z&<?php echo($view_state) ?>">Z</a>&nbsp;&nbsp;
+            <a href="./browse_artist.php?nav_row=0&letter=A&<?php echo($view_state) ?>">A</a>&nbsp;&nbsp;
+            <a href="./browse_artist.php?nav_row=0&letter=B&<?php echo($view_state) ?>">B</a>&nbsp;&nbsp;
+            <a href="./browse_artist.php?nav_row=0&letter=C&<?php echo($view_state) ?>">C</a>&nbsp;&nbsp;
+            <a href="./browse_artist.php?nav_row=0&letter=D&<?php echo($view_state) ?>">D</a>&nbsp;&nbsp;
+            <a href="./browse_artist.php?nav_row=0&letter=E&<?php echo($view_state) ?>">E</a>&nbsp;&nbsp;
+            <a href="./browse_artist.php?nav_row=0&letter=F&<?php echo($view_state) ?>">F</a>&nbsp;&nbsp;
+            <a href="./browse_artist.php?nav_row=0&letter=G&<?php echo($view_state) ?>">G</a>&nbsp;&nbsp;
+            <a href="./browse_artist.php?nav_row=0&letter=H&<?php echo($view_state) ?>">H</a>&nbsp;&nbsp;
+            <a href="./browse_artist.php?nav_row=0&letter=I&<?php echo($view_state) ?>">I</a>&nbsp;&nbsp;
+            <a href="./browse_artist.php?nav_row=0&letter=J&<?php echo($view_state) ?>">J</a>&nbsp;&nbsp;
+            <a href="./browse_artist.php?nav_row=0&letter=K&<?php echo($view_state) ?>">K</a>&nbsp;&nbsp;
+            <a href="./browse_artist.php?nav_row=0&letter=L&<?php echo($view_state) ?>">L</a>&nbsp;&nbsp;
+            <a href="./browse_artist.php?nav_row=0&letter=M&<?php echo($view_state) ?>">M</a>&nbsp;&nbsp;
+            <a href="./browse_artist.php?nav_row=0&letter=N&<?php echo($view_state) ?>">N</a>&nbsp;&nbsp;
+            <a href="./browse_artist.php?nav_row=0&letter=O&<?php echo($view_state) ?>">O</a>&nbsp;&nbsp;
+            <a href="./browse_artist.php?nav_row=0&letter=P&<?php echo($view_state) ?>">P</a>&nbsp;&nbsp;
+            <a href="./browse_artist.php?nav_row=0&letter=Q&<?php echo($view_state) ?>">Q</a>&nbsp;&nbsp;
+            <a href="./browse_artist.php?nav_row=0&letter=R&<?php echo($view_state) ?>">R</a>&nbsp;&nbsp;
+            <a href="./browse_artist.php?nav_row=0&letter=S&<?php echo($view_state) ?>">S</a>&nbsp;&nbsp;
+            <a href="./browse_artist.php?nav_row=0&letter=T&<?php echo($view_state) ?>">T</a>&nbsp;&nbsp;
+            <a href="./browse_artist.php?nav_row=0&letter=U&<?php echo($view_state) ?>">U</a>&nbsp;&nbsp;
+            <a href="./browse_artist.php?nav_row=0&letter=V&<?php echo($view_state) ?>">V</a>&nbsp;&nbsp;
+            <a href="./browse_artist.php?nav_row=0&letter=W&<?php echo($view_state) ?>">W</a>&nbsp;&nbsp;
+            <a href="./browse_artist.php?nav_row=0&letter=X&<?php echo($view_state) ?>">X</a>&nbsp;&nbsp;
+            <a href="./browse_artist.php?nav_row=0&letter=Y&<?php echo($view_state) ?>">Y</a>&nbsp;&nbsp;
+            <a href="./browse_artist.php?nav_row=0&letter=Z&<?php echo($view_state) ?>">Z</a>&nbsp;&nbsp;
           </div>
           <br />
           <span style="font-size: larger;">

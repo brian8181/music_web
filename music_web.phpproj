@@ -38,7 +38,7 @@
     {
     "ProjRelPath" = "T"
     }
-    "config\\config.php.tmpl"
+    "config\\config.tmp.php"
     {
     "ProjRelPath" = "T"
     }
@@ -250,6 +250,10 @@
     {
     "ProjRelPath" = "T"
     }
+    "browse_artist_albums.2.php"
+    {
+    "ProjRelPath" = "T"
+    }
     "browse_artist_albums.php"
     {
     "ProjRelPath" = "T"
@@ -279,10 +283,6 @@
     "ProjRelPath" = "T"
     }
     "music_stats.php"
-    {
-    "ProjRelPath" = "T"
-    }
-    "playlist.php"
     {
     "ProjRelPath" = "T"
     }

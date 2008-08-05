@@ -1,5 +1,6 @@
 <?php
 include_once("./php/functions.php");
+include_once("./config/config.php");
 session_start();
 if( !isset( $_SESSION['_USER'] ) || !isset( $_SESSION['_GROUPS'] ) )
 {
@@ -11,7 +12,8 @@ if( !isset( $_SESSION['_USER'] ) || !isset( $_SESSION['_GROUPS'] ) )
 		$pass = $_GET['_PASSWORD'];
 		if( validate_pass( $pass ) ) //BKP: move to java?
 		{
-			$db = mysql_connect('192.168.81.50', 'brian', 'sas*0125');
+			$db = mysql_connect($db_address, $db_user_name, $db_password);
+			mysql_select_db($db_name, $db);
 			mysql_select_db('web_admin', $db);
 			$sql = "SELECT user.id, `user`, `group`, `password` FROM `user` " . 
 				"INNER JOIN `user_group` ON `user`.id=`user_id` " . 

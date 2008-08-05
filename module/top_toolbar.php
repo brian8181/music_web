@@ -1,4 +1,10 @@
-<script type="text/javascript" src="./script/validate.js"></script>
+<script type="text/javascript">
+	function on_quick_submit(form) 
+	{
+		form.elements['artist'].value = form.elements['album'].value;
+		form.elements['title'].value = form.elements['album'].value;
+	}
+</script>
 <table align="center">
   <tr>
     <td align="center">
@@ -9,21 +15,5 @@
     </td>
      	
 <?php include("toolbar_items.php"); ?>
-
-    <td align="center">
-        <form name="toolbar" onsubmit="validate(toolbar)" method="get" action="results.php">
-          <input type="hidden" name="query_type" value="default" />
-          <input type="hidden" name="and" value="false" />
-          <input type="hidden" name="artist" />
-          <input type="hidden" name="title" />
-          <div class="white" style="text-align: center">
-            <strong>
-              <em>Quick Search:</em>
-            </strong>&nbsp;
-            <input type="text" name="album" align="right"/>
-          </div>
-        </form>
-      </td>
   </tr>
-
 </table>

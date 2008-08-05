@@ -1,10 +1,4 @@
 // JScript File
-function validate(form) 
-{
-	form.elements['artist'].value = form.elements['album'].value;
-	form.elements['title'].value = form.elements['album'].value;
-}
-
 function on_submit(form)  // intialize all values
 {
 	// get check boxes

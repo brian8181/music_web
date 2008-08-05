@@ -14,17 +14,17 @@ class navbar {
 
   function execute($sql, $db, $type = "mysql") {
     // global variables needed by the function
-    global $total_records, $row, $numtoshow; 
+    global $total_records, $nav_row, $numtoshow; 
     global $result;
     
     // number of records to show at a time
     $numtoshow = $this->numrowsperpage;
-    // $row is actually the number of the row of 
+    // $nav_row is actually the number of the row of 
     // records (the page number)
-    if (!isset($row)) $row = 0;
+    if (!isset($nav_row)) $nav_row = 0;
     
     // the record start number for the SQL query
-    $start = $row * $numtoshow;
+    $start = $nav_row * $numtoshow;
     // check the database type
     if ($type == "mysql") 
     {
@@ -77,7 +77,7 @@ class navbar {
 
   function getlinks($option = "all", $show_blank = "off") {
     // global variables needed by the function
-    global $total_records, $row, $numtoshow;
+    global $total_records, $nav_row, $numtoshow;
 
     // build the "GET" type URL for the links
     $extra_vars = $this->build_geturl();
@@ -90,26 +90,26 @@ class navbar {
     for ($current = 0; $current < $number_of_pages; $current++) {	
       // check if the option asks for this element in the array
       if ((($option == "all") || ($option == "sides")) && ($current == 0)) {
-        if ($row != 0)
-          $array[0] = '<A HREF="' . $file . '?row=' . ($row - 1) 
+        if ($nav_row != 0)
+          $array[0] = '<A HREF="' . $file . '?nav_row=' . ($nav_row - 1) 
                       . $extra_vars . '">' . $this->str_previous . '</A>';
-        elseif (($row == 0) && ($show_blank == "on"))
+        elseif (($nav_row == 0) && ($show_blank == "on"))
           $array[0] = $this->str_previous;
       }
 
       if (($option == "all") || ($option == "pages")) {
-        if ($row == $current)
+        if ($nav_row == $current)
           $array[++$subscript] = ($current > 0 ? ($current + 1) : 1);
         else
-          $array[++$subscript] = '<A HREF="' . $file . '?row=' . $current 
+          $array[++$subscript] = '<A HREF="' . $file . '?nav_row=' . $current 
                             . $extra_vars . '">' . ($current + 1) . '</A>';
       }
 
       if ((($option == "all") || ($option == "sides")) && ($current == ($number_of_pages - 1))) {
-        if ($row != ($number_of_pages - 1))
-          $array[++$subscript] = '<A HREF="' . $file . '?row=' . ($row + 1) . $extra_vars 
+        if ($nav_row != ($number_of_pages - 1))
+          $array[++$subscript] = '<A HREF="' . $file . '?nav_row=' . ($nav_row + 1) . $extra_vars 
                             . '">' . $this->str_next . '</A>';
-        elseif (($row == ($number_of_pages - 1)) && ($show_blank == "on"))
+        elseif (($nav_row == ($number_of_pages - 1)) && ($show_blank == "on"))
           $array[++$subscript] = $this->str_next;
       }
     }

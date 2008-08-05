@@ -71,7 +71,7 @@ include_once("./config/config.php");
 	
 			<!-- Navagation Bar -->
 				
-<?php // this fucks up js on_sumbmit!!! (ambig!!!) include("./module/top_toolbar.php"); ?>
+<?php include("./module/top_toolbar.php"); ?>
 
 			<hr />
 			<br />

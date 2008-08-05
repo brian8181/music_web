@@ -11,7 +11,10 @@
         </a>
     </td>
 
-<?php include("toolbar_items.php"); ?>
+<?php
+$enable_quick_search = false; 
+include("toolbar_items.php"); 
+	?>
 
    </tr>
 </table>
