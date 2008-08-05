@@ -1,4 +1,6 @@
 <?php
+include_once("version.php");
+
 /////////////////////////////////////////////////
 // Server:                                     //
 /////////////////////////////////////////////////
@@ -39,7 +41,6 @@ $music_location = "/music";
 ////////////////////////////////////////////////////
 $mail_message = "for further information please email us @";
 // global version 
-$version = "0.0.1";
 $version_date = "Sunday July 20 4:37 AM CDT 2008";
 $index_title = "Music Database";
 $search_title = "Search Database";

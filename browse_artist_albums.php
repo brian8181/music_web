@@ -48,7 +48,7 @@ if(isset($aid))
 		"INNER JOIN album ON album_id=album.id " .
 		"INNER JOIN artist ON artist_id=artist.id " . 
 		"LEFT JOIN art ON art_id=art.id WHERE artist_id='$aid' $filter";
-	//echo($sql);			
+	echo($sql);			
 	$result = mysql_query($sql, $db);
 	$row = mysql_fetch_row($result);
 	echo("<div align=\"center\"><h3>$row[3]</h3></div>");

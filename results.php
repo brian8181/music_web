@@ -68,10 +68,11 @@ echo($results_title);
 		</h1>
 	</div>
 	<br />
+
+<?php 
+include("./module/top_toolbar.php"); 
+		?>
 	
-	<?php include("./module/top_toolbar.php"); ?>
-	
-	<img src="./image/apache_pb.gif" align="right" width="259" height="32" alt="Apache" />
 	<hr />
 	
 <?php
@@ -189,8 +190,6 @@ if($result) {
 $uri = $_SERVER['REQUEST_URI'];
 			?>
 		<br /><br />	
-		<!-- Results table -->			
-		<table class="Result" align="center">
 <?php
 // Remove "sortby" from URI
 $pos = strrpos($uri, "sortby");
@@ -202,19 +201,16 @@ if ( ! ($pos === false) ) {
 }
 			?>
 			
-<div style="margin-left:20%; margin-right:20%; text-align:justify;">
-			
-<table id="result">		
+	<table id="result">		
 		<tr id ="header_row">
-		<th align="center">Cover</th>
-		<th align="center"><a class="Header" href=<?php echo( "\"$uri&amp;sortby=track\"" ) ?>>Track</a></th>
-		<th align="center"><a class="Header" href=<?php echo( "\"$uri&amp;sortby=title\"" ) ?>>Title</a></th>
-		<th align="center"><a class="Header" href=<?php echo( "\"$uri&amp;sortby=album.album,track\"" ) ?>>Album</a></th>
-		<th align="center">
-		<a class="Header" href=<?php echo( "\"$uri&amp;sortby=artist.artist\"" ) ?>>Artist</a></th>
-		<th align="center">Download</th>
+			<th align="center">Cover</th>
+			<th align="center"><a class="Header" href=<?php echo( "\"$uri&amp;sortby=track\"" ) ?>>Track</a></th>
+			<th align="center"><a class="Header" href=<?php echo( "\"$uri&amp;sortby=title\"" ) ?>>Title</a></th>
+			<th align="center"><a class="Header" href=<?php echo( "\"$uri&amp;sortby=album.album,track\"" ) ?>>Album</a></th>
+			<th align="center">
+			<a class="Header" href=<?php echo( "\"$uri&amp;sortby=artist.artist\"" ) ?>>Artist</a></th>
+			<th align="center">Download</th>
 		</tr>
-		<!-- Start Table Rows -->
 <?php
 if($result)
 {
@@ -254,10 +250,7 @@ if($result)
 }
 mysql_close($db);
 		?>
-        <!-- End Table Rows   -->		
-</table>	
-
-</div>
+	</table>	
 	
 	<br /><br />
 	<hr />
@@ -267,8 +260,8 @@ include("./module/bottom_toolbar.php");
 include("./module/contact_info.php");
 			?>
 			
-		<br />
-		
+	<br />
+	
 <?php
 include("./module/version.php");
 			?>

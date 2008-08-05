@@ -26,7 +26,7 @@ include("./module/login_greeting.php");
 		<!-- Navagation Bar -->
 		<br />
 <?php 
-//include("./module/top_toolbar.php");
+include("./module/top_toolbar.php");
 		 ?>
 		
 		<hr>
