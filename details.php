@@ -24,7 +24,10 @@ include("./module/login_greeting.php");
 		
 		<br />
 			<div class="box" style="text-align: center">
-				<h1><em>Songs Details</em></h1>
+<h1><?php 
+echo($details_title); 
+		?>
+		</h1>
 			</div>
 		<br />			
 

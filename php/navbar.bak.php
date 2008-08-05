@@ -29,7 +29,7 @@ for ($y = 0; $y < count($links); $y++) {
 ?>
 */
 
-class navbar2 {
+class navbar {
   // Default values for the navigation link bar
   var $numrowsperpage = 10;
   var $str_previous = "Previous page";
@@ -53,13 +53,11 @@ class navbar2 {
   //  . "mysql" - uses mysql php functions
   //  . "pgsql" - uses pgsql php functions
   function execute($sql, $db, $type = "mysql") {
-    global $total_records, $g_row, $numtoshow;
-    $result
+    global $total_records, $nav_row, $numtoshow;
 
     $numtoshow = $this->numrowsperpage;
-    if (!isset($row_)) $g_row = 0;
-    $start = $g_row * $numtoshow;
-    $result = -;
+    if (!isset($nav_row)) $nav_row = 0;
+    $start = $nav_row * $numtoshow;
     if ($type == "mysql") {
       $result = mysql_query($sql, $db);
       $total_records = mysql_num_rows($result);
@@ -82,11 +80,10 @@ class navbar2 {
   // dynamically.
   function build_geturl()
   {
-	$query_string = "";
     global $REQUEST_URI, $REQUEST_METHOD, $HTTP_GET_VARS, $HTTP_POST_VARS;
 
     list($fullfile, $voided) = explode("?", $REQUEST_URI);
-    //$this->file = $fullfile;
+    $this->file = $fullfile;
     $cgi = $REQUEST_METHOD == 'GET' ? $HTTP_GET_VARS : $HTTP_POST_VARS;
     reset ($cgi);
     while (list($key, $value) = each($cgi)) {
@@ -112,7 +109,7 @@ class navbar2 {
   //  . "off" - don't show the "Next" or "Previous" when it is not needed
   //  . "on"  - show the "Next" or "Previous" strings as plain text when it is not needed
   function getlinks($option = "all", $show_blank = "off") {
-    global $total_records, $g_row, $numtoshow;
+    global $total_records, $nav_row, $numtoshow;
 
     $extra_vars = $this->build_geturl();
     $file = $this->file;
@@ -120,23 +117,23 @@ class navbar2 {
     $subscript = 0;
     for ($current = 0; $current < $number_of_pages; $current++) {
       if ((($option == "all") || ($option == "sides")) && ($current == 0)) {
-        if ($g_row != 0)
-          $array[0] = '<A HREF="' . $file . '?g_row=' . ($g_row - 1) . $extra_vars . '">' . $this->str_previous . '</A>';
-        elseif (($g_row == 0) && ($show_blank == "on"))
+        if ($nav_row != 0)
+          $array[0] = '<A HREF="' . $file . '?nav_row=' . ($nav_row - 1) . $extra_vars . '">' . $this->str_previous . '</A>';
+        elseif (($nav_row == 0) && ($show_blank == "on"))
           $array[0] = $this->str_previous;
       }
 
       if (($option == "all") || ($option == "pages")) {
-        if ($g_row == $current)
+        if ($nav_row == $current)
           $array[++$subscript] = ($current > 0 ? ($current + 1) : 1);
         else
-          $array[++$subscript] = '<A HREF="' . $file . '?g_row=' . $current . $extra_vars . '">' . ($current + 1) . '</A>';
+          $array[++$subscript] = '<A HREF="' . $file . '?nav_row=' . $current . $extra_vars . '">' . ($current + 1) . '</A>';
       }
 
       if ((($option == "all") || ($option == "sides")) && ($current == ($number_of_pages - 1))) {
-        if ($g_row != ($number_of_pages - 1))
-          $array[++$subscript] = '<A HREF="' . $file . '?g_row=' . ($g_row + 1) . $extra_vars . '">' . $this->str_next . '</A>';
-        elseif (($g_row == ($number_of_pages - 1)) && ($show_blank == "on"))
+        if ($nav_row != ($number_of_pages - 1))
+          $array[++$subscript] = '<A HREF="' . $file . '?nav_row=' . ($nav_row + 1) . $extra_vars . '">' . $this->str_next . '</A>';
+        elseif (($nav_row == ($number_of_pages - 1)) && ($show_blank == "on"))
           $array[++$subscript] = $this->str_next;
       }
     }

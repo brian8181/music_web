@@ -3,7 +3,6 @@ session_start();
 if( isset( $enable_security ) && $enable_security == true )
 {
 	include_once("./php/sec_user.php"); 
-	
 	if( !isset( $_SESSION['_USER']) || !isset( $_SESSION['_GROUPS']) )
 	{
 		$_SESSION['_PAGE'] = 'index.php';
@@ -66,7 +65,11 @@ include_once("./config/config.php");
 
 			<!-- Display Title -->
 			<div class="box" style="text-align: center">
-				<h1><em>Music Query</em></h1>
+			<h1>
+<?php 
+echo($search_title); 
+		?>
+			</h1>
 			</div>
 	
 			<!-- Navagation Bar -->

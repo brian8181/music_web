@@ -9,7 +9,7 @@ include_once("./config/config.php");
     <title>Browse Artist</title>
     <meta name="generator" content="Bluefish 1.0.7"/>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link rel="stylesheet" type="text/css" href="/css/main_web.css" />
+    <link rel="stylesheet" type="text/css" href="./css/<?php echo($style); ?>" />
   </head>
   <body>
 	<div class="text_area">
@@ -23,7 +23,9 @@ include_once("./config/config.php");
             </center>
           </div>
           <br />
-          <?php include("./module/top_toolbar.php"); ?>
+<?php
+include("./module/top_toolbar.php"); 
+		?>
           
 		  <hr />
           <br />
@@ -33,7 +35,7 @@ include_once("./config/config.php");
 
 //get set variables
 $letter   = isset($_GET['letter'])    ? $_GET['letter']   : null;
-$nav_row      = isset($_GET['nav_row'])       ? $_GET['nav_row']      : null;
+$nav_row   = isset($_GET['nav_row'])       ? $_GET['nav_row']      : 0;
 $show_all  = isset($_GET['show_all']) ? $_GET['show_all'] : null;
 
 $filter = "";
@@ -45,7 +47,7 @@ $letter = isset($letter) ? mysql_real_escape_string($letter, $db) : 'A';
 $view_state = "show_all=false";
 
 if(isset($show_all) && $show_all != "true") {
-       	        ?>
+       	      ?>
                     <a href="./browse_artist.php?nav_row=0&letter=<?php echo($letter) ?>&show_all=true">Full Albums</a>&nbsp;|&nbsp;
                     Show All<br /><br />
 	<?php
@@ -58,7 +60,7 @@ else{
 	$filter = "/albums/";
 	$view_state = "show_all=true";
 } 
-			      ?>
+	?>
             <a href="./browse_artist.php?nav_row=0&letter=A&<?php echo($view_state) ?>">A</a>&nbsp;&nbsp;
             <a href="./browse_artist.php?nav_row=0&letter=B&<?php echo($view_state) ?>">B</a>&nbsp;&nbsp;
             <a href="./browse_artist.php?nav_row=0&letter=C&<?php echo($view_state) ?>">C</a>&nbsp;&nbsp;

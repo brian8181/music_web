@@ -11,7 +11,7 @@ if( isset( $enable_browse ) && $enable_browse == true )
 	{
 	?>
 	<td align="center">
-       <a class="Nav" href="browse_artist.php">Browse</a>
+       <a class="Nav" href="browse_artist.php?nav_row=0">Browse</a>
     </td>
 <?php
 }
