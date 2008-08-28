@@ -54,6 +54,7 @@ div#result_table
 /********************/
 table#result 
 {
+	text-align:center;
 	border-spacing: 5px;
     padding: 5px;	
     border-color: #FFFFFF;
@@ -66,14 +67,18 @@ table#result
 /* all rows */ 
 /*table#result tr 
 {
+	padding: 5px;	
+	text-align:center;
 	background-color:#BFBFBF;
 }*/ 
 
 /* all cells */
-/*table#result td 
+table#result td 
 {
-	background-color:#FFFFFF;
-}*/
+	padding: 3px;	
+	text-align:center;
+	/*background-color:#FFFFFF;*/
+}
 
 td#art_col
 {

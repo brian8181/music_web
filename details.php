@@ -24,7 +24,8 @@ include("./module/login_greeting.php");
 		
 		<br />
 			<div class="box" style="text-align: center">
-<h1><?php 
+		<h1>
+<?php 
 echo($details_title); 
 		?>
 		</h1>

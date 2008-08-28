@@ -12,8 +12,9 @@ include_once("./config/config.php");
 	</head>
 	<body>
 		<div class="text_area">
-		
-		<?php include("./module/login_greeting.php"); ?>
+<?php 
+include("./module/login_greeting.php"); 
+	?>
 		<br />
 			<div class="box" style="text-align: center">
 			<center>
@@ -21,8 +22,10 @@ include_once("./config/config.php");
 			</center>
 			</div>
 			<br />	
-			<!-- Navagation Bar -->
-			<?php include("./module/top_toolbar.php"); ?>
+	
+<?php 
+include("./module/top_toolbar.php"); 
+		?>
 			<br />
 			<table align="center">
 <?php
@@ -96,7 +99,7 @@ include("./module/bottom_toolbar.php");
 include("./module/contact_info.php");
 			?>
 			<br />
-			<!-- verison info -->
+	
 <?php
 include("./module/version.php");
 			?>
