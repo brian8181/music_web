@@ -5,7 +5,7 @@
 </p>
 <h3>The music / database / sql / search / browser / whatever?</h3>
 <p>
-    <img class="floatLeft" src="/image/180px-Tux.png" align="left" alt="Tux" height="100" />
+    <img class="floatLeft" src="./image/180px-Tux.png" align="left" alt="Tux" height="100" />
     I finally databased most but not all of my music files. For now I have imported
     just .mp3 files. I plan on doing .wma then .ogg &amp; .flac more on this later.
     It is running at over <strong>23,356</strong> songs listings at the point I wrote
