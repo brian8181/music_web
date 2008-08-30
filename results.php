@@ -125,6 +125,8 @@ switch( $query_type )
 				$genre = str_replace( "?", "_", $genre);
 				$file = str_replace( "*", "%", $file);
 				$file = str_replace( "?", "_", $file);
+				$lyrics = str_replace( "*", "%", $lyrics);
+				$lyrics = str_replace( "?", "_", $lyrics);
 			}
 			else
 			{
@@ -133,6 +135,7 @@ switch( $query_type )
 				$title = !empty( $title ) ? "%$title%" : "";
 				$genre = !empty( $genre ) ? "%$genre%" : "";
 				$file = !empty( $file ) ? "%$file%" : "";
+				$lyrics = !empty( $lyrics ) ? "%$lyrics%" : "";
 			}
 			$album = mysql_real_escape_string( $album );
 			$artist = mysql_real_escape_string( $artist );
@@ -145,6 +148,8 @@ switch( $query_type )
 				"LEFT JOIN album ON album.id = song.album_id " .
 				"LEFT JOIN art ON song.art_id = art.id";
 			$operator = '';
+			
+			//echo( $sql );
 			$sql = "$sql WHERE";
 			if( !empty( $artist ) )
 			{
@@ -170,6 +175,10 @@ switch( $query_type )
 			{
 				$sql = "$sql $operator (`song`.`file` LIKE '$file')";
 			}
+			if( !empty( $lyrics ) )
+			{
+				$sql = "$sql $operator (`song`.`lyrics` LIKE '$lyrics')";
+			}
 			if( !empty( $sortby ) )
 				$sql = "$sql ORDER BY $sortby";
 		}
@@ -180,7 +189,7 @@ if( $page_result_limit > 0 ) {
 }
 
 //debug
-//echo("<br /><br />SQL: $sql<br /><br />");
+echo("<br /><br />SQL: $sql<br /><br />");
 
 $result = mysql_query($sql, $db);
 if($result) {

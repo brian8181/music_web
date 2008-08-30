@@ -44,8 +44,11 @@ include_once("./config/config.php");
 			  form.elements['artist'].value = search_string;
 			  break;
 		  case "4": // File
-		  form.elements['file'].value = search_string;
-		  break;
+			form.elements['file'].value = search_string;
+			break;
+		  case "5": // File
+			  form.elements['lyrics'].value = search_string;
+			  break;	
 		  default:
 		  return false;
       }
@@ -109,6 +112,7 @@ echo($search_title);
 						<option value="2"<?php if ($listOption == "2") { echo " SELECTED"; } ?>>Album</option>
 						<option value="3"<?php if ($listOption == "3") { echo " SELECTED"; } ?>>Artist</option>
 						<option value="4"<?php if ($listOption == "4") { echo " SELECTED"; } ?>>File</option>
+						<option value="5"<?php if ($listOption == "5") { echo " SELECTED"; } ?>>Lyrics</option>
 					</select>
 					use wildcards:
 					<input name="wildcard" type="checkbox" value="on" <?php if (isset($wildcard)) { echo " CHECKED"; } ?> />
