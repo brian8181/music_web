@@ -2,7 +2,7 @@
 
 function get_connect_str()
 {
-	return "bkp-online.homelinux.org', 'brian', 'sas*0125";
+	return "";
 }
 function login()
 {

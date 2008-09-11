@@ -24,7 +24,7 @@ include_once("./config/config.php");
 			<hr />
 			<center>
 <?php
-$db = mysql_connect('127.0.0.1', 'web', 'sas*.0125');
+$db = $db = mysql_connect($db_address, $db_user_name, $db_password);
 mysql_select_db('music', $db);
 
 $sql = "SELECT id, name from playlists ORDER BY name";

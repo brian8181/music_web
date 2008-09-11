@@ -61,7 +61,7 @@
 			<!-- Main Section -->
 <?php
 // database connection stuff
-$db = mysql_connect("127.0.0.1", "web", "sas*.0125");
+$db = mysql_connect($db_address, $db_user_name, $db_password);
 mysql_select_db("music", $db) or die(mysql_errno() . ": " . mysql_error() . "<br>");
 // including the navbar class
 include("../php/navbar.php");
