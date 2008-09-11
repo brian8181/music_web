@@ -13,6 +13,12 @@ echo($results_title);
 		</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<link rel="stylesheet" type="text/css" href="./css/<?php echo($style); ?>" />
+		<style type="text/css">
+		a:visited.NoColor
+		{
+			color: transparent;
+		}
+		</style>
 	</head>
 	<body>
 	<div class="text_area">
@@ -187,9 +193,8 @@ switch( $query_type )
 if( $page_result_limit > 0 ) {
 	$sql = "$sql LIMIT $page_result_limit";
 }
-
 //debug
-echo("<br /><br />SQL: $sql<br /><br />");
+//echo("<br /><br />SQL: $sql<br /><br />");
 
 $result = mysql_query($sql, $db);
 if($result) {
@@ -231,7 +236,7 @@ if($result)
 				"<tr id=\"table_row\">\n" .
 				//cover
 				"\t<td id=\"art_col\">
-					<a class=\"Logo\" href=\"/query/results.php?album=$row[3]&artist=$row[4]&amp;sortby=track\">
+					<a class=\"NoColor\" href=\"/query/results.php?album=$row[3]&artist=$row[4]&amp;sortby=track\">
 					<img src=\"$art_location/xsmall/$row[0]\" width=\"50\" height=\"50\" alt=\"NA\"/>
 					</a>
 					</td>\n" .

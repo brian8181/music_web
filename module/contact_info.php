@@ -1,7 +1,13 @@
+<style type="text/css">
+a:visited.NoColor
+{
+	color: transparent;
+}
+</style>
 <?php include_once("./config/config.php"); ?>
 <br />
 <div style="text-align: center">
-<a class="Logo" href="http://validator.w3.org/check?uri=referer">
+<a class="NoColor" href="http://validator.w3.org/check?uri=referer">
 	<img src="./image/valid-xhtml10-blue.png" alt="Valid XHTML 1.0 Transitional" height="31" width="88" align="middle" />
 </a>
 </div>

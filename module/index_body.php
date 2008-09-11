@@ -1,3 +1,13 @@
+<style type="text/css">
+a:visited.NoColor
+{
+	color: transparent;
+}
+</style>
+<h3>Album Art Missing Bug.</h3>
+<p>
+	I noticed there is some album art not showing where I am sure it exists in the database. I will figure this out soon and remove this message.
+</p>
 <h3>A couple of steps backwards.</h3>
 <p>
 	If you happen to notice there are a few things not working that were before. Yes, I broke them. Fortunately I leaned some new things
@@ -94,7 +104,7 @@
     <a href="http://fire.dynalias.org/music/albums/Blur/Blur%20-%20Blur/02%20-%20Song%202.mp3">
         WhooHoo!</a>.
 </p>
-<a href="http://www.taglib-sharp.com/Main_Page" class="Logo">
+<a href="http://www.taglib-sharp.com/Main_Page" class="NoColor">
     <img src="./image/taglib.logo.png" alt="(TagLib#)" /></a>
 <!-- Date -->
 <table cellpadding="0" cellspacing="0" border="0" align="center" width="80%">
