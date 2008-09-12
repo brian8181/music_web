@@ -27,7 +27,7 @@ if( !isset( $_SESSION['_USER'] ) || !isset( $_SESSION['_GROUPS'] ) )
 				$_SESSION['_USER_ID'] = $row[0]; do{
 					$grp = $row[2];
 					$groups[$grp] = 1;
-				}while( $row = mysql_fetch_row($result) );
+				}while( $row == mysql_fetch_row($result) );
 				$_SESSION['_USER'] = $user;
 				$_SESSION['_GROUPS'] = $groups;
 				if( isset($_SESSION['_PAGE']) ) {
@@ -57,13 +57,13 @@ if( !isset( $_SESSION['_USER'] ) || !isset( $_SESSION['_GROUPS'] ) )
 				var user = form.elements['_USER'].value;
 				var auth = form.elements['_PASSWORD'].value;
 				setCookie('user', user, 30);
-				setCookie('auth', auth, 30);
+				setCookie('pass', auth, 30);
 			}
 			else
 			{
 				delete cookie;
-				deleteCookie('_USER');
-				deleteCookie('_AUTH');
+				deleteCookie('user');
+				deleteCookie('pass');
 			}
 		}
 	</script>
@@ -81,7 +81,7 @@ if( !isset( $_SESSION['_USER'] ) || !isset( $_SESSION['_GROUPS'] ) )
 			<fieldset>
 			<legend>User Login:</legend>
 			<p><label for="user">User&nbsp;</label><input type="text" name="_USER" value="<?php if (isset($user)) { echo $user; } ?>" /></p>
-			<p><label for="password">Password&nbsp;</label><input type="password" name="_PASSWORD" value="<?php if (isset($password)) { echo $password; } ?>" /></p>
+			<p><label for="password">Password&nbsp;</label><input type="password" name="_PASSWORD" value="<?php if (isset($pass)) { echo $pass; } ?>" /></p>
 			<p><label for="save">Save</label><input type="checkbox" name="_SAVE" /></p>
 			<p class="submit"><input type="submit" value="Submit" /></p>
 			<p><label for="msg">
@@ -91,12 +91,12 @@ if( !isset( $_SESSION['_USER'] ) || !isset( $_SESSION['_GROUPS'] ) )
 			</fieldset>
 			<script type="text/javascript">
 				var user = checkUser('user');
-				var auth = checkAuth('auth');
+				var auth = checkAuth('pass');
 				if(user != null && auth != null)
 				{
 					// fill text boxes
 					document.forms[0].elements['_USER'].value = user;
-					document.forms[0].elements['_PASSWORD'].value = auth;
+					document.forms[0].elements['_PASSWORD'].value = pass;
 					document.forms[0].elements['_SAVE'].checked = true;
 				}
 			</script>
