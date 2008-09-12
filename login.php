@@ -10,9 +10,7 @@ if( !isset( $_SESSION['_USER'] ) || !isset( $_SESSION['_GROUPS'] ) )
 	{
 		$user = $_GET['_USER'];
 		$pass = $_GET['_PASSWORD'];
-		if( validate_pass( $pass ) ) //BKP: move to java?
-		{
-			$db = mysql_connect($db_address, $db_user_name, $db_password);
+		$db = mysql_connect($db_address, $db_user_name, $db_password);
 			mysql_select_db('web_admin', $db);
 			$sql = "SELECT user.id, `user`, `group`, `password` FROM `user` " . 
 				"INNER JOIN `user_group` ON `user`.id=`user_id` " . 
@@ -29,15 +27,31 @@ if( !isset( $_SESSION['_USER'] ) || !isset( $_SESSION['_GROUPS'] ) )
 				}while( $row == mysql_fetch_row($result) );
 				$_SESSION['_USER'] = $user;
 				$_SESSION['_GROUPS'] = $groups;
-				if( isset($_SESSION['_PAGE']) ) {
+				if( isset($_SESSION['_PAGE']) )
+				{
 					$page = $_SESSION['_PAGE'];
-					/*header( "Location: ./$_page" );*/ } else {
-					/*header( "Location: ./index.php" );*/ } } else {
-				$message = "<b>No matching user / password</b>"; }
-			mysql_close($db); } else {
-			$message = "<b>Invalid user or password.</b>"; }} else {
-		$message = "<b>Please enter user & password.</b>";} } else {
-	/*header( "Location: ./index.php" );*/ }
+					header( "Location: ./$_page" ); 
+				} 
+				else 
+				{
+					header( "Location: ./index.php" ); 
+				} 
+			} 
+			else 
+			{
+				$message = "<b>No matching user / password</b>"; 
+			}
+			mysql_close($db); 
+	} 
+	else 
+	{
+		$message = "<b>Please enter user & password.</b>";
+	} 
+} 
+else 
+{
+	header( "Location: ./index.php" ); 
+}
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
