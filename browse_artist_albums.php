@@ -71,7 +71,7 @@ if(isset($aid))
 						<a href="results.php?query_type=album&album_id=<?php echo("\"$album_id\"") ?>>
 							<img src=<?php echo("\".album_art/large/$row[1]\" alt=\"$row[0]\"") ?> 
 							title=<?php echo("\"$row[0]\""); ?> alt="Cover Art" align="right" 
-							border="0" height="200" hspace="0" vspace="0" width="200">
+							border="0" height="200" hspace="0" vspace="0" width="200" />
 						</a>
 						</td>
 						<td background="../image/vdrop-20x1024.white.jpg" width="20">&nbsp;</td>
