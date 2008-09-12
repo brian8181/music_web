@@ -11,7 +11,6 @@ include_once("./config/config.php");
 	</head>
 	<body>
 	<div class="text_area">
-		<center>
 <?php include("./module/login_greeting.php"); ?>
 		<br />
 			<div class="box" style="text-align: center">
@@ -46,7 +45,6 @@ include("./module/contact_info.php");
 <?php
 include("./module/version.php");
 			?>
-		</center>
 	</div>	
 	</body>
 </html>

@@ -1,6 +1,5 @@
 <?php
-include_once("./php/sec_user.php");
-//include_once("./php/validate_login.php");
+session_start();
 include_once("./config/config.php");
 		?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -253,13 +252,22 @@ if($result)
 				// artist
 				"\t<td class='Padded' align='left'>
 					<a href=\"results.php?artist=$row[4]&amp;sortby=album.album,track\">$row[4]</a>
-					</td>\n" .
+					</td>\n"  );
+		if( isset( $_SESSION['_USER'] ) )
+		{
+			echo( 
 				// download link
 				"\t<td align='center'>
 					<a href=\"$music_location$row[5]\">download</a>
-					</td>\n" .
-				"</tr>\n" 
-				);
+					</td>\n" );
+		}
+		else
+		{
+			echo( 
+				// download link
+				"\t<td align='center'><i>NA</i></td>\n" );	
+		}
+		echo("</tr>\n");
 	}
 }
 mysql_close($db);

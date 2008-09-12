@@ -1,5 +1,4 @@
 <?php 
-include_once("./php/sec_user.php"); 
 include_once("./config/config.php");
 		?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -89,8 +88,9 @@ else{
             <a href="./browse_artist.php?nav_row=0&letter=Z&<?php echo($view_state) ?>">Z</a>&nbsp;&nbsp;
           </div>
           <br />
+          <div style="text-align: center">
           <span style="font-size: larger;">
-            <div style="text-align: center">
+          
 <?php
 
 // including the navbar class
@@ -132,8 +132,9 @@ for ($y = 0; $y < count($links); $y++)
 }
 mysql_close( $db );
 				?>
-            </div>
-         </span>
+           
+         	</span>
+         </div>
          <br />
 		 <hr />	         
 <?php
