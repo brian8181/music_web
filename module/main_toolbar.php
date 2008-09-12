@@ -1,6 +1,6 @@
 <table class="BMenu" align="center">
 	<tr>
-		<td align="center">  <div class="test">
+		<td align="center">
 	        <a class="Nav" href="../index.php">
 	          Home
 	        </a>
@@ -10,7 +10,7 @@
 	          Music DB
 	        </a>
 	    </td>
-	    <td align="center"> <div class="test">    
+	    <td align="center">
 	        <a class="Nav" href="../bugzilla/">
 	          Bugzilla
 	        </a>
