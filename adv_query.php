@@ -71,7 +71,7 @@ include("./module/top_toolbar.php");
 						<br />
 						<div align="center">
 						<fieldset>
-							All&nbsp;<input type="radio" name="and" value="true" checked="yes" />
+							All&nbsp;<input type="radio" name="and" value="true" checked />
 							Any&nbsp;<input type="radio" name="and" value="false" />
 						</fieldset>
 						</div>
@@ -81,7 +81,7 @@ include("./module/top_toolbar.php");
 			<br />
 			<input type="submit" />&nbsp;
 			Use&nbsp;wildcards:
-			<input name="wildcard" type="checkbox" value="on" <?php if (isset($wildcard)) { echo " CHECKED"; } ?><br /><br />
+			<input name="wildcard" type="checkbox" value="on" <?php if (isset($wildcard)) { echo " CHECKED"; } ?>/><br /><br />
 		</form>
 		</center>
 

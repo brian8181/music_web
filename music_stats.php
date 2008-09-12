@@ -1,5 +1,5 @@
 <?php
-include_once("./php/sec_user.php");
+//include_once("./php/sec_user.php");
 //include_once("./php/validate_login.php");
 include_once("./config/config.php");
 			    ?>
@@ -21,15 +21,15 @@ include_once("./config/config.php");
 		</div>
 
 		<br />
-<!--        toolbar              -->
 <?php 
 include("./module/top_toolbar.php"); 
 		?>
 		
 		<br />
 		<br />
+		<div align="center">
 		<span style="font-size: larger;">
-			<div align="center">
+			
 			
 <?php
 $db = mysql_connect($db_address, $db_user_name, $db_password);
@@ -117,8 +117,8 @@ echo("<strong>Total Users: <em>$row[0]</em></strong><br />");
 mysql_close($db);
 			?>
 			
- 			</div>
-		</span>
+ 		</span>
+		</div>
 	<br />
 	<br />
 	

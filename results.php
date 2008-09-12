@@ -281,5 +281,5 @@ include("./module/version.php");
 			?>
 			
 	</div>	
-	<body>	
+	</body>	
 </html>
