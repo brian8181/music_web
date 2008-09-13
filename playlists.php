@@ -45,6 +45,6 @@ include("./module/contact_info.php");
 <?php
 include("./module/version.php");
 			?>
-	</div>	
+		</div>	
 	</body>
 </html>
