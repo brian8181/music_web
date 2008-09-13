@@ -25,7 +25,8 @@ include("./module/login_greeting.php");
 
 		<!-- Navagation Bar -->
 		<br />
-<?php 
+<?php
+$enable_quick_search = false;  
 include("./module/top_toolbar.php");
 		 ?>
 		
