@@ -1,12 +1,13 @@
 <?php
 
-function get_connect_str()
+// validate user is logged in
+function assert_login()
 {
-	return "";
-}
-function login()
-{
-	return true;
+	if( isset($_SESSION['_USER']) && isset($_SESSION['_GROUPS']) )
+	{
+		return true;
+	}
+	return false;
 }
 
 function logout()

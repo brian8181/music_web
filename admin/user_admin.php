@@ -10,7 +10,7 @@ if( !isset( $_SESSION['_USER'] ) || !isset( $_SESSION['_GROUPS'] ) )
 }
 
 $groups_loc = $_SESSION['_GROUPS']; 
-if(!array_key_exists('user', $groups_loc))
+if(!array_key_exists('admin', $groups_loc))
 {
 	echo( "<div style=\"text-align: center\"><h3>Sorry, your are not authorized to access the page.</h3></div>" );	
 	echo( "<div style=\"text-align: center\"><a href=\"/index.php\"><i>www.bkp-online.com</i></a></div>" );

@@ -30,7 +30,7 @@ if( !isset( $_SESSION['_USER'] ) || !isset( $_SESSION['_GROUPS'] ) )
 				if( isset($_SESSION['_PAGE']) )
 				{
 					$page = $_SESSION['_PAGE'];
-					header( "Location: ./$_page" ); 
+					header( "Location: $page" ); 
 				} 
 				else 
 				{
