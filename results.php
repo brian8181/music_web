@@ -253,19 +253,25 @@ if($result)
 				"\t<td class='Padded' align='left'>
 					<a href=\"results.php?artist=$row[4]&amp;sortby=album.album,track\">$row[4]</a>
 					</td>\n"  );
+		// download link			
 		if( isset( $_SESSION['_USER'] ) )
 		{
-			echo( 
-				// download link
-				"\t<td align='center'>
-					<a href=\"$music_location$row[5]\">download</a>
-					</td>\n" );
+			if($enable_direct_download)
+			{
+				echo( "\t<td align='center'>
+							<a href=\"$music_location$row[5]\">download</a>
+						</td>\n" );
+			}
+			else
+			{
+				echo( "\t<td align='center'>
+							<a href=\"./php/download.php?sid=$row[6]\">download</a>
+						</td>\n" );
+			}
 		}
 		else
 		{
-			echo( 
-				// download link
-				"\t<td align='center'><i>NA</i></td>\n" );	
+			echo( "\t<td align='center'><i>NA</i></td>\n" );	
 		}
 		echo("</tr>\n");
 	}

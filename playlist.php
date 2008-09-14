@@ -81,7 +81,7 @@ mysql_close($db);
 			?>
 		</table>
 		<br />
-		<hr>
+		<hr />
 		<!-- Navagation Bar -->
 	<?php
 include("./module/bottom_toolbar.php");

@@ -15,9 +15,7 @@ include_once("./config/config.php");
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
     <title>Query Page</title>
-    
-	<link rel="stylesheet" type="text/css" href="./css/<?php echo($style); ?>" />
-    	
+   	<link rel="stylesheet" type="text/css" href="./css/<?php echo($style); ?>" />
     <script type="text/javascript">
       function on_submit(form)  // intialize all values
       {
@@ -77,7 +75,10 @@ echo($search_title);
 	
 			<!-- Navagation Bar -->
 				
-<?php include("./module/top_toolbar.php"); ?>
+<?php 
+$enable_quick_search = false; 
+include("./module/top_toolbar.php"); 
+	?>
 
 			<hr />
 			<br />

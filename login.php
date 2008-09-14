@@ -59,7 +59,7 @@ else
 	<title>User Login</title>
 	<meta name="generator" content="Bluefish 1.0.7" />
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<link rel="stylesheet" type="text/css" href="frm_style.css" />
+	<link rel="stylesheet" type="text/css" href="./css/<?php echo($style); ?>" />
 	<script src="./script/cookies.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		function on_submit(form) // intialize all values
@@ -89,6 +89,12 @@ else
 	</style>
 </head>
 <body>
+	<div class="text_area">
+	
+	<div class="box" style="text-align: center">
+		<h1>Login</h1>
+	</div>
+
 	<center>
 	<form action="login.php" method="get" name="login_frm" onsubmit="on_submit(login_frm)">
 			<fieldset>
@@ -115,5 +121,6 @@ else
 			</script>
 	</form>
 	</center>
+	</div>
 </body>
 </html>

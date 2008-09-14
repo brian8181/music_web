@@ -44,7 +44,7 @@ $sql = "SELECT track, title, album.album, artist.artist, genre, bitrate," .
 	//echo( $sql ); 
 	mysql_close($db); 
 			?>
-			<hr>
+			<hr />
             <table class="Main" width="="100%"><tr>
 			<td  class="Padded" width="80%">
 			<h2>Song Details:</h2>

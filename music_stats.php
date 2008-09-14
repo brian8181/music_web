@@ -25,10 +25,10 @@ include_once("./config/config.php");
 include("./module/top_toolbar.php"); 
 		?>
 		
-		<br />
-		<br />
-		<div align="center">
-		<span style="font-size: larger;">
+<br />
+<br />
+<div align="center">
+<span style="font-size: larger;">
 			
 			
 <?php
@@ -71,9 +71,11 @@ $result = mysql_query("SELECT count(*) FROM song WHERE file like '%.flac'", $db)
 $row = mysql_fetch_row($result);
 echo("<strong>FLAC: <em>$row[0]</em></strong><br />");
 			?>
-				
-				<br />
-				<hr />
+</span>				
+<br />
+<hr />
+
+<span style="font-size: larger;">
 		
 <?php
 $result = mysql_query("SELECT count(*) FROM artist LEFT JOIN song ON artist.id=artist_id WHERE artist_id IS NULL", $db); 
@@ -100,10 +102,12 @@ $result = mysql_query("SELECT DISTINCT update_ts FROM song ORDER BY update_ts DE
 $row = mysql_fetch_row($result);
 echo("<strong>Last Update: <em>$row[0]</em></strong><br />");
         ?>
-		
-				<br />
-				<hr />
-		
+</span>	
+	
+<br />
+<hr />
+
+<span style="font-size: larger;">		
 <?php
 $result = mysql_query("SELECT count(*) FROM music.query_log", $db); 
 $row = mysql_fetch_row($result);
@@ -116,11 +120,11 @@ echo("<strong>Total Users: <em>$row[0]</em></strong><br />");
 
 mysql_close($db);
 			?>
-			
- 		</span>
-		</div>
-	<br />
-	<br />
+</span>
+</div>
+
+<br />
+<br />
 	
 <?php
 include("./module/bottom_toolbar.php");
