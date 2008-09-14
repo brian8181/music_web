@@ -91,7 +91,7 @@ $links = $nav->getlinks("all", "on");
 			<tr>
 				<td>
 					<!-- Cover Image & Drop Shadow -->
-					<table valign="top"  align="center" border="0" cellpadding="0" cellspacing="0">
+					<table align="center" border="0" cellpadding="0" cellspacing="0">
 						<tbody>
 						<!-- <caption align=bottom>TODO</caption> -->
 						<tr>
