@@ -15,12 +15,6 @@ echo($results_title);
 		</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<link rel="stylesheet" type="text/css" href="./css/<?php echo($style); ?>" />
-		<style type="text/css">
-		a:visited.NoColor
-		{
-			color: transparent;
-		}
-		</style>
 	</head>
 	<body>
 	<div class="text_area">
