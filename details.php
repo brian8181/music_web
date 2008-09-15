@@ -12,6 +12,22 @@ include_once("./config/config.php");
 
 <style type="text/css">
 td.norepeat{background-repeat:no-repeat;}
+td#vdrop{
+background:url(./image/vdrop-20x1024.white.jpg); 
+background-repeat:no-repeat;
+}
+td#hdrop{
+background:url(./image/hdrop-1024x20.white.jpg); 
+background-repeat:no-repeat;
+}
+td#cdrop{
+background:url(./image/cdrop-20x20.white.jpg); 
+background-repeat:no-repeat;
+}
+td#lside{
+background:url(./image/lside-10x1024.white.jpg); 
+background-repeat:no-repeat;
+}
 </style> 	
 </head>
 
@@ -39,8 +55,6 @@ $sql = "SELECT track, title, album.album, artist.artist, genre, bitrate," .
 		"WHERE song.id='$sid'";
 $result = mysql_query($sql);
 $row = mysql_fetch_array($result, MYSQL_NUM);
-//$helper = new Helper();
-//echo( $sql );
 mysql_close($db);
 ?>
 <hr />
@@ -63,7 +77,8 @@ mysql_close($db);
 			<!-- <li><strong>Disc:</strong>&nbsp;<em><?php echo ( $row[9] ); ?></em></li> -->
 			<!-- <li><strong>Disc Count:</strong>&nbsp;<em><?php echo ( $row[9] ); ?></em></li> -->
 			<li><strong>File:&nbsp;</strong><em><?php echo ( "<a href=\"/music" . $row[10] . "\">" . basename($row[10]) . "</a>" ); ?></em></li>
-			<li><strong>Lyrics:</strong> <?php
+			<li><strong>Lyrics:</strong> 
+			<?php
 			if($row[13] != NULL)
 			{
 				echo( "<a href=\"lyrics.php?sid='" . $sid . "'\"><em>see</em></a>" );
@@ -72,7 +87,8 @@ mysql_close($db);
 			{
 				echo( "<em>NA</em>" );
 			}
-			?></li>
+			?>
+			</li>
 		</ul>
 		<dl>
 			<dt><strong>Comments:</strong></dt>
@@ -80,22 +96,22 @@ mysql_close($db);
 		</dl>
 		</td>
 		<td align="left">
-		<table valign="top" width="100%" align="center" border="0"
+		<table width="100%" align="center" border="0"
 			cellpadding="0" cellspacing="0">
 			<tbody>
 				<!-- <caption align=bottom>TODO</caption> -->
 				<tr>
-					<td background="./image/lside-10x1024.white.jpg" width="10">&nbsp;</td>
+					<td id="lside" width="10">&nbsp;</td>
 					<td><img
 						src="<?php echo( $art_location ) ?>/large/<?php echo($row[12]) ?>"
 						alt="Cover Art" align="right" border="0" height="225" hspace="0"
 						vspace="0" width="225" /></td>
-					<td class="norepeat" background="./image/vdrop-20x1024.white.jpg" width="20">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+					<td id="vdrop" width="20">&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				</tr>
 				<tr>
 					<td width="10"></td>
-					<td class="norepeat" background="./image/hdrop-1024x20.white.jpg" height="20"></td>
-					<td class="norepeat" background="./image/cdrop-20x20.white.jpg" height="20"></td>
+					<td id="hdrop" height="20"></td>
+					<td id="cdrop" height="20"></td>
 				</tr>
 			</tbody>
 		</table>
