@@ -6,9 +6,7 @@ include_once("./config/config.php");
 
 <head>
 <title>Advanced Query Page</title>
-<link rel="stylesheet" type="text/css"
-	href="./css/<?php echo($style); ?>" />
-<link rel="stylesheet" type="text/css" href="./css/query.css" />
+<link rel="stylesheet" type="text/css" href="./css/<?php echo($style); ?>" />
 </head>
 <body>
 <div class="text_area"><?php 

@@ -1,7 +1,9 @@
 <?php
 session_start();
-$_SESSION['_PAGE'] = $_SERVER['REQUEST_URI'];
 include_once("./config/config.php");
+include_once("./php/functions.php");
+include_once("./php/navbar.php");
+$_SESSION['_PAGE'] = $_SERVER['REQUEST_URI'];
 		?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -196,10 +198,18 @@ if( $page_result_limit > 0 ) {
 //debug
 //echo("<br /><br />SQL: $sql<br /><br />");
 
-$result = mysql_query($sql, $db);
+$nav_row  = isset($_GET['nav_row'])  ? $_GET['nav_row']  : null;
+$nav = new navbar;
+$nav->numrowsperpage = 50;
+$result = $nav->execute($sql, $db, "mysql");
+$total = $nav->total;
+$start_number = $nav->start_number;
+$end_number = $nav->end_number;
+
+//$result = mysql_query($sql, $db);
 if($result) {
 	$num_rows = mysql_num_rows($result);
-	echo( "<br /><br /><b>$num_rows</b>" . " results found." );
+	echo( "<br /><br /><b>Showing $start_number - $end_number of $total</b>" );
 }
 $uri = $_SERVER['REQUEST_URI'];
 			?>
@@ -228,6 +238,7 @@ if ( ! ($pos === false) ) {
 <?php
 if($result)
 {
+	$authorized = !$enable_security || assert_login(); 
 	echo("\n");
 	while ( $row = mysql_fetch_row($result) )
 	{
@@ -255,7 +266,7 @@ if($result)
 					<a href=\"results.php?artist=$row[4]&amp;sortby=album.album,track\">$row[4]</a>
 					</td>\n"  );
 		// download link			
-		if( isset( $_SESSION['_USER'] ) )
+		if( $authorized )
 		{
 			if($enable_direct_download)
 			{
@@ -282,8 +293,19 @@ mysql_close($db);
 	</table>	
 	
 	<br /><br />
-	<hr />
+	<center>
+<?php
 
+	$links = $nav->getlinks("all", "on");
+	for ($y = 0; $y < count($links); $y++) {
+	  echo $links[$y] . "&nbsp;&nbsp;";
+	}
+
+	?>
+	<br />
+	<br />	
+	<hr />
+	</center>
 <?php
 include("./module/bottom_toolbar.php");
 include("./module/contact_info.php");

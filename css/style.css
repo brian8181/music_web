@@ -12,6 +12,11 @@ body
  	text-align: left;
 }
 
+a:visited.NoColor
+{
+	color: transparent;
+}
+
 div.box
 {
 	height: 100px; 

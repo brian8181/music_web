@@ -1,9 +1,3 @@
-<style type="text/css">
-a:visited.NoColor
-{
-	color: transparent;
-}
-</style>
 <?php include_once("./config/config.php"); ?>
 <br />
 <div style="text-align: center">

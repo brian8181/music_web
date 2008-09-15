@@ -36,7 +36,10 @@ class navbar {
 	var $str_next = "Next page";
 	// Variables used internally
 	var $file;
-	var $total_records;
+	var $total_records = 0;
+	var $total = 0;
+	var $start_number = 0;
+	var $end_number = 0;
 	
 	// The next function runs the needed queries.
 	// It needs to run the first time to get the total
@@ -69,6 +72,11 @@ class navbar {
 			$sql .= " LIMIT $numtoshow, $start";
 			$result = pg_Exec($db, $sql);
 		}
+		//BKP added total, start_number, & end_number value
+		$this->total = $total_records;
+		$this->start_number = $start+1;
+		$last_num = mysql_num_rows($result);
+		$this->end_number = $start+$last_num;
 		return $result;
 	}
 	

@@ -1,14 +1,5 @@
 <?php
 session_start(); 
-if( isset( $enable_security ) && $enable_security == true )
-{
-	include_once("./php/sec_user.php"); 
-	if( !isset( $_SESSION['_USER']) || !isset( $_SESSION['_GROUPS']) )
-	{
-		$_SESSION['_PAGE'] = 'index.php';
-		header( "Location: login.php" );
-	}
-}
 include_once("./config/config.php");
 			    ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

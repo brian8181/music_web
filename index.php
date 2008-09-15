@@ -2,7 +2,7 @@
 session_start();
 include_once("./config/config.php");
 include_once("./php/functions.php");
-?>
+	?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
@@ -15,9 +15,10 @@ include_once("./php/functions.php");
 
 <body>
 <div class="text_area">
+
 <?php 
 include("./module/login_greeting.php");
-?>
+	?>
 
 <div class="box" style="text-align: center">
 <h1><?php echo($index_title);?></h1>
@@ -25,7 +26,7 @@ include("./module/login_greeting.php");
 
 <?php
 include("./module/top_toolbar.php");
-?>
+	?>
 
 <hr />
 <?php
@@ -37,16 +38,20 @@ else
 {
 	include("./module/deny_index_body.php");
 }
-?>
+	?>
 
 <hr />
+
 <?php
 include("./module/bottom_toolbar.php");
 include("./module/contact_info.php");
-?> <br />
+	?> 
+
+<br />
 
 <?php
 include("./module/version.php");
-?></div>
+	?>
+</div>
 </body>
 </html>
