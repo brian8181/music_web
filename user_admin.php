@@ -179,8 +179,9 @@ mysql_close();
 			include("./module/contact_info.php");
             ?>
             <br />
-            <span style="font-size: smaller;"><em>Version 1.5.0.2 Sat Sep 8 11:23:37 CDT 2007 ~(
-                Copyright © by Brian Preston (2007) )</em> </span>
+<?php
+include("./module/version.php");
+	?>
        </div>
     </body>
 </html>

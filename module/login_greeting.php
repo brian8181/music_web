@@ -17,7 +17,7 @@ if( isset( $enable_security ) && $enable_security == true )
 		}
 		else
 		{
-			echo( "<a href=\"login.php\"><b>Login&nbsp;</b></a>&nbsp;<a href=\"./admin/create_account.php\"><b>(create&nbsp;account)</b></a>" );
+			echo( "<a href=\"login.php\"><b>Login&nbsp;</b></a>&nbsp;<a href=\"./create_account.php\"><b>(create&nbsp;account)</b></a>" );
 		}
 			?>	
 		</td>

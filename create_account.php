@@ -12,12 +12,8 @@ include_once("./config/config.php");
 	</head>
 	<body>
 	<div class="text_area">
-		<center>
-		<table class="Main" width="100%"><tr><td class="Padded">
 			<div class="box" style="text-align: center">
-			<center>
-				<h1>Create Account</h1>
-			</center>
+			<h1>Create Account</h1>
 			</div>
 			<br />	
 			<hr />
@@ -48,11 +44,10 @@ include_once("./config/config.php");
 				</table>
 				<input type="submit" value="Create" />			
 			</form>
-			</center>
-			<center>
 			<h3>
 <?php
 include("./php/functions.php");
+include("./admin/functions.php");
 
 $user_name  = isset($_GET['user_name']) ? $_GET['user_name'] : null;
 $password   = isset($_GET['password'])  ? $_GET['password']  : null;
@@ -70,28 +65,37 @@ if( !empty($user_name) && !empty($password) && !empty($password2) && !empty($ful
 			$db = mysql_connect($admin_db_address, $admin_db_user_name, $admin_db_password);
 			mysql_select_db($admin_db_name, $db);
 			mysql_query("SET NAMES 'utf8'");
-			$user_name = mysql_real_escape_string($user_name);
-			$password = mysql_real_escape_string($password);
-			$full_name = mysql_real_escape_string($full_name);
-			$email = mysql_real_escape_string($email);
-			// make sure user dose not exsit
-			$result = get_user( $user_name, $db );
-			if($result)
+			
+			if( !ip_blocked( 'CREATE', $db ) )
 			{
-				echo( "Account already exists, please choose another user name." );
-			}
-			else
-			{
-				if(create_accout( $user_name, $passowrd, $password2, $full_name, $email ))
+				$user_name = mysql_real_escape_string($user_name);
+				$password = mysql_real_escape_string($password);
+				$full_name = mysql_real_escape_string($full_name);
+				$email = mysql_real_escape_string($email);
+				// make sure user dose not exsit
+				$result = get_user( $user_name, $db );
+				if($result)
 				{
-					echo( "Account created for $full_name ($user_name)" );
+					echo( "Account already exists, please choose another user name." );
 				}
 				else
 				{
-					echo( "Sorry account could not be created plesae try agion later (unknown Error)." );
+					if(create_account( $user_name, $password, $full_name, $email, $db ))
+					{
+						echo( "Account created for $full_name ($user_name)" );
+					}
+					else
+					{
+						echo( "Sorry account could not be created. (unknown Error)." );
+					}
 				}
+				mysql_close($db);
 			}
-			mysql_close($db);
+			else
+			{
+				// ip blocked (do not give any real reason here!)
+				echo( "Sorry account could not be created. (unknown Error)." );	
+			}
 		}
 		else
 		{
@@ -100,7 +104,7 @@ if( !empty($user_name) && !empty($password) && !empty($password2) && !empty($ful
 	}
 	else
 	{
-		echo( "Password do not match." );
+		echo( "Passwords do not match." );
 	}
 }
 else
@@ -115,13 +119,9 @@ else
 			</center>
 			<hr />
 			<br />
-			<!-- verison info -->
-			<em>
-			Version 1.0.0.1 Mon Dec 24 08:52:35 EST 2007 ~( Copyright © by Brian Preston (2007) )
-			</em>
-			<!-- End Page Table -->
-		</td></tr></table>
-		</center>
+<?php
+include("./module/version.php");
+			?>
 		</div>
 	</body>
 </html>

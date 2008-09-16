@@ -1,7 +1,8 @@
 <?php
-
+session_start();
 include_once("../config/config.php");
 $sid = isset($_GET['sid']) ? $_GET['sid'] : null;
+
 
 $db = mysql_connect($db_address, $db_user_name, $db_password);
 mysql_select_db($db_name, $db);
@@ -22,6 +23,9 @@ if(mysql_num_rows($result) == 1)
 	HttpResponse::setFile("../../music/$path");
 	HttpResponse::send();
 }
+
+$id = $_SESSION['_USER_ID'];
+mysql_query("INSERT INTO download (user_id, song_id) VALUES( $id, $sid )", $db);
 
 mysql_close($db); 
 

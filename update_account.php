@@ -12,12 +12,8 @@ $user_name  = isset($_GET['user_name']) ? $_GET['user_name'] : null;
 	</head>
 	<body>
 	<div class="text_area">
-		<center>
-		<table class="Main" width="100%"><tr><td class="Padded">
 			<div class="box" style="text-align: center">
-			<center>
 				<h1>Update Account</h1>
-			</center>
 			</div>
 			<br />	
 			<hr />
@@ -51,8 +47,6 @@ $user_name  = isset($_GET['user_name']) ? $_GET['user_name'] : null;
 				</table>
 				<input type="submit" value="Update" />			
 			</form>
-			</center>
-			<center>
 			<h3>
 <?php
 include("./php/functions.php");
@@ -111,13 +105,9 @@ else
 			</center>
 			<hr />
 			<br />
-			<!-- verison info -->
-			<em>
-			Version 1.0.0.1 Mon Dec 24 08:52:35 EST 2007 ~( Copyright © by Brian Preston (2007) )
-			</em>
-			<!-- End Page Table -->
-		</td></tr></table>
-		</center>
+<?php
+include("./module/version.php");
+			?>
 		</div>
 	</body>
 </html>

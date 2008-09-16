@@ -21,7 +21,9 @@ if( !isset( $_SESSION['_USER'] ) || !isset( $_SESSION['_GROUPS'] ) )
 			{
 				$_groups = array();
 				$row = mysql_fetch_row($result);
-				$_SESSION['_USER_ID'] = $row[0]; do{
+				$id = $row[0];
+				$_SESSION['_USER_ID'] = $id; 
+				do{
 					$grp = $row[2];
 					$groups[$grp] = 1;
 				}while( $row == mysql_fetch_row($result) );
@@ -36,6 +38,8 @@ if( !isset( $_SESSION['_USER'] ) || !isset( $_SESSION['_GROUPS'] ) )
 				{
 					header( "Location: ./index.php" ); 
 				} 
+				mysql_select_db($db_name, $db);
+				mysql_query( "INSERT INTO login (user_id) VALUES( $id )", $db );
 			} 
 			else 
 			{
