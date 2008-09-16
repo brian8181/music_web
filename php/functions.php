@@ -10,6 +10,19 @@ function assert_login()
 	return false;
 }
 
+function assert_group($group)
+{
+	if(assert_login())
+	{
+		$groups_loc = $_SESSION['_GROUPS']; 
+		if(array_key_exists('admin', $groups_loc))
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
 function validate_pass($password)
 {
 	if(

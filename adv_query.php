@@ -1,5 +1,7 @@
 <?php
+session_start();
 include_once("./config/config.php");
+include_once("./php/functions.php");
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -9,9 +11,10 @@ include_once("./config/config.php");
 <link rel="stylesheet" type="text/css" href="./css/<?php echo($style); ?>" />
 </head>
 <body>
-<div class="text_area"><?php 
+<div class="text_area">
+<?php 
 include("./module/login_greeting.php");
-?> <br />
+?> 
 
 <!-- Display Title -->
 <div class="box" style="text-align: center">
@@ -64,17 +67,17 @@ include("./module/top_toolbar.php");
 	<tr>
 		<td colspan="2"><br />
 		<div align="center">
-		<fieldset>All&nbsp;<input type="radio" name="and" value="true"
-			checked="checked" /> Any&nbsp;<input type="radio" name="and"
-			value="false" /></fieldset>
+		<fieldset>
+		<legend>Boolean Modifier</legend>
+			All&nbsp;<i>(AND)</i>&nbsp;<input type="radio" name="and" value="true" checked="checked" />
+			Any<i>&nbsp;(OR)</i>&nbsp;<input type="radio" name="and" value="false" /></fieldset>
 		</div>
 		</td>
 	</tr>
 </table>
 <br />
-<input type="submit" />&nbsp; Use&nbsp;wildcards: <input name="wildcard"
-	type="checkbox" value="on"
-	<?php if (isset($wildcard)) { echo " CHECKED"; } ?> /><br />
+<input type="submit" value="Search" />&nbsp; Use&nbsp;wildcards: <input name="wildcard" type="checkbox" value="on" 
+<?php if (isset($wildcard)) { echo " CHECKED"; } ?> /><br />
 <br />
 </form>
 </center>

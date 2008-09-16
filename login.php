@@ -1,7 +1,7 @@
 <?php
-include_once("./php/functions.php");
-include_once("./config/config.php");
 session_start();
+include_once("./config/config.php");
+include_once("./php/functions.php");
 if( !isset( $_SESSION['_USER'] ) || !isset( $_SESSION['_GROUPS'] ) )
 {
 	$user = null;
@@ -94,19 +94,17 @@ else
 	<div class="box" style="text-align: center">
 		<h1>Login</h1>
 	</div>
-
 	<center>
 	<form action="login.php" method="get" name="login_frm" onsubmit="on_submit(login_frm)">
 			<fieldset>
 			<legend>User Login:</legend>
-			<p><label for="user">User&nbsp;</label><input type="text" name="_USER" value="<?php if (isset($user)) { echo $user; } ?>" /></p>
-			<p><label for="password">Password&nbsp;</label><input type="password" name="_PASSWORD" value="<?php if (isset($pass)) { echo $pass; } ?>" /></p>
-			<p><label for="save">Save</label><input type="checkbox" name="_SAVE" /></p>
-			<p class="submit"><input type="submit" value="Submit" /></p>
-			<p><label for="msg">
-			<?php if( isset($message) ) echo("<div align=\"center\"><em>$message</em></div>"); ?>
-			</label>
-			</p>
+			<table>
+				<tr><td><label for="user">User:&nbsp;&nbsp;</label></td><td><input type="text" name="_USER" value="<?php if (isset($user)) { echo $user; } ?>" /></td></tr>
+				<tr><td><label for="password">Password:&nbsp;&nbsp;</label></td><td><input type="password" name="_PASSWORD" value="<?php if (isset($pass)) { echo $pass; } ?>" /></td></tr>
+				<tr><td><label for="save">Save:&nbsp;&nbsp;</label></td><td><input type="checkbox" name="_SAVE" /></td></tr>
+				<tr><td>&nbsp;</td><td><input type="submit" value="Submit" /></td></tr>
+				<tr><td colspan="2" ><label for="msg"><?php if( isset($message) ) echo("<div align=\"center\"><em>$message</em></div>"); ?></label></td></tr>
+			</table>
 			</fieldset>
 			<script type="text/javascript">
 				var user = checkUser('user');

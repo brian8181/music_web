@@ -1,4 +1,3 @@
-<?php include_once("./config/config.php"); ?>
 <br />
 <div style="text-align: center">
 <a class="NoColor" href="http://validator.w3.org/check?uri=referer">

@@ -13,6 +13,7 @@ if( isset( $enable_security ) && $enable_security == true )
 		{
 			$local_user = $_SESSION['_USER'];
 			echo( "<b>$local_user</b>&nbsp;<a href=\"logout.php\"><b>Logout</b></a>" );	
+			echo( "|&nbsp;<a href=\"./update_account.php\"><b>Account</b></a>" );	
 		}
 		else
 		{

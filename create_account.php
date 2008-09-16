@@ -1,6 +1,6 @@
 <?php 
 session_start();
-include_once("../config/config.php");
+include_once("./config/config.php");
 			?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -8,7 +8,7 @@ include_once("../config/config.php");
 		<title>Create Account</title>
 		<meta name="generator" content="Bluefish 1.0.7"/>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<link rel="stylesheet" type="text/css" href="../css/main_web.css" />
+		<link rel="stylesheet" type="text/css" href="./css/<?php echo($style); ?>" />
 	</head>
 	<body>
 	<div class="text_area">
@@ -52,7 +52,7 @@ include_once("../config/config.php");
 			<center>
 			<h3>
 <?php
-include("../php/functions.php");
+include("./php/functions.php");
 
 $user_name  = isset($_GET['user_name']) ? $_GET['user_name'] : null;
 $password   = isset($_GET['password'])  ? $_GET['password']  : null;
@@ -67,37 +67,29 @@ if( !empty($user_name) && !empty($password) && !empty($password2) && !empty($ful
 	{
 		if( validate_pass( $password ) )
 		{
-			$db = mysql_connect($db_address, $db_user_name, $db_password);
-			mysql_select_db('web_admin', $db);
+			$db = mysql_connect($admin_db_address, $admin_db_user_name, $admin_db_password);
+			mysql_select_db($admin_db_name, $db);
+			mysql_query("SET NAMES 'utf8'");
 			$user_name = mysql_real_escape_string($user_name);
 			$password = mysql_real_escape_string($password);
 			$full_name = mysql_real_escape_string($full_name);
 			$email = mysql_real_escape_string($email);
 			// make sure user dose not exsit
-			$sql = "SELECT password, last_login FROM `web_admin`.`user` WHERE user='$user_name'";
-			$result = mysql_query( $sql, $db );
-			if( mysql_num_rows($result) )
+			$result = get_user( $user_name, $db );
+			if($result)
 			{
 				echo( "Account already exists, please choose another user name." );
 			}
 			else
 			{
-				// insert into db
-				$sql = "INSERT INTO `user` (`user`, `password`, `full_name`, `email`, `comment`)
-						VALUES('$user_name', '$password', '$full_name', '$email', 'web user')";
-				mysql_query( $sql, $db );
-				// insert into user group
-				$user_id = mysql_insert_id( $db );
-				$sql = "SELECT id FROM `group` WHERE `group`.`group`='user'";
-				$result = mysql_query( $sql, $db );
-				$row = mysql_fetch_row( $result );
-				$group_id = $row[0];
-				mysql_query("INSERT INTO `user_group` (`user_id`, `group_id`) VALUES($user_id, $group_id)", $db);
-				// make sure it inserted
-				if( mysql_affected_rows($db) > 0 )
+				if(create_accout( $user_name, $passowrd, $password2, $full_name, $email ))
+				{
 					echo( "Account created for $full_name ($user_name)" );
+				}
 				else
+				{
 					echo( "Sorry account could not be created plesae try agion later (unknown Error)." );
+				}
 			}
 			mysql_close($db);
 		}
@@ -118,7 +110,7 @@ else
 	else
 		echo( "Please provide this information." );	
 }
-			?>
+	?>
 			</h3>
 			</center>
 			<hr />

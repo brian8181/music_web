@@ -31,6 +31,17 @@ if( isset( $enable_statistics ) && $enable_statistics == true )
      </td>
 <?php
 }
+if( isset( $enable_security ) && $enable_security == true )
+{
+	if(assert_group('admin'))
+	{
+	?>
+	 <td align="center">
+       <a class="Nav" href="./user_admin.php">Admin</a>
+     </td>
+<?php
+	}
+}
 if( isset( $enable_quick_search ) && $enable_quick_search == true )
 {
 	?>

@@ -1,5 +1,7 @@
 <?php
+session_start();
 include_once("./config/config.php");
+include_once("./php/functions.php");
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -40,7 +42,7 @@ mysql_query("SET NAMES 'utf8'");
 $sid = isset($_GET['sid']) ? $_GET['sid'] : null;
 include("./module/login_greeting.php");
 ?> 
-<br />
+
 <div class="box" style="text-align: center">
 <h1><?php echo($details_title); ?></h1>
 </div>

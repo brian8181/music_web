@@ -18,6 +18,14 @@ $db_user_name = "web";
 $db_password = "<db_password>";
 
 /////////////////////////////////////////////////
+// Admin Database:                             //
+/////////////////////////////////////////////////
+$admin_db_name = $db_name;
+$admin_db_address = $db_address;
+$admin_db_user_name = $db_user_name;
+$admin_db_password = $db_password;
+
+/////////////////////////////////////////////////
 // Customization:                              //
 /////////////////////////////////////////////////
 $site_name = "Music Web";
