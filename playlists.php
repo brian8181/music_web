@@ -16,7 +16,7 @@ include_once("./php/functions.php");
 <?php include("./module/login_greeting.php"); ?>
 			<div class="box" style="text-align: center">
 			<center>
-				<h1><em>Playlists</em></h1>
+				<h1>Playlists</h1>
 			</center>
 			</div>
 			<br />	

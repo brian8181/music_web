@@ -18,7 +18,7 @@ include("./module/login_greeting.php");
 
 <!-- Display Title -->
 <div class="box" style="text-align: center">
-<h1><em>Advanced Music Query</em></h1>
+<h1>Advanced Music Query</h1>
 </div>
 
 <!-- Navagation Bar --> <br />
