@@ -26,7 +26,7 @@ include_once("./php/functions.php");
 
 <?php
 include("./module/top_toolbar.php");
-?>
+	?>
 
 <hr />
 <?php
@@ -35,7 +35,7 @@ mysql_select_db($db_name, $db);
 mysql_query("SET NAMES 'utf8'");
 /// get song id
 $sid = isset($_GET['sid']) ? $_GET['sid'] : null;
-?>
+	?>
 
 <center>
 <?php
@@ -51,7 +51,8 @@ if( isset( $sid ) )
 	echo( $lyrics );
 	mysql_close($db);
 }
-?></center>
+	?>
+</center>
 <br />
 <hr />
 
@@ -59,6 +60,7 @@ if( isset( $sid ) )
 include("./module/bottom_toolbar.php");
 include("./module/contact_info.php");
 include("./module/version.php");
-?></div>
+	?>
+</div>
 </body>
 </html>

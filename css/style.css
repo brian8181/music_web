@@ -12,9 +12,14 @@ body
  	text-align: left;
 }
 
-a:visited.NoColor
-{
+a:link.NoColor { 
+	color: transparent; 
+}
+a:visited.NoColor {
 	color: transparent;
+}
+a:hover.NoColor { 
+	color: yellow; 
 }
 
 div.box
@@ -69,15 +74,6 @@ table#result
     margin-right:auto
 }
  
-/* all rows */ 
-/*table#result tr 
-{
-	padding: 5px;	
-	text-align:center;
-	background-color:#BFBFBF;
-}*/ 
-
-/* all cells */
 table#result td 
 {
 	padding: 3px;	

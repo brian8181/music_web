@@ -2,7 +2,8 @@
 session_start();
 include_once("./config/config.php");
 include_once("./php/functions.php");
-?>
+$_SESSION['_PAGE'] = $_SERVER['REQUEST_URI'];	
+	?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
@@ -78,7 +79,28 @@ mysql_close($db);
 			<!-- <li><strong>Track Count:</strong>&nbsp;<em><?php echo ( $row[9] ); ?></em></li> -->
 			<!-- <li><strong>Disc:</strong>&nbsp;<em><?php echo ( $row[9] ); ?></em></li> -->
 			<!-- <li><strong>Disc Count:</strong>&nbsp;<em><?php echo ( $row[9] ); ?></em></li> -->
-			<li><strong>File:&nbsp;</strong><em><?php echo ( "<a href=\"/music" . $row[10] . "\">" . basename($row[10]) . "</a>" ); ?></em></li>
+			<li><strong>File:&nbsp;</strong>
+			<em>
+			<?php 
+				$authorized = !$enable_security || assert_login(); 
+				if( $authorized )
+				{
+					if($enable_direct_download)
+					{
+						echo( "<a href=\"$music_location$row[10]\">" . basename($row[10]) . "</a>" );
+					}
+					else
+					{
+						echo( "<a href=\"./php/download.php?sid=$sid\">" . basename($row[10]) . "</a>" );
+					}
+				}
+				else
+				{
+					echo( "NA" );	
+				} 
+				?>
+			</em>
+			</li>
 			<li><strong>Lyrics:</strong> 
 			<?php
 			if($row[13] != NULL)
@@ -89,7 +111,7 @@ mysql_close($db);
 			{
 				echo( "<em>NA</em>" );
 			}
-			?>
+				?>
 			</li>
 		</ul>
 		<dl>

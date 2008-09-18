@@ -241,7 +241,7 @@ if($result)
 				"<tr id=\"table_row\">\n" .
 				//cover
 				"\t<td id=\"art_col\">
-					<a class=\"NoColor\" href=\"/query/results.php?album=$row[3]&artist=$row[4]&amp;sortby=track\">
+					<a class=\"NoColor\" href=\"./results.php?album=$row[3]&artist=$row[4]&amp;sortby=track\">
 					<img src=\"$art_location/xsmall/$row[0]\" width=\"50\" height=\"50\" alt=\"NA\"/>
 					</a>
 					</td>\n" .

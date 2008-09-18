@@ -1,8 +1,17 @@
 <?php
 session_start();
 include_once("./config/config.php");
-$user_name  = isset($_GET['user_name']) ? $_GET['user_name'] : null;
-			?>
+include("./admin/functions.php");
+include("./php/functions.php");
+if(assert_login() == false)
+{
+	exit();
+}
+else
+{
+	$user_name = $_SESSION['_USER'];
+}
+	?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 	<head>
@@ -24,35 +33,33 @@ $user_name  = isset($_GET['user_name']) ? $_GET['user_name'] : null;
 				<input type="hidden" name="submitted" value="true"/>
 				<table cellpadding="3">
 				<tr>
-					<td>User:&nbsp;</td><td><b><?php if (isset($user_name)) { echo $user_name; } ?></b></td>
+					<td>User:&nbsp;</td><td><b><?php echo $user_name; ?></b></td>
 				</tr>
 				<tr>
 					<td>Password:&nbsp;</td>
-					<td><input type="password" name="orginal" value="<?php if (isset($orginal)) { echo $orginal; } ?>" /></td>
+					<td><input type="password" name="orginal" /></td>
 				</tr>
 				<tr>
 					<td>New Password:&nbsp;</td>
-					<td><input type="password" name="password" value="<?php if (isset($password)) { echo $password; } ?>" /></td>
+					<td><input type="password" name="password" /></td>
 				</tr>
 				<tr>
 					<td>Retype:&nbsp;</td>
-					<td><input type="password" name="password2" value="<?php if (isset($password2)) { echo $password2; } ?>" /></td>
+					<td><input type="password" name="password2" /></td>
 				</tr>
 				<tr>
 					<td>Full Name:&nbsp;</td>
-					<td><input type="text" name="full_name" value="<?php if (isset($full_name)) { echo $full_name; } ?>" /></td>
+					<td><input type="text" name="full_name" /></td>
 				</tr>
 				<tr>
 					<td>Email:&nbsp;</td>
-					<td><input type="text" name="email" value="<?php if (isset($email)) { echo $email; } ?>" /></td>
+					<td><input type="text" name="email" /></td>
 				</tr>
 				</table>
 				<input type="submit" value="Update" />			
 			</form>
 			<h3>
 <?php
-include("./php/functions.php");
-include("./admin/functions.php");
 
 $orginal    = isset($_GET['$orginal'])  ? $_GET['$orginal']  : null;
 $password   = isset($_GET['password'])  ? $_GET['password']  : null;
