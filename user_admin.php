@@ -6,7 +6,7 @@ include_once("./php/functions.php");
 if( !isset( $_SESSION['_USER'] ) || !isset( $_SESSION['_GROUPS'] ) )
 {
 	$_SESSION['_PAGE'] = $_SERVER['PHP_SELF'];
-	header( "Location: ../login.php" );
+	header( "Location: ./login.php" );
 	exit();
 }
 
@@ -32,7 +32,7 @@ if(!array_key_exists('admin', $groups_loc))
 			var count = frm.elements.length;
 			var user_group = "";
 			var cur_user = "";
-			for( var i = 0; i < count; ++i)
+			for( var i = 0; i < count; ++i )
 			{
 				if(frm.elements[i].checked)
 				{
@@ -58,6 +58,36 @@ if(!array_key_exists('admin', $groups_loc))
 			form.elements['usr_grps'].value = user_group;
 			return true;
 		}
+		function on_delete_clicked()
+		{
+			var frm = document.forms[2];
+			var count = frm.elements.length;
+			var checked = false;
+			
+			for( var i = 0; i < count; ++i )
+			{
+				var str = frm.elements[i].name;
+				var pairs = str.split('-');
+				var user = pairs[0] ;
+				var group = pairs[1];
+								
+				if( group == "delete" )
+				{
+					checked = frm.elements[i].checked;
+					continue;
+				}
+				frm.elements[i].disabled = checked;
+			}
+		}
+		function enable_all()
+		{
+			var frm = document.forms[2];
+			var count = frm.elements.length;
+			for( var i = 0; i < count; ++i )
+			{
+				frm.elements[i].disabled = false;
+			}
+		}
     </script>
     </head>
 	<body>
@@ -66,7 +96,7 @@ if(!array_key_exists('admin', $groups_loc))
 include("./module/login_greeting.php");
 	?>
 		<div class="box" style="text-align: center">
-			<h1><em>User Administration</em></h1>
+			<h1>User Administration</h1>
 		</div>
 		<br />
 		<?php include("./module/top_toolbar.php"); ?>
@@ -136,6 +166,7 @@ while ( $row = mysql_fetch_row($result) )
 	$usr_grp[$uid][$gid] = true;
 }
 
+echo("<th colspan=\"1\" align=\"center\">Delete</th>\r\n");
 echo("<th colspan=\"1\" align=\"center\">&nbsp;</th>\r\n");
 foreach($groups_loc as $group)
 {
@@ -144,6 +175,7 @@ foreach($groups_loc as $group)
 foreach($users as $uid => $local_user)
 {
 	echo("<tr class=\"Admin\">");
+	echo("<td align=\"center\"><input type=\"checkbox\" name=\"$uid-delete\" onclick=\"on_delete_clicked()\" /></td>\r\n");
 	echo("<td align=\"center\">$local_user</td>\r\n");
 	
 	foreach($groups_loc as $gid => $group)
@@ -162,14 +194,31 @@ mysql_close();
 		?>
 		
         </table>
-            <input type="reset" />
+        <br />
+        <input type="reset" onclick="enable_all()" />
         </form>
-            <br />
-            <form action="./admin/update_users.php" name="update_form" onsubmit="return on_submit(update_form)"
-                method="get">
-                <input type="hidden" name="usr_grps" value="" />
-                <input type="submit" value="Update" />
-            </form>
+        
+		<br />
+		<form action="./admin/update_users.php" name="update_form" onsubmit="return on_submit(update_form)" method="get">
+			<input type="hidden" name="usr_grps" value="" />
+			<input type="submit" value="Update" />
+		</form>
+		<?php
+		if( isset( $_GET['updated'] ) && $_GET['updated'] == "true" ) 
+		{
+			?>
+			<br />
+			<b>Users sucessfully updated.</b>
+		<?php
+		}
+		else if( isset($_GET['updated']) && $_GET['updated'] == "false" )
+		{
+			?>
+			<br />
+			<b>Error occured while updating.</b>
+		<?php	
+		}
+			?>
         </center>
             <br />
             <hr>
@@ -177,7 +226,7 @@ mysql_close();
 			<?php 
 			include("./module/bottom_toolbar.php"); 
 			include("./module/contact_info.php");
-            ?>
+            	?>
             <br />
 <?php
 include("./module/version.php");

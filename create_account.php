@@ -12,6 +12,8 @@ include_once("./config/config.php");
 	</head>
 	<body>
 	<div class="text_area">
+	<img src="./image/home.gif" alt="user" />
+	<a href="./index.php"><b>Home</b></a>
 			<div class="box" style="text-align: center">
 			<h1>Create Account</h1>
 			</div>
