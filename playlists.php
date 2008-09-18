@@ -2,6 +2,7 @@
 session_start();
 include_once("./config/config.php");
 include_once("./php/functions.php");
+$_SESSION['_PAGE'] = $_SERVER['REQUEST_URI'];
 			?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -25,17 +26,34 @@ include_once("./php/functions.php");
 			<center>
 <?php
 $db = $db = mysql_connect($db_address, $db_user_name, $db_password);
-mysql_select_db('music', $db);
+mysql_select_db($db_name, $db);
 
 $sql = "SELECT id, name from playlists ORDER BY name";
 $result = mysql_query($sql);
+?>
+	<!-- move formating to css -->
+	<table>
+	<tr>
+		<th align="left">Name</th>
+		<th align="left">Count</th>
+	</tr>
+<?php 
 while ( $row = mysql_fetch_array($result, MYSQL_NUM) )
 {
+	echo("<tr>");
 	$id = $row[0];
-	echo( "<a href=\"./results.php?query_type=playlist&id=$id\">$row[1]</a><br />" );
+	$name = $row[1];
+	$sql = "SELECT count(*) FROM playlist_songs WHERE playlist_id=$id";
+	$count_result = mysql_query($sql);
+	$count_row = mysql_fetch_array($count_result, MYSQL_NUM);
+	$count = $count_row[0]; 
+	echo( "<td><a href=\"./results.php?query_type=playlist&id=$id\">$name</a><br /></td>" );
+	echo( "<td><em>$count</em></td>" );
+	echo("</tr>");
 }
 mysql_close($db);
 			?>
+	</table>			
 			</center>
 			<hr />
 <?php
