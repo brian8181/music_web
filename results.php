@@ -3,7 +3,8 @@ session_start();
 include_once("./config/config.php");
 include_once("./php/functions.php");
 include_once("./php/navbar.php");
-$_SESSION['_PAGE'] = $_SERVER['REQUEST_URI'];
+$_SESSION['_PAGE']  = $_SERVER['REQUEST_URI'];
+$_SESSION['_QUERY'] = $_SERVER['QUERY_STRING'];
 		?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -291,8 +292,11 @@ mysql_close($db);
 <?php
 
 	$links = $nav->getlinks("all", "on");
-	for ($y = 0; $y < count($links); $y++) {
-	  echo $links[$y] . "&nbsp;&nbsp;";
+	if($links != null)
+	{
+		for ($y = 0; $y < count($links); $y++) {
+		  echo $links[$y] . "&nbsp;&nbsp;";
+		}
 	}
 
 	?>

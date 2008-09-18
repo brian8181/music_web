@@ -11,7 +11,7 @@ if( !isset( $_SESSION['_USER'] ) || !isset( $_SESSION['_GROUPS'] ) )
 		$user = $_GET['_USER'];
 		$pass = $_GET['_PASSWORD'];
 		$db = mysql_connect($db_address, $db_user_name, $db_password);
-			mysql_select_db('web_admin', $db);
+			mysql_select_db($db_name, $db);
 			$sql = "SELECT user.id, `user`, `group`, `password` FROM `user` " . 
 				"INNER JOIN `user_group` ON `user`.id=`user_id` " . 
 				"INNER JOIN `group` ON `user_group`.`group_id`=`group`.id " . 

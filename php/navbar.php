@@ -147,7 +147,7 @@ class navbar {
 					$array[++$subscript] = $this->str_next;
 			}
 		}
-		return $array;
+		return isset($array) ? $array : null;
 	}
 }
 ?>

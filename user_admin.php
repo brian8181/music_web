@@ -116,8 +116,8 @@ include("./module/login_greeting.php");
 		<table class="Admin" align="center">
 		
 <?php 
-$db = mysql_connect($admin_db_address, $admin_db_user_name, $admin_db_password);
-mysql_select_db($admin_db_name, $db);
+$db = mysql_connect($db_address, $db_user_name, $db_password);
+mysql_select_db($db_name, $db);
 mysql_query("SET NAMES 'utf8'");
 
 $usr_grp = array();

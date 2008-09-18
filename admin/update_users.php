@@ -23,7 +23,7 @@ else
 	}
 	
 	$db = mysql_connect($db_address, $db_user_name, $db_password);
-	mysql_select_db('web_admin', $db);
+	mysql_select_db($db_name, $db);
 	mysql_query("SET NAMES 'utf8'");
 
 	$user_array = explode('-', $usr_grps);
