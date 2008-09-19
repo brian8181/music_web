@@ -10,5 +10,5 @@
 <div style="text-align: center">
 	<?php echo($mail_message) ?>
 	<br />
-	<a href="mailto:<?php echo($email) ?>?subject=Web Password"><?php echo($email) ?></a>
+	<a href="mailto:<?php echo($admin_email) ?>?subject=Web Password"><?php echo($admin_email) ?></a>
 </div>
