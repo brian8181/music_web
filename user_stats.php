@@ -1,8 +1,14 @@
-<?php 
+<?php
+session_start();
 include_once("./config/config.php");
 include_once("./php/functions.php");
 $_SESSION['_PAGE'] = $_SERVER['REQUEST_URI'];
-	?>
+if(!assert_login())
+{
+	header( "Location: ./login.php" );
+	exit(); 		
+}
+		?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
@@ -17,13 +23,12 @@ $_SESSION['_PAGE'] = $_SERVER['REQUEST_URI'];
 <?php 
 $db = mysql_connect($db_address, $db_user_name, $db_password); mysql_select_db($db_name, $db);
 mysql_query("SET NAMES 'utf8'");
-mysql_close();
 include("./module/login_greeting.php"); 
                 ?> 
-				
+
 	<div class="box" style="text-align: center">
 		<h1>
-			[$title]
+			User Stats
 		</h1>
 	</div>
 	
@@ -32,9 +37,8 @@ include("./module/top_toolbar.php");
 		?>
 		
 		<hr />
-<?php		
-include("./module/index_body.php"); 		
-	    ?>			
+		
+		<!-- todo -->
 	
 		<hr />
 <?php
@@ -50,3 +54,4 @@ include("./module/version.php");
 	</div>	
 	</body>
 </html>
+		

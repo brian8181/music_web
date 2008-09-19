@@ -3,6 +3,7 @@ session_start();
 include_once("./config/config.php");
 include_once("./php/functions.php");
 include_once("./php/navbar.php");
+include_once("./classes/table.php");
 $_SESSION['_PAGE']  = $_SERVER['REQUEST_URI'];
 $_SESSION['_QUERY'] = $_SERVER['QUERY_STRING'];
 		?>
@@ -219,17 +220,11 @@ if ( ! ($pos === false) ) {
 	$uri = substr( $uri, 0, -$len );
 }
 			?>
-			
 	<table id="result">		
-		<tr id ="header_row">
-			<th align="center">Cover</th>
-			<th align="center"><a class="Header" href=<?php echo( "\"$uri&amp;sortby=track\"" ) ?>>Track</a></th>
-			<th align="center"><a class="Header" href=<?php echo( "\"$uri&amp;sortby=title\"" ) ?>>Title</a></th>
-			<th align="center"><a class="Header" href=<?php echo( "\"$uri&amp;sortby=album.album,track\"" ) ?>>Album</a></th>
-			<th align="center">
-			<a class="Header" href=<?php echo( "\"$uri&amp;sortby=artist.artist\"" ) ?>>Artist</a></th>
-			<th align="center">Download</th>
-		</tr>
+		<?php
+		 	$headers = new result_headers($uri);
+			$headers->printOut($uri);
+			?>
 <?php
 if($result)
 {
@@ -275,9 +270,11 @@ if($result)
 							<a href=\"./php/download.php?sid=$row[6]\">download</a>
 						</td>\n" );
 			}
+			echo( "\t<td align='center'><i>NA</i></td>\n" );
 		}
 		else
 		{
+			echo( "\t<td align='center'><i>NA</i></td>\n" );
 			echo( "\t<td align='center'><i>NA</i></td>\n" );	
 		}
 		echo("</tr>\n");

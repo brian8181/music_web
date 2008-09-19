@@ -1,7 +1,5 @@
 <?php 
 include_once("./config/config.php");
-include_once("./php/functions.php");
-$_SESSION['_PAGE'] = $_SERVER['REQUEST_URI'];
 	?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -15,15 +13,12 @@ $_SESSION['_PAGE'] = $_SERVER['REQUEST_URI'];
 	<div class="text_area">
    
 <?php 
-$db = mysql_connect($db_address, $db_user_name, $db_password); mysql_select_db($db_name, $db);
-mysql_query("SET NAMES 'utf8'");
-mysql_close();
 include("./module/login_greeting.php"); 
                 ?> 
 				
 	<div class="box" style="text-align: center">
 		<h1>
-			[$title]
+			<em>[$title]</em>
 		</h1>
 	</div>
 	
@@ -33,8 +28,31 @@ include("./module/top_toolbar.php");
 		
 		<hr />
 <?php		
-include("./module/index_body.php"); 		
-	    ?>			
+
+//$mysql = new mysql_db();
+//$mysql->sql_connect($db_address, $db_user_name, $db_password, $db_name);
+
+//$db = mysql_connect($db_address, $db_user_name, $db_password);
+//mysql_select_db($db_name, $db);
+//mysql_query("SET NAMES 'utf8'");
+
+//$sql = "SELECT artist FROM artist";
+//$result = mysql_query( $sql );
+
+	    ?>
+	    
+	    <table>
+	    <tr>
+	    	<th>Artist</th>
+	    	<th>Album Count</th>
+	    	<th>Sougs Count</th>
+	    </tr>
+	    <tr>
+	    	<td></td>
+	    	<td></td>
+	    	<td></td>
+	    </tr>
+	    </table>			
 	
 		<hr />
 <?php

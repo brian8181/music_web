@@ -41,7 +41,7 @@ include_once("./config/config.php");
 				</tr>
 				<tr>
 					<td>Email:&nbsp;</td>
-					<td><input type="text" name="email" value="<?php if (isset($email)) { echo $email; } ?>" /></td>
+					<td><input type="text" name="email" /></td>
 				</tr>
 				</table>
 				<input type="submit" value="Create" />			
