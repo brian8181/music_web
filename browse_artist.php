@@ -90,7 +90,6 @@ else{
           </div>
           <br />
           <div style="text-align: center">
-          <span style="font-size: larger;">
           
 <?php
 
@@ -114,16 +113,40 @@ else
 		"AND song.file LIKE CONCAT('$filter', '%') ORDER BY artist";
 }
 
-$nav->numrowsperpage = 50;
+$nav->numrowsperpage = 25;
 $result = $nav->execute($sql, $db, 'mysql'); 
-
-while( $row = mysql_fetch_row( $result ) )
-{
-	echo("<a href=\"browse_artist_albums.php?aid=$row[0]&filter=$filters\">$row[1]</a><br />");
-}
-
 echo '<br />';
-
+?>
+	<center>
+	<table>
+	<tr>
+		<th>Artist</th>
+		<th>Songs</th>
+		<th>Albums</th>
+	</tr>
+<?php 
+	while( $row = mysql_fetch_row( $result ) )
+	{
+		$aid = $row[0];
+		// get counts
+		$res = mysql_query("SELECT count(*) FROM song where artist_id=$aid", $db); 
+		$r = mysql_fetch_row($res);
+		$song_count = $r[0];
+		
+		$res = mysql_query("SELECT count(DISTINCT album_id) FROM song where artist_id=$aid", $db); 
+		$r = mysql_fetch_row($res);
+		$album_count = $r[0];
+		
+		echo("<tr>");
+		echo("<td><a href=\"browse_artist_albums.php?aid=$aid&filter=$filters\">$row[1]</a></td>");
+		echo("<td>$song_count</td>");
+		echo("<td>$album_count</td>");
+		echo("</tr>");
+	}
+	?>
+	</table>
+	</center>
+<?php
 // display links
 $links = $nav->getlinks("all", "on");
 for ($y = 0; $y < count($links); $y++)
@@ -132,11 +155,9 @@ for ($y = 0; $y < count($links); $y++)
 }
 mysql_close( $db );
 				?>
-           
-         	</span>
-         </div>
-         <br />
-		 <hr />	         
+ 	</div>
+    <br />
+	<hr />	         
 <?php
 include("./module/bottom_toolbar.php");
 include("./module/contact_info.php");

@@ -4,6 +4,7 @@ include_once("./config/config.php");
 include_once("./php/functions.php");
 include_once("./php/navbar.php");
 include_once("./classes/table.php");
+isset( $_SESSION['_SEARCH_PAGE'] ) ? $back = $_SESSION['_SEARCH_PAGE'] : $back = "./index.php";
 $_SESSION['_PAGE']  = $_SERVER['REQUEST_URI'];
 $_SESSION['_QUERY'] = $_SERVER['QUERY_STRING'];
 		?>
@@ -78,7 +79,8 @@ include("./module/top_toolbar.php");
 		?>
 	
 	<hr />
-	
+	<br />
+	<center><a href="<?php echo($back) ?>"><b>Back To Search</b></a></center>
 <?php
 if( !isset( $query_type ) ) $query_type = "default";
 $sql = "";

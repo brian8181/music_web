@@ -2,6 +2,8 @@
 session_start();
 include_once("./config/config.php");
 include_once("./php/functions.php");
+$_SESSION['_PAGE']  = $_SERVER['REQUEST_URI'];
+$_SESSION['_SEARCH_PAGE'] = $_SESSION['_PAGE'];
 $last_query = isset($_SESSION['_QUERY']) ? $_SESSION['_QUERY'] : null;
 if($last_query != null)
 {
