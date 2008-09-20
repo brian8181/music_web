@@ -3,6 +3,7 @@ session_start();
 include_once("./config/config.php");
 include_once("./php/functions.php");
 include_once("./php/navbar.php");
+include_once("./php/results.php");
 include_once("./classes/table.php");
 isset( $_SESSION['_SEARCH_PAGE'] ) ? $back = $_SESSION['_SEARCH_PAGE'] : $back = "./index.php";
 $_SESSION['_PAGE']  = $_SERVER['REQUEST_URI'];
@@ -21,7 +22,6 @@ echo($results_title);
 	</head>
 	<body>
 	<div class="text_area">
-  
 <?php
 $db = mysql_connect($db_address, $db_user_name, $db_password);
 mysql_select_db($db_name, $db);
@@ -39,10 +39,9 @@ $and        = isset($_GET['and'])        ? $_GET['and']        : null;
 $wildcard   = isset($_GET['wildcard'])   ? $_GET['wildcard']   : null;
 $sortby     = isset($_GET['sortby'])     ? $_GET['sortby']     : null;
 // playlist
-$id         = isset($_GET['id'])         ? $_GET['id']         : null;
+$pid         = isset($_GET['pid'])         ? $_GET['pid']         : null;
 // deprecated!! used with - case "quick_search" 
 $txtSearch  = isset($_GET['txtSearch'])  ? $_GET['txtSearch']  : null;
- 
 // logging
 $remote_ip = $_SERVER['REMOTE_ADDR'];
 $sql = "INSERT INTO `query_log` (`query_type`, `album`, `artist`, `title`, `genre`, `file`, `comments`, `lyrics`, `and`, `wildcard`, `sortby`, `ip`) VALUES(" .
@@ -77,119 +76,16 @@ echo($results_title);
 <?php 
 include("./module/top_toolbar.php"); 
 		?>
-	
 	<hr />
 	<br />
 	<center><a href="<?php echo($back) ?>"><b>Back To Search</b></a></center>
 <?php
 if( !isset( $query_type ) ) $query_type = "default";
-$sql = "";
-// todo: change to stored procecudres (requires use of "MYSQLI") 
-switch( $query_type )
-{
-	case "all_lyrics":
-		$sql = "SELECT art.file, track, title, album, artist.artist, song.file, song.id FROM song " .
-			"LEFT JOIN artist ON artist.id = song.artist_id " .
-			"LEFT JOIN album ON album.id = song.album_id " .
-			"LEFT JOIN art ON song.art_id = art.id WHERE NOT lyrics IS NULL";
-		break;	
-	case "playlist":
-		if( !isset($id) )
-			break;
-		$sql = "SELECT art.file, track, title, album, artist.artist, song.file, song.id FROM song " . 
-			"LEFT JOIN playlist_songs ON song.id = song_id " .
-			"LEFT JOIN album ON album.id = song.album_id " .
-			"LEFT JOIN artist ON artist.id = artist_id " .
-			"LEFT JOIN art ON song.art_id = art.id " .
-			"WHERE playlist_id=$id ORDER BY `order`";
-		break;
-	case "album":
-		$sql = "SELECT art.file, track, title, album, artist.artist, song.file, song.id FROM song " .
-			"LEFT JOIN artist ON artist.id = song.artist_id " .
-			"LEFT JOIN album ON album.id = song.album_id " .
-			"LEFT JOIN art ON song.art_id = art.id WHERE album_id=$album_id ORDER BY track";
-		break;		
-	case "quick_search": //deprecated
-		if( !isset($txtSearch) )
-			break;
-		$album = $txtSearch;
-		$artist = $txtSearch;
-		$title = $txtSearch;
-	// FALL THROUGH!
-	default:
-		{
-			// check for wildcards & strip escape characters
-			if(isset($wildcard) && $wildcard == "on")
-			{
-				$album = str_replace( "*", "%", $album);
-				$album = str_replace( "?", "_", $album);
-				$artist = str_replace( "*", "%", $artist);
-				$artist = str_replace( "?", "_", $artist);
-				$title = str_replace( "*", "%", $title);
-				$title = str_replace( "?", "_", $title);
-				$genre = str_replace( "*", "%", $genre);
-				$genre = str_replace( "?", "_", $genre);
-				$file = str_replace( "*", "%", $file);
-				$file = str_replace( "?", "_", $file);
-				$lyrics = str_replace( "*", "%", $lyrics);
-				$lyrics = str_replace( "?", "_", $lyrics);
-			}
-			else
-			{
-				$album = !empty( $album ) ? "%$album%" : "";
-				$artist = !empty( $artist ) ? "%$artist%" : "";
-				$title = !empty( $title ) ? "%$title%" : "";
-				$genre = !empty( $genre ) ? "%$genre%" : "";
-				$file = !empty( $file ) ? "%$file%" : "";
-				$lyrics = !empty( $lyrics ) ? "%$lyrics%" : "";
-			}
-			$album = mysql_real_escape_string( $album );
-			$artist = mysql_real_escape_string( $artist );
-			$title = mysql_real_escape_string( $title );
-			$genre = mysql_real_escape_string( $genre );
-			$file = mysql_real_escape_string( $file );
-			// Build SQL
-			$sql = "SELECT art.file, track, title, album, artist.artist, song.file, song.id FROM song " .
-				"LEFT JOIN artist ON artist.id = song.artist_id " .
-				"LEFT JOIN album ON album.id = song.album_id " .
-				"LEFT JOIN art ON song.art_id = art.id";
-			$operator = '';
-			
-			//echo( $sql );
-			$sql = "$sql WHERE";
-			if( !empty( $artist ) )
-			{
-				$sql = "$sql (`artist`.`artist` LIKE '$artist')";
-				$operator = isset($and) && ($and == "false") ? "OR" : "AND";
-			}
-							if( !empty( $album ) )
-			{
-				$sql = "$sql $operator (`album`.`album` LIKE '$album')";
-				$operator = isset($and) && ($and == "false") ? "OR" : "AND";
-			}
-			if( !empty( $title ) )
-			{
-				$sql = "$sql $operator (`song`.`title` LIKE '$title')";
-				$operator = isset($and) && ($and == "false") ? "OR" : "AND";
-			}
-			if( !empty( $genre ) )
-			{
-				$sql = "$sql $operator (`song`.`genre` LIKE '$genre')";
-				$operator = isset($and) && ($and == "false") ? "OR" : "AND";
-			}
-			if( !empty( $file ) )
-			{
-				$sql = "$sql $operator (`song`.`file` LIKE '$file')";
-			}
-			if( !empty( $lyrics ) )
-			{
-				$sql = "$sql $operator (`song`.`lyrics` LIKE '$lyrics')";
-			}
-			if( !empty( $sortby ) )
-				$sql = "$sql ORDER BY $sortby";
-		}
-		break;
-}
+
+// build the sql query
+$sql = build_query(
+	$query_type, $artist, $album, $title, $genre, $file, $lyrics, $sortby, $and );
+
 if( $page_result_limit > 0 ) {
 	$sql = "$sql LIMIT $page_result_limit";
 }
@@ -204,7 +100,6 @@ $total = $nav->total;
 $start_number = $nav->start_number;
 $end_number = $nav->end_number;
 
-//$result = mysql_query($sql, $db);
 if($result) {
 	$num_rows = mysql_num_rows($result);
 	echo( "<br /><br /><b>Showing $start_number - $end_number of $total</b>" );
@@ -221,19 +116,19 @@ if ( ! ($pos === false) ) {
 	$len -= $pos-1;
 	$uri = substr( $uri, 0, -$len );
 }
-			?>
+	?>
 	<table id="result">		
-		<?php
-		 	$headers = new result_headers($uri);
-			$headers->printOut($uri);
-			?>
 <?php
+$headers = new result_headers($uri);
+$headers->printOut($uri);
+
 if($result)
 {
 	$authorized = !$enable_security || assert_login(); 
 	echo("\n");
 	while ( $row = mysql_fetch_row($result) )
 	{
+		$sid = $row[6];
 		// process the row...
 		echo(
 				"<tr id=\"table_row\">\n" .
@@ -247,7 +142,7 @@ if($result)
 				"\t<td align='center'>$row[1]</td>\n" .
 				// title
 				"\t<td class='Padded' align='left'>
-					<a href=\"details.php?sid=$row[6]\">$row[2]</a>
+					<a href=\"details.php?sid=$sid\">$row[2]</a>
 					</td>\n" .
 				// album
 				"\t<td class='Padded' align='left'>
@@ -269,10 +164,12 @@ if($result)
 			else
 			{
 				echo( "\t<td align='center'>
-							<a href=\"./php/download.php?sid=$row[6]\">download</a>
+							<a href=\"./php/download.php?sid=$sid\">download</a>
 						</td>\n" );
 			}
-			echo( "\t<td align='center'><i>NA</i></td>\n" );
+			echo( "\t<td align='center'>
+							<a href=\"./php/add_to_cart.php?sid=$sid\">add to cart</a>
+						</td>\n" );
 		}
 		else
 		{
@@ -282,7 +179,7 @@ if($result)
 		echo("</tr>\n");
 	}
 }
-mysql_close($db);
+//mysql_close($db);
 		?>
 	</table>	
 	

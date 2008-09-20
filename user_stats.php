@@ -39,6 +39,8 @@ include("./module/top_toolbar.php");
 		<hr />
 		
 		<!-- todo -->
+		<!-- Counts -->
+		<!-- History Link -->
 	
 		<hr />
 <?php

@@ -1,6 +1,7 @@
 <?php
 session_start();
 include_once("../config/config.php");
+include_once("../php/results.php");
 $sid = isset($_GET['sid']) ? $_GET['sid'] : null;
 
 
@@ -26,6 +27,8 @@ if(mysql_num_rows($result) == 1)
 
 $id = $_SESSION['_USER_ID'];
 mysql_query("INSERT INTO download (user_id, song_id) VALUES( $id, $sid )", $db);
+// remove from cart
+delete_from_cart($uid, $sid, $db);
 
 mysql_close($db); 
 
