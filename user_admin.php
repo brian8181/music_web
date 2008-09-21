@@ -17,13 +17,14 @@ if(!array_key_exists('admin', $groups_loc))
 	echo( "<div style=\"text-align: center\"><a href=\"/index.php\"><i>www.bkp-online.com</i></a></div>" );
 	exit();
 }
+$style = assert_login() ? $_SESSION['_STYLE'] : "./css/$style";
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <!-- Headers -->
 <head>
     <title>User Admin Page</title>
-    <link rel="stylesheet" type="text/css" href="./css/<?php echo($style); ?>" />
+    <link rel="stylesheet" type="text/css" href="<?php echo($style) ?>" />
     <script type="text/javascript">
 		function on_submit(form)  // intialize all values
 		{

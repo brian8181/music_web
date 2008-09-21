@@ -12,23 +12,30 @@ if( !isset( $_SESSION['_USER'] ) || !isset( $_SESSION['_GROUPS'] ) )
 		$pass = $_GET['_PASSWORD'];
 		$db = mysql_connect($db_address, $db_user_name, $db_password);
 			mysql_select_db($db_name, $db);
-			$sql = "SELECT user.id, `user`, `group`, `password` FROM `user` " . 
+			$sql = "SELECT user.id, `user`, `group`, `password`, email, full_name, `style`.`id`, `style`.`file` FROM `user` " . 
 				"INNER JOIN `user_group` ON `user`.id=`user_id` " . 
-				"INNER JOIN `group` ON `user_group`.`group_id`=`group`.id " . 
+				"INNER JOIN `group` ON `user_group`.`group_id`=`group`.id " .
+				"LEFT JOIN `style` ON `style`.`id`=`style_id` " . 
 				"WHERE user='$user' AND password='$pass'";
 			$result = mysql_query( $sql, $db );
 			if( mysql_num_rows($result) )
 			{
-				$_groups = array();
 				$row = mysql_fetch_row($result);
-				$id = $row[0];
-				$_SESSION['_USER_ID'] = $id; 
+				$_SESSION['_USER_ID'] = $row[0]; 
+				$_SESSION['_USER'] = $row[1];
+				$_SESSION['USER_PASSWORD'] = $row[3];
+				$_SESSION['USER_EMAIL'] = $row[4];
+				$_SESSION['USER_FULLNAME'] = $row[5];
+				$_SESSION['USER_STYLE_ID'] = $row[6];
+				$_SESSION['USER_STYLE'] = $row[7];
+				// fetch groups
+				$_groups = array();
 				do{
 					$grp = $row[2];
 					$groups[$grp] = 1;
 				}while( $row == mysql_fetch_row($result) );
-				$_SESSION['_USER'] = $user;
 				$_SESSION['_GROUPS'] = $groups;
+				
 				if( isset($_SESSION['_PAGE']) )
 				{
 					$page = $_SESSION['_PAGE'];
@@ -56,6 +63,7 @@ else
 {
 	header( "Location: ./index.php" ); 
 }
+$style = assert_login() ? $_SESSION['_STYLE'] : "./css/$style";
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -63,7 +71,7 @@ else
 	<title>User Login</title>
 	<meta name="generator" content="Bluefish 1.0.7" />
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<link rel="stylesheet" type="text/css" href="./css/<?php echo($style); ?>" />
+	<link rel="stylesheet" type="text/css" href="<?php echo($style) ?>" />
 	<script src="./script/cookies.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		function on_submit(form) // intialize all values

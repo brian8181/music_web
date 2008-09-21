@@ -13,6 +13,7 @@ if(!assert_login())
 	header( "Location: ./login.php" );
 	exit(); 		
 }
+$style = assert_login() ? $_SESSION['_STYLE'] : "./css/$style";
 		?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -20,7 +21,7 @@ if(!assert_login())
     <title>My Cart</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="shortcut icon" href="./favicon.png" />
-	<link rel="stylesheet" type="text/css" href="./css/<?php echo($style); ?>" />
+	<link rel="stylesheet" type="text/css" href="<?php echo($style) ?>" />
 </head>
 	<body>
 	<div class="text_area">

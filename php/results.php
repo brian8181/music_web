@@ -5,7 +5,6 @@ function build_special_query($query_type)
  return build_query($query_type, null, null, null, null, null, null, null, null);
 }
 
-
 function build_query($query_type, $artist=null, $album=null, $title=null, $genre=null, $file=null, $lyrics=null, $sortby=null, $and=null)
 {
 	$sql = "";
@@ -33,8 +32,15 @@ function build_query($query_type, $artist=null, $album=null, $title=null, $genre
 					INNER JOIN song ON user_cart.song_id=song.id
 					LEFT JOIN artist ON artist.id = song.artist_id
 					LEFT JOIN album ON album.id = song.album_id
-					LEFT JOIN art ON song.art_id = art.id WHERE `user_cart`.user_id=1";
+					LEFT JOIN art ON song.art_id = art.id WHERE `user_cart`.user_id=1  AND removed_ts IS NULL";
 			break;	
+		case "my_downloads":
+			$sql = "SELECT art.file as art_file, track, title, album, artist.artist, song.file, song.id as sid FROM download
+					INNER JOIN song ON download.song_id=song.id
+					LEFT JOIN artist ON artist.id = song.artist_id
+					LEFT JOIN album ON album.id = song.album_id
+					LEFT JOIN art ON song.art_id = art.id WHERE `download`.user_id=1";	
+			break;
 		case "album":
 			$sql = "SELECT art.file, track, title, album, artist.artist, song.file, song.id FROM song " .
 				"LEFT JOIN artist ON artist.id = song.artist_id " .
@@ -127,6 +133,8 @@ function build_query($query_type, $artist=null, $album=null, $title=null, $genre
 
 function add_2_cart($uid, $sid, $db)
 {
+	$uid = mysql_real_escape_string( $uid );
+	$sid = mysql_real_escape_string( $sid );
 	// make sure it is not already present
 	$sql = "INSERT INTO user_cart (user_id, song_id) VALUES($uid, $sid)";
 	mysql_query($sql, $db);
@@ -134,8 +142,11 @@ function add_2_cart($uid, $sid, $db)
 
 function delete_from_cart($uid, $sid, $db)
 {
+	$sid = mysql_real_escape_string( $uid );
+	$sid = mysql_real_escape_string( $sid );
 	// make sure it is not already present
 	$sql = "DELETE FROM user_cart WHERE user_id=$uid AND song_id=$sid";
+	$sql = "UPDATE user_cart SET removed_ts=NOW() WHERE user_id=$uid AND song_id=$sid";
 	mysql_query($sql, $db);
 }
 

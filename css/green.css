@@ -1,3 +1,5 @@
+@CHARSET "ISO-8859-1";
+
 body
 {
 	color: black;
@@ -27,7 +29,7 @@ div.box
 	height: 100px; 
 	width: 100%;
 	border: black 1px solid;
-	background: Black;
+	background: Olive;
 	left: 5%;
 	color: white;
 	top: 5%;

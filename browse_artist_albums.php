@@ -4,6 +4,7 @@ include_once("./config/config.php");
 include_once("./php/functions.php");
 isset( $_SESSION['_PAGE'] ) ? $back = $_SESSION['_PAGE'] : $back = "./browse_artist.php";
 $_SESSION['_PAGE'] = $_SERVER['REQUEST_URI'];
+$style = assert_login() ? $_SESSION['_STYLE'] : "./css/$style";
 		?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -12,7 +13,7 @@ $_SESSION['_PAGE'] = $_SERVER['REQUEST_URI'];
 		<title>Artist Albums</title>
 		<meta name="generator" content="Bluefish 1.0.7"/>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<link rel="stylesheet" type="text/css" href="./css/<?php echo($style); ?>" />
+		<link rel="stylesheet" type="text/css" href="<?php echo($style) ?>" />
 		<style type="text/css">
 			td.norepeat{background-repeat:no-repeat;}
 			td#vdrop{

@@ -1,6 +1,7 @@
 <?php 
 session_start();
 include_once("./config/config.php");
+$style = assert_login() ? $_SESSION['_STYLE'] : "./css/$style";
 			?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -8,7 +9,13 @@ include_once("./config/config.php");
 		<title>Create Account</title>
 		<meta name="generator" content="Bluefish 1.0.7"/>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<link rel="stylesheet" type="text/css" href="./css/<?php echo($style); ?>" />
+		<link rel="stylesheet" type="text/css" href="<?php echo($style) ?>" />
+		<script type="text/javascript">
+			function on_submit(form)  // intialize all values
+			{
+				// todo
+			}
+		</script>
 	</head>
 	<body>
 	<div class="text_area">
@@ -20,7 +27,7 @@ include_once("./config/config.php");
 			<br />	
 			<hr />
 			<center>
-			<form action="create_account.php" method="get">
+			<form name="create_form" action="create_account.php" method="get" onsubmit="on_submit(create_form)">
 				<input type="hidden" name="submitted" value="true"/>
 				<table cellpadding="3">
 				<tr>
@@ -43,6 +50,29 @@ include_once("./config/config.php");
 					<td>Email:&nbsp;</td>
 					<td><input type="text" name="email" /></td>
 				</tr>
+				<tr>
+					<td>Security Question:&nbsp;</td>
+					<td>
+					<select name="listOption" size="0">
+						<?php
+							$db = mysql_connect($db_address, $db_user_name, $db_password);
+							mysql_select_db($db_name, $db);
+							mysql_query("SET NAMES 'utf8'");
+							$result = mysql_query("SELECT id, question FROM security_question WHERE `default`=TRUE", $db);
+							while( $row = mysql_fetch_assoc($result) )
+							{
+								$id = $row['id'];
+								$question = $row['question'];
+								echo("<option value=\"$id\">$question</option>");
+							}
+						?>
+					</select>
+					</td>
+				</tr>
+				<tr>
+					<td>Answer:&nbsp;</td>
+					<td><input type="text" name="question_answer" /></td>
+				</tr>
 				</table>
 				<input type="submit" value="Create" />			
 			</form>
@@ -56,18 +86,18 @@ $password   = isset($_GET['password'])  ? $_GET['password']  : null;
 $password2  = isset($_GET['password2']) ? $_GET['password2'] : null;
 $full_name  = isset($_GET['full_name']) ? $_GET['full_name'] : null;
 $email      = isset($_GET['email'])     ? $_GET['email']     : null;
+$listOption = isset($_GET['listOption']) ? $_GET['listOption'] : null;
+$question_answer = isset($_GET['question_answer']) ? $_GET['question_answer'] : null;
+$submitted = isset($_GET['submitted']) ? $_GET['submitted'] : null;
 
-if( !empty($user_name) && !empty($password) && !empty($password2) && !empty($full_name) && !empty($email) )
+if( !empty($user_name) && !empty($password) && !empty($password2) && 
+	!empty($full_name) && !empty($email) && !empty($question_answer) && !empty($listOption) )
 {
 	// TODO! validate user, password, email for length spaces & invalid chars
 	if( $password == $password2 )
 	{
 		if( validate_pass( $password ) )
 		{
-			$db = mysql_connect($admin_db_address, $admin_db_user_name, $admin_db_password);
-			mysql_select_db($admin_db_name, $db);
-			mysql_query("SET NAMES 'utf8'");
-			
 			if( !ip_blocked( 'CREATE', $db ) )
 			{
 				$user_name = mysql_real_escape_string($user_name);
@@ -82,7 +112,7 @@ if( !empty($user_name) && !empty($password) && !empty($password2) && !empty($ful
 				}
 				else
 				{
-					if(create_account( $user_name, $password, $full_name, $email, $db ))
+					if(create_account( $user_name, $password, $full_name, $email, $listOption, $question_answer, $db ))
 					{
 						echo( "Account created for $full_name ($user_name)" );
 					}
