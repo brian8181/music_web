@@ -29,11 +29,11 @@ include("./module/login_greeting.php");
 <h1>Advanced Music Query</h1>
 </div>
 
-<!-- Navagation Bar --> <br />
+<!-- Navagation Bar --> 
 <?php
 $enable_quick_search = false;
 include("./module/top_toolbar.php");
-?>
+	?>
 
 <hr />
 <br />

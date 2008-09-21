@@ -21,7 +21,6 @@ $style = assert_login() ? $_SESSION['USER_STYLE'] : "./css/$style";
 				<h1>Playlists</h1>
 			</center>
 			</div>
-			<br />	
 <?php include("./module/top_toolbar.php"); ?>
 			<hr />
 			<center>
@@ -48,7 +47,7 @@ while ( $row = mysql_fetch_array($result, MYSQL_NUM) )
 	$count_result = mysql_query($sql);
 	$count_row = mysql_fetch_array($count_result, MYSQL_NUM);
 	$count = $count_row[0]; 
-	echo( "<td><a href=\"./results.php?query_type=playlist&pid=$id\">$name</a><br /></td>" );
+	echo( "<td><a href=\"./results.php?query_type=playlist&pid=$id&nav_row=0\">$name</a><br /></td>" );
 	echo( "<td><em>$count</em></td>" );
 	echo("</tr>");
 }

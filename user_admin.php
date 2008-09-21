@@ -99,8 +99,9 @@ include("./module/login_greeting.php");
 		<div class="box" style="text-align: center">
 			<h1>User Administration</h1>
 		</div>
-		<br />
-		<?php include("./module/top_toolbar.php"); ?>
+<?php 
+include("./module/top_toolbar.php"); 
+	?>
 
 		<hr />
 		<br />

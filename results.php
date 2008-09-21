@@ -86,11 +86,11 @@ if( !isset( $query_type ) ) $query_type = "default";
 // build the sql query
 $uid = isset($_SESSION['_USER_ID']) ? $_SESSION['_USER_ID'] : null;
 $sql = build_query(
-	$query_type, $artist, $album, $title, $genre, $file, $lyrics, $sortby, $and, $uid );
+	$query_type, $artist, $album, $title, $genre, $file, $lyrics, $sortby, $and, $pid, $uid );
 
-if( $page_result_limit > 0 ) {
-	$sql = "$sql LIMIT $page_result_limit";
-}
+//if( $page_result_limit > 0 ) {
+//	$sql = "$sql LIMIT $page_result_limit";
+//}
 //debug
 //echo("<br /><br />SQL: $sql<br /><br />");
 
