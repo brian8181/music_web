@@ -27,7 +27,13 @@ $db = mysql_connect($db_address, $db_user_name, $db_password);
 mysql_select_db($db_name, $db);
 mysql_query("SET NAMES 'utf8'");
 $user_id = $_SESSION['_USER_ID'];
-
+// first get current settings from session 
+$user_id = $_SESSION['_USER_ID'];
+$user_name = $_SESSION['_USER'];
+$password   = $_SESSION['USER_PASSWORD'];
+$full_name  = $_SESSION['USER_FULLNAME'];
+$user_email = $_SESSION['USER_EMAIL'];
+$style_id  = $_SESSION['USER_STYLE_ID'];
 include("./module/login_greeting.php"); 
                 ?> 
 
@@ -43,6 +49,9 @@ include("./module/top_toolbar.php");
 ?>
 <br />
 		<table>
+			<tr><td><strong>User:&nbsp;&nbsp;&nbsp;</strong></td><td><em><?php echo( $user_name ) ?></em></td></tr>
+			<tr><td><strong>Full Name:&nbsp;&nbsp;&nbsp;</strong></td><td><em><?php echo( $full_name ) ?></em></td></tr>
+			<tr><td><strong>Email:&nbsp;&nbsp;&nbsp;</strong></td><td><em><?php echo( $user_email ) ?></em></td></tr>
 		<?php
 			$result = mysql_query("SELECT MAX(insert_ts) FROM login WHERE `user_id`=$user_id", $db); 
 			$row = mysql_fetch_row($result);
@@ -52,20 +61,20 @@ include("./module/top_toolbar.php");
 			$result = mysql_query("SELECT count(*) FROM login WHERE `user_id`=$user_id", $db); 
 			$row = mysql_fetch_row($result);
 				?>
-				<tr><td><strong>Login Count:&nbsp;&nbsp;&nbsp;</strong></td><td><em><?php echo( $row[0] ) ?></em></td></tr>
+				<tr><td><strong>Logins:&nbsp;&nbsp;&nbsp;</strong></td><td><em><?php echo( $row[0] ) ?></em></td></tr>
 			<?php
-			$result = mysql_query("SELECT count(*) FROM user_cart WHERE `user_id`=1", $db); 
+			$result = mysql_query("SELECT count(*) FROM user_cart WHERE `user_id`=1 AND removed_ts IS NULL", $db); 
 			$row = mysql_fetch_row($result);
 				?>
-				<tr><td><strong>Basket Count:&nbsp;&nbsp;&nbsp;</strong></td><td><em><?php echo( $row[0] ) ?></em></td></tr>
+				<tr><td><strong>Cart Items:&nbsp;&nbsp;&nbsp;</strong></td><td><em><?php echo( $row[0] ) ?></em></td></tr>
 			<?php
 			$result = mysql_query("SELECT count(*) FROM download WHERE `user_id`=1", $db); 
 			$row = mysql_fetch_row($result);
 				?>
-				<tr><td><strong>Download Count:&nbsp;&nbsp;&nbsp;</strong></td><td><em><?php echo( $row[0] ) ?></em></td></tr>	
+				<tr><td><strong>Downloads:&nbsp;&nbsp;&nbsp;</strong></td><td><em><?php echo( $row[0] ) ?></em></td></tr>	
 		</table>
 		<br />
-		<center><a href="./user_download_history.php?nav_row=0">See download history</a></center>
+		<center><a href="./user_download_history.php?nav_row=0"><em>see download history</em></a></center>
 		<hr />
 <?php
 include("./module/bottom_toolbar.php");
