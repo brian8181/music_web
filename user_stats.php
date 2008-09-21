@@ -42,11 +42,12 @@ include("./module/login_greeting.php");
 			My Stats
 		</h1>
 	</div>
-	<hr />
+	
 	<div align="center">
 <?php 
 include("./module/top_toolbar.php"); 
 ?>
+<hr />
 <br />
 		<table>
 			<tr><td><strong>User:&nbsp;&nbsp;&nbsp;</strong></td><td><em><?php echo( $user_name ) ?></em></td></tr>

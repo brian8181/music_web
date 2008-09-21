@@ -72,7 +72,6 @@ echo($results_title);
 		?>
 		</h1>
 	</div>
-	<br />
 
 <?php 
 include("./module/top_toolbar.php"); 
