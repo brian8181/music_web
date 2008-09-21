@@ -12,6 +12,7 @@ $style = assert_login() ? $_SESSION['USER_STYLE'] : "./css/$style";
     <title>Browse Artist</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" type="text/css" href="<?php echo($style) ?>" />
+    
   </head>
   <body>
 	<div class="text_area">
@@ -34,8 +35,8 @@ include("./module/top_toolbar.php");
 <?php
 
 //get set variables
-$letter   = isset($_GET['letter'])    ? $_GET['letter']   : null;
-$nav_row   = isset($_GET['nav_row'])  ? $_GET['nav_row']      : 0;
+$letter   = isset($_GET['letter'])    ? $_GET['letter']  : null;
+$nav_row   = isset($_GET['nav_row'])  ? $_GET['nav_row']  : 0;
 $show_all  = isset($_GET['show_all']) ? $_GET['show_all'] : null;
 
 $filter = "";
@@ -119,11 +120,11 @@ $result = $nav->execute($sql, $db, 'mysql');
 echo '<br />';
 ?>
 	<center>
-	<table>
+	<table cellpadding="3">
 	<tr>
-		<th>Artist</th>
-		<th>Songs</th>
-		<th>Albums</th>
+		<th style="text-align: left">Artist</th>
+		<th style="text-align: center">Songs</th>
+		<th style="text-align: center">Albums</th>
 	</tr>
 <?php 
 	while( $row = mysql_fetch_row( $result ) )
@@ -140,13 +141,14 @@ echo '<br />';
 		
 		echo("<tr>");
 		echo("<td><a href=\"browse_artist_albums.php?aid=$aid&filter=$filters\">$row[1]</a></td>");
-		echo("<td>$song_count</td>");
-		echo("<td>$album_count</td>");
+		echo("<td style=\"text-align: center\">$song_count</td>");
+		echo("<td style=\"text-align: center\">$album_count</td>");
 		echo("</tr>");
 	}
 	?>
 	</table>
 	</center>
+	<br />
 <?php
 // display links
 $links = $nav->getlinks("all", "on");

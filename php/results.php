@@ -42,7 +42,6 @@ function build_query($query_type, $artist=null, $album=null, $title=null, $genre
 					"WHERE playlist_id=$pid ORDER BY `order`";
 			}
 			break;
-			// todo move not a result.php
 		case "my_cart":
 			$sql = "SELECT art.file as art_file, track, title, album, artist.artist, song.file, song.id as sid FROM user_cart
 					INNER JOIN song ON user_cart.song_id=song.id
@@ -50,7 +49,6 @@ function build_query($query_type, $artist=null, $album=null, $title=null, $genre
 					LEFT JOIN album ON album.id = song.album_id
 					LEFT JOIN art ON song.art_id = art.id WHERE `user_cart`.user_id=1  AND removed_ts IS NULL";
 			break;	
-			// todo move not a result.php
 		case "my_downloads":
 			$sql = "SELECT art.file as art_file, track, title, album, artist.artist, song.file, song.id as sid FROM download
 					INNER JOIN song ON download.song_id=song.id
