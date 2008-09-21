@@ -74,7 +74,8 @@ include("./module/login_greeting.php");
 							{
 								$id = $row['id'];
 								$style = $row['style'];
-								echo("<option value=\"$id\">$style</option>");
+								$selected = $id == $style_id ? "selected=\"selected\"" : null;
+								echo("<option value=\"$id\" $selected >$style</option>");
 							}
 						?>
 					</select>
