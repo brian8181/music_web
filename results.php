@@ -84,8 +84,9 @@ include("./module/top_toolbar.php");
 if( !isset( $query_type ) ) $query_type = "default";
 
 // build the sql query
+$uid = isset($_SESSION['_USER_ID']) ? $_SESSION['_USER_ID'] : null;
 $sql = build_query(
-	$query_type, $artist, $album, $title, $genre, $file, $lyrics, $sortby, $and );
+	$query_type, $artist, $album, $title, $genre, $file, $lyrics, $sortby, $and, $uid );
 
 if( $page_result_limit > 0 ) {
 	$sql = "$sql LIMIT $page_result_limit";
@@ -156,21 +157,31 @@ if($result)
 		// download link			
 		if( $authorized )
 		{
-			if($enable_direct_download)
+			$incart = $row[7];
+			$removed = $row[8];
+			if($incart && !$removed) //was in cart and not removed
 			{
-				echo( "\t<td align='center'>
-							<a href=\"$music_location$row[5]\">download</a>
-						</td>\n" );
+				echo( "\t<td align='center'><i>added to cart</i></td>\n" );
+				echo( "\t<td align='center'><i>added to cart</i></td>\n" );	
 			}
 			else
 			{
+				if($enable_direct_download)
+				{
+					echo( "\t<td align='center'>
+								<a href=\"$music_location$row[5]\">download</a>
+							</td>\n" );
+				}
+				else
+				{
+					echo( "\t<td align='center'>
+								<a href=\"./php/download.php?sid=$sid\">download</a>
+							</td>\n" );
+				}
 				echo( "\t<td align='center'>
-							<a href=\"./php/download.php?sid=$sid\">download</a>
-						</td>\n" );
+								<a href=\"./php/add_to_cart.php?sid=$sid\">add to cart</a>
+							</td>\n" );
 			}
-			echo( "\t<td align='center'>
-							<a href=\"./php/add_to_cart.php?sid=$sid\">add to cart</a>
-						</td>\n" );
 		}
 		else
 		{

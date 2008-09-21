@@ -5,7 +5,7 @@ function build_special_query($query_type)
  return build_query($query_type, null, null, null, null, null, null, null, null);
 }
 
-function build_query($query_type, $artist=null, $album=null, $title=null, $genre=null, $file=null, $lyrics=null, $sortby=null, $and=null)
+function build_query($query_type, $artist=null, $album=null, $title=null, $genre=null, $file=null, $lyrics=null, $sortby=null, $and=null, $uid=null)
 {
 	$sql = "";
 	// todo: change to stored procecudres (requires use of "MYSQLI") 
@@ -86,11 +86,24 @@ function build_query($query_type, $artist=null, $album=null, $title=null, $genre
 				$title = mysql_real_escape_string( $title );
 				$genre = mysql_real_escape_string( $genre );
 				$file = mysql_real_escape_string( $file );
+				
 				// Build SQL
-				$sql = "SELECT art.file, track, title, album, artist.artist, song.file, song.id FROM song " .
+				if( $uid != null )
+				{
+					$sql = "SELECT art.file, track, title, album, artist.artist, song.file, song.id, " . 
+					"user_cart.user_id, user_cart.removed_ts FROM song " .
+					"LEFT JOIN artist ON artist.id = song.artist_id " .
+					"LEFT JOIN album ON album.id = song.album_id " .
+					"LEFT JOIN art ON song.art_id = art.id " .
+					"LEFT JOIN user_cart ON song.id = user_cart.song_id";
+				}
+				else
+				{
+					$sql = "SELECT art.file, track, title, album, artist.artist, song.file, song.id FROM song " .
 					"LEFT JOIN artist ON artist.id = song.artist_id " .
 					"LEFT JOIN album ON album.id = song.album_id " .
 					"LEFT JOIN art ON song.art_id = art.id";
+				}
 				$operator = '';
 				
 				//echo( $sql );
@@ -122,6 +135,10 @@ function build_query($query_type, $artist=null, $album=null, $title=null, $genre
 				if( !empty( $lyrics ) )
 				{
 					$sql = "$sql $operator (`song`.`lyrics` LIKE '$lyrics')";
+				}
+				if( !empty( $uid ) )
+				{
+					$sql = "$sql AND (user_id=$uid OR user_id IS NULL)";
 				}
 				if( !empty( $sortby ) )
 					$sql = "$sql ORDER BY $sortby";
