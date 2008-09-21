@@ -110,7 +110,9 @@ if( !empty($password) && !empty($password2) && !empty($full_name) && !empty($use
 			// make sure user dose not exsit
 			if(update_account( $user_name, $password, $full_name, $user_email, $style_id, $db ))
 			{
-				echo( "Account updated for $full_name ($user_name)" );
+				set_session($user_name, $password, $db);
+				header( "Location: ./user_stats.php" ); 
+				//echo( "Account updated for $full_name ($user_name)" );
 			}
 			else
 			{

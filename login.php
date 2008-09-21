@@ -11,48 +11,27 @@ if( !isset( $_SESSION['_USER'] ) || !isset( $_SESSION['_GROUPS'] ) )
 		$user = $_GET['_USER'];
 		$pass = $_GET['_PASSWORD'];
 		$db = mysql_connect($db_address, $db_user_name, $db_password);
-			mysql_select_db($db_name, $db);
-			$sql = "SELECT user.id, `user`, `group`, `password`, email, full_name, `style`.`id`, `style`.`file` FROM `user` " . 
-				"INNER JOIN `user_group` ON `user`.id=`user_id` " . 
-				"INNER JOIN `group` ON `user_group`.`group_id`=`group`.id " .
-				"LEFT JOIN `style` ON `style`.`id`=`style_id` " . 
-				"WHERE user='$user' AND password='$pass'";
-			$result = mysql_query( $sql, $db );
-			if( mysql_num_rows($result) )
+		mysql_select_db($db_name, $db);
+		
+		if( set_session($user, $pass, $db ) )
+		{
+			if( isset($_SESSION['_PAGE']) )
 			{
-				$row = mysql_fetch_row($result);
-				$_SESSION['_USER_ID'] = $row[0]; 
-				$_SESSION['_USER'] = $row[1];
-				$_SESSION['USER_PASSWORD'] = $row[3];
-				$_SESSION['USER_EMAIL'] = $row[4];
-				$_SESSION['USER_FULLNAME'] = $row[5];
-				$_SESSION['USER_STYLE_ID'] = $row[6];
-				$_SESSION['USER_STYLE'] = $row[7];
-				// fetch groups
-				$_groups = array();
-				do{
-					$grp = $row[2];
-					$groups[$grp] = 1;
-				}while( $row == mysql_fetch_row($result) );
-				$_SESSION['_GROUPS'] = $groups;
-				
-				if( isset($_SESSION['_PAGE']) )
-				{
-					$page = $_SESSION['_PAGE'];
-					header( "Location: $page" ); 
-				} 
-				else 
-				{
-					header( "Location: ./index.php" ); 
-				} 
-				mysql_select_db($db_name, $db);
-				mysql_query( "INSERT INTO login (user_id) VALUES( $id )", $db );
+				$page = $_SESSION['_PAGE'];
+				header( "Location: $page" ); 
 			} 
 			else 
 			{
-				$message = "<b>No matching user / password</b>"; 
-			}
-			mysql_close($db); 
+				header( "Location: ./index.php" ); 
+			} 
+			mysql_select_db($db_name, $db);
+			mysql_query( "INSERT INTO login (user_id) VALUES( $id )", $db );
+		} 
+		else 
+		{
+			$message = "<b>No matching user / password</b>"; 
+		}
+		mysql_close($db); 
 	} 
 	else 
 	{

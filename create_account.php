@@ -112,7 +112,8 @@ if( !empty($user_name) && !empty($password) && !empty($password2) &&
 				{
 					if(create_account( $user_name, $password, $full_name, $user_email, $listOption, $question_answer, $db ))
 					{
-						echo( "Account created for $full_name ($user_name)" );
+						header( "Location: ./user_stats.php" ); 
+						//echo( "Account created for $full_name ($user_name)" );
 					}
 					else
 					{

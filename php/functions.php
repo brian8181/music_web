@@ -48,6 +48,38 @@ function create_account($user_name, $password, $full_name, $email, $question_id,
 	// make sure it inserted
 	return false;
 }
+//////////////////////////////////////
+// auths user and sets session vars //
+//////////////////////////////////////
+function set_session($user, $pass, $db)
+{
+	$sql = "SELECT user.id, `user`, `group`, `password`, email, full_name, `style`.`id`, `style`.`file` FROM `user` " . 
+			"INNER JOIN `user_group` ON `user`.id=`user_id` " . 
+			"INNER JOIN `group` ON `user_group`.`group_id`=`group`.id " .
+			"LEFT JOIN `style` ON `style`.`id`=`style_id` " . 
+			"WHERE user='$user' AND password='$pass'";
+	$result = mysql_query( $sql, $db );
+	if( mysql_num_rows($result) )
+	{
+		$row = mysql_fetch_row($result);
+		$_SESSION['_USER_ID'] = $row[0]; 
+		$_SESSION['_USER'] = $row[1];
+		$_SESSION['USER_PASSWORD'] = $row[3];
+		$_SESSION['USER_EMAIL'] = $row[4];
+		$_SESSION['USER_FULLNAME'] = $row[5];
+		$_SESSION['USER_STYLE_ID'] = $row[6];
+		$_SESSION['USER_STYLE'] = $row[7];
+		// fetch groups
+		$_groups = array();
+		do{
+			$grp = $row[2];
+			$groups[$grp] = 1;
+		}while( $row == mysql_fetch_row($result) );
+		$_SESSION['_GROUPS'] = $groups;
+		return true;
+	}
+	return false;
+}
 
 function update_account($user_name, $password, $full_name, $email, $style_id, $db)
 {
