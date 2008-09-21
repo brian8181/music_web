@@ -21,13 +21,13 @@ $style = assert_login() ? $_SESSION['USER_STYLE'] : "./css/$style";
 			</h1>
 		</div>
 
-		<br />
 <?php 
 include("./module/top_toolbar.php"); 
 		?>
 		
+<hr />
 <br />
-<br />
+
 <div align="center">
 			
 <table>
@@ -132,7 +132,7 @@ $row = mysql_fetch_row($result);
 </div>
 
 <br />
-<br />
+<hr />
 	
 <?php
 mysql_close($db);

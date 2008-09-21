@@ -12,6 +12,7 @@ $db = mysql_connect($db_address, $db_user_name, $db_password);
 mysql_select_db($db_name, $db);
 mysql_query("SET NAMES 'utf8'");
 
+// first get current settings from session 
 $user_id = $_SESSION['_USER_ID'];
 $user_name = $_SESSION['_USER'];
 $password   = $_SESSION['USER_PASSWORD'];
@@ -45,7 +46,7 @@ include("./module/login_greeting.php");
 				</tr>
 				<tr>
 					<td>Password:&nbsp;</td>
-					<td><input type="password" name="original" value="<?php echo($password); ?>" /></td>
+					<td><input type="password" name="original" /></td>
 				</tr>
 				<tr>
 					<td>New Password:&nbsp;</td>
@@ -61,7 +62,7 @@ include("./module/login_greeting.php");
 				</tr>
 				<tr>
 					<td>Email:&nbsp;</td>
-					<td><input type="text" name="email" value="<?php echo($user_email); ?>" /></td>
+					<td><input type="text" name="user_email" value="<?php echo($user_email); ?>" /></td>
 				</tr>
 				<tr>
 					<td>Custom Style Setting:&nbsp;</td>
@@ -85,15 +86,18 @@ include("./module/login_greeting.php");
 			<h3>
 <?php
 
-if( !empty($user_name) && !empty($password) && !empty($password2) && !empty($full_name) && !empty($email) )
+// get new current settings from query strings
+$password   = isset($_GET['password'])  ? $_GET['password']  : null;
+$password2  = isset($_GET['password2']) ? $_GET['password2'] : null;
+$full_name  = isset($_GET['full_name']) ? $_GET['full_name'] : null;
+$user_email = isset($_GET['user_email']) ? $_GET['user_email'] : null;
+$style_id  = isset($_GET['style_id']) ? $_GET['style_id'] : null;
+$listOption = isset($_GET['listOption']) ? $_GET['listOption'] : null;
+$question_answer = isset($_GET['question_answer']) ? $_GET['question_answer'] : null;
+$submitted = isset($_GET['submitted']) ? $_GET['submitted'] : null;
+
+if( !empty($password) && !empty($password2) && !empty($full_name) && !empty($user_email) )
 {
-	$original    = isset($_GET['$$original']) ? $_GET['$original']  : null;
-	$password   = isset($_GET['password'])  ? $_GET['password']  : null;
-	$password2  = isset($_GET['password2']) ? $_GET['password2'] : null;
-	$full_name  = isset($_GET['full_name']) ? $_GET['full_name'] : null;
-	$user_email = isset($_GET['user_email']) ? $_GET['user_email']     : null;
-	$style_id  = isset($_GET['style_id']) ? $_GET['style_id'] : null;
-	
 	// TODO! validate user, password, email for length spaces & invalid chars
 	if( $password == $password2 )
 	{
@@ -102,9 +106,9 @@ if( !empty($user_name) && !empty($password) && !empty($password2) && !empty($ful
 			$user_name = mysql_real_escape_string($user_name);
 			$password = mysql_real_escape_string($password);
 			$full_name = mysql_real_escape_string($full_name);
-			$email = mysql_real_escape_string($email);
+			$user_email = mysql_real_escape_string($user_email);
 			// make sure user dose not exsit
-			if(update_account( $user_name, $password, $full_name, $email, $style_id, $db ))
+			if(update_account( $user_name, $password, $full_name, $user_email, $style_id, $db ))
 			{
 				echo( "Account updated for $full_name ($user_name)" );
 			}

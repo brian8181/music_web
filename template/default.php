@@ -32,18 +32,17 @@ include("./module/top_toolbar.php");
 		?>
 		
 		<hr />
-<?php		
-include("./module/index_body.php"); 		
-	    ?>			
-	
+		<br />
+		
+[TODO]
+
+		<br />
 		<hr />
 <?php
 include("./module/bottom_toolbar.php");
 include("./module/contact_info.php");
 			?>
-
 		<br />
-
 <?php
 include("./module/version.php");
 			    ?>

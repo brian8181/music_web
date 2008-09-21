@@ -54,8 +54,8 @@ function update_account($user_name, $password, $full_name, $email, $style_id, $d
 	$sql = "UPDATE `user` SET `password`='$password', `full_name`='$full_name', `email`='$email', `style_id`=$style_id " .
 					"WHERE `user`='$user_name'";
 	mysql_query( $sql, $db );
-	// make sure it inserted
-	return ( mysql_affected_rows($db) > 0 );
+	// make sure it inserted -1 = failed
+	return ( mysql_affected_rows($db) > -1 );
 }
 
 function update_settings($user_name, $style_id, $db)
