@@ -8,7 +8,7 @@ include_once("./classes/table.php");
 isset( $_SESSION['_SEARCH_PAGE'] ) ? $back = $_SESSION['_SEARCH_PAGE'] : $back = "./index.php";
 $_SESSION['_PAGE']  = $_SERVER['REQUEST_URI'];
 $_SESSION['_QUERY'] = $_SERVER['QUERY_STRING'];
-$style = assert_login() ? $_SESSION['_STYLE'] : "./css/$style";
+$style = assert_login() ? $_SESSION['USER_STYLE'] : "./css/$style";
 		?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">

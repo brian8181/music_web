@@ -142,10 +142,10 @@ function add_2_cart($uid, $sid, $db)
 
 function delete_from_cart($uid, $sid, $db)
 {
-	$sid = mysql_real_escape_string( $uid );
+	$uid = mysql_real_escape_string( $uid );
 	$sid = mysql_real_escape_string( $sid );
 	// make sure it is not already present
-	$sql = "DELETE FROM user_cart WHERE user_id=$uid AND song_id=$sid";
+	//$sql = "DELETE FROM user_cart WHERE user_id=$uid AND song_id=$sid";
 	$sql = "UPDATE user_cart SET removed_ts=NOW() WHERE user_id=$uid AND song_id=$sid";
 	mysql_query($sql, $db);
 }

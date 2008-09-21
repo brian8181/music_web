@@ -58,6 +58,11 @@ function update_account($user_name, $password, $full_name, $email, $style_id, $d
 	return ( mysql_affected_rows($db) > 0 );
 }
 
+function update_settings($user_name, $style_id, $db)
+{
+		
+}
+
 // validate user is logged in 
 function assert_login()
 {

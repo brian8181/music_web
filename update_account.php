@@ -1,7 +1,6 @@
 <?php
 session_start();
 include_once("./config/config.php");
-include("./admin/functions.php");
 include("./php/functions.php");
 if(assert_login() == false)
 {
@@ -23,16 +22,17 @@ $style_id  = $_SESSION['USER_STYLE_ID'];
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 	<head>
-		<title>My Account</title>
+		<title>My Settings</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<link rel="stylesheet" type="text/css" href="<?php echo($style) ?>" />
 	</head>
 	<body>
 	<div class="text_area">
-	<img src="./image/home.gif" alt="user" />
-	<a href="./index.php"><b>Home</b></a>
+<?php
+include("./module/login_greeting.php"); 
+	?>
 			<div class="box" style="text-align: center">
-				<h1>My Account</h1>
+				<h1>My Settings</h1>
 			</div>
 			<br />	
 			<hr />

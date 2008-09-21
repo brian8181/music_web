@@ -13,8 +13,7 @@ if( isset( $enable_security ) && $enable_security == true )
 		{
 			$local_user = $_SESSION['_USER'];
 			echo( "<b>$local_user</b>&nbsp;<a href=\"logout.php\"><b>Logout</b></a>" );	
-			echo( "|&nbsp;<a href=\"./update_account.php\"><b>Account</b></a>" );
-			echo( "|&nbsp;<a href=\"./user_settings.php\"><b>Settings</b></a>" );
+			echo( "|&nbsp;<a href=\"./update_account.php\"><b>My Settings</b></a>" );
 			echo( "|&nbsp;<a href=\"./cart.php?nav_row=0\"><b>My Cart</b></a>" );
 			echo( "|&nbsp;<a href=\"./user_stats.php?nav_row=0\"><b>My Stats</b></a>" );	
 		}

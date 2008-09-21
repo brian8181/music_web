@@ -17,7 +17,7 @@ if(!array_key_exists('admin', $groups_loc))
 	echo( "<div style=\"text-align: center\"><a href=\"/index.php\"><i>www.bkp-online.com</i></a></div>" );
 	exit();
 }
-$style = assert_login() ? $_SESSION['_STYLE'] : "./css/$style";
+$style = assert_login() ? $_SESSION['USER_STYLE'] : "./css/$style";
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -200,7 +200,7 @@ mysql_close();
         </form>
         
 		<br />
-		<form action="./admin/update_users.php" name="update_form" onsubmit="return on_submit(update_form)" method="get">
+		<form action="./php/update_users.php" name="update_form" onsubmit="return on_submit(update_form)" method="get">
 			<input type="hidden" name="usr_grps" value="" />
 			<input type="submit" value="Update" />
 		</form>
