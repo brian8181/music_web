@@ -2,45 +2,38 @@
 // Result Table
 class table
 {
-	private $columns;
-	private $template;
+	private $header_html;
+	private $row_tmpl;
 	private $db;
 	
-	function __construct($columns, $template, $db) 
+	function __construct($header_html, $row_tmpl, $db) 
 	{
-    	$this->columns = $columns;
-		$this->template = $template; 
+    	$this->header_html = $header_html;
+		$this->row_tmpl = $row_tmpl; 
 		$this->db = $db;
    	}
    	
 	// print the table
     public function printOut($sql)
      {
-	   	//$this->getOptions();
+     	// print headers
 	   	echo("<table id=\"result\"><tr class=\"header_row\">");
-	   	$result = mysql_query($sql, $this->db);
-	   	$len  = mysql_num_fields($result);
-		
-	   	// print headers
-	   	for($i = 0; $i < $len; ++$i)
-	   	{
-			$field = mysql_fetch_field($result, $i);
-			if( in_array($field->name, $this->columns) )
-			{
-				echo("<th>$field->name</th>");
-			}
-	   	}
-	   	echo("</tr>");
+	   	echo($this->header_html);
+	    echo("</tr>");
+	    
+	    $result = mysql_query($sql, $this->db);
+	    $len  = mysql_num_fields($result);
+	   	   
 	   	// print data
 	   	while( $row = mysql_fetch_assoc($result) )
 		{
-			$html_row = $this->template;
+			$row_html = $this->row_tmpl;
 			for($i = 0; $i < $len; ++$i)
 		   	{
 				$field = mysql_fetch_field($result, $i);
-				$html_row = str_replace("%$field->name%", $row[$field->name], $html_row);
+				$row_html = str_replace("%$field->name%", $row[$field->name], $row_html);
 		   	}
-		   	echo("<tr id=\"table_row\">$html_row</tr>");
+		   	echo("<tr id=\"table_row\">$row_html</tr>");
 		}
 	   	echo("</table>");
     }
