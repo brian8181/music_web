@@ -34,7 +34,7 @@ class table
 	   	// print data
 	   	while( $row = mysql_fetch_assoc($result) )
 		{
-			$html_row = "<td>%id%</td><td>%track%</td><td>%year%</td>";
+			$html_row = $this->template;
 			for($i = 0; $i < $len; ++$i)
 		   	{
 				$field = mysql_fetch_field($result, $i);

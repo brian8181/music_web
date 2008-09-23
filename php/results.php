@@ -110,7 +110,7 @@ function build_query($query_type, $artist=null, $album=null, $title=null, $genre
 					"LEFT JOIN artist ON artist.id = song.artist_id " .
 					"LEFT JOIN album ON album.id = song.album_id " .
 					"LEFT JOIN art ON song.art_id = art.id " .
-					"LEFT JOIN user_cart ON song.id = user_cart.song_id";
+					"LEFT JOIN user_cart ON song.id = user_cart.song_id AND (user_id IS NULL OR removed_ts IS NULL) ";
 				}
 				else
 				{
@@ -150,10 +150,6 @@ function build_query($query_type, $artist=null, $album=null, $title=null, $genre
 				if( !empty( $lyrics ) )
 				{
 					$sql = "$sql $operator (`song`.`lyrics` LIKE '$lyrics')";
-				}
-				if( !empty( $uid ) )
-				{
-					$sql = "$sql AND (user_id=$uid OR user_id IS NULL)";
 				}
 				if( !empty( $sortby ) )
 					$sql = "$sql ORDER BY $sortby";
