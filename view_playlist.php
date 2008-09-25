@@ -1,0 +1,71 @@
+<?php
+session_start();
+include_once("./config/config.php");
+include_once("./php/functions.php");
+$uri = $_SERVER['REQUEST_URI'];
+$style = assert_login() ? $_SESSION['USER_STYLE'] : "./css/$style";
+$pid = isset($_GET['pid']) ? $_GET['pid'] : null;
+
+$db = mysql_connect($db_address, $db_user_name, $db_password); mysql_select_db($db_name, $db);
+mysql_query("SET NAMES 'utf8'");
+$result = mysql_query("SELECT name FROM playlists where id='$pid'");
+$playlist_name = "Playlist View";
+if($result)
+{
+	$row = mysql_fetch_row($result);
+	if($row)
+	{
+		$playlist_name = $row[0];
+	}
+}
+	?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Playlist View - <?php echo($playlist_name) ?></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="shortcut icon" href="./favicon.png" />
+	<link rel="stylesheet" type="text/css" href="<?php echo($style); ?>" />
+</head>
+	<body>
+	<div class="text_area">
+   
+<?php 
+include("./module/login_greeting.php"); 
+	?> 
+				
+	<div class="box" style="text-align: center">
+		<h1>
+			<?php echo($playlist_name) ?>
+		</h1>
+	</div>
+	
+<?php 
+include("./module/top_toolbar.php"); 
+		?>
+		
+		<hr />
+		<br />
+<?php 
+$sql = get_playlist($pid);
+$result = mysql_query($sql, $db); 
+if($result)
+{
+	printTable($result);
+}
+mysql_close($db);
+	?>		
+
+		<br />
+		<hr />
+<?php
+include("./module/bottom_toolbar.php");
+include("./module/contact_info.php");
+			?>
+		<br />
+<?php
+include("./module/version.php");
+			    ?>
+	</div>	
+	</body>
+</html>
