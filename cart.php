@@ -2,7 +2,6 @@
 session_start();
 include_once("./config/config.php");
 include_once("./php/functions.php");
-include_once("./php/results.php");
 include_once("./php/navbar.php");
 include_once("./php/html_functions.php");
 include_once("./module/standard_headers.php");
@@ -44,7 +43,6 @@ include("./module/top_toolbar.php");
 		
 		<hr />
 <?php 
-$sql = build_query('my_cart');
 
 if(isset($_GET['nav_row']))
 {
@@ -55,6 +53,8 @@ else
 	$_GET['nav_row'] = $nav_row = 0;
 }
 
+$uid = $_SESSION['USER_ID'];
+$sql = get_my_cart($uid);
 
 $nav = new navbar;
 $nav->numrowsperpage = 50;

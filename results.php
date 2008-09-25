@@ -3,8 +3,6 @@ session_start();
 include_once("./config/config.php");
 include_once("./php/functions.php");
 include_once("./php/navbar.php");
-include_once("./php/results.php");
-include_once("./classes/table.php");
 isset( $_SESSION['_SEARCH_PAGE'] ) ? $back = $_SESSION['_SEARCH_PAGE'] : $back = "./index.php";
 $_SESSION['_PAGE']  = $_SERVER['REQUEST_URI'];
 $_SESSION['_QUERY'] = $_SERVER['QUERY_STRING'];
@@ -83,14 +81,16 @@ include("./module/top_toolbar.php");
 if( !isset( $query_type ) ) $query_type = "default";
 
 // build the sql query
-$uid = isset($_SESSION['_USER_ID']) ? $_SESSION['_USER_ID'] : null;
+$uid = isset($_SESSION['USER_ID']) ? $_SESSION['USER_ID'] : null;
 $sql = get_search(
-	$artist, $album, $title, $genre, $file, $lyrics, $sortby, $and, $pid, $uid );
+	$artist, $album, $title, $genre, $file, $lyrics, $sortby, $and, $pid );
 
 $nav_row  = isset($_GET['nav_row'])  ? $_GET['nav_row']  : null;
-$nav = new navbar;
+$nav = new navbar();
 $nav->numrowsperpage = 50;
 $result = $nav->execute($sql, $db, "mysql");
+
+// get totals
 $total = $nav->total;
 $start_number = $nav->start_number;
 $end_number = $nav->end_number;
@@ -106,92 +106,19 @@ $uri = $_SERVER['REQUEST_URI'];
 // Remove "sortby" from URI
 $pos = strrpos($uri, "sortby");
 if ( ! ($pos === false) ) {  
-	// found...
 	$len = strlen($uri);
 	$len -= $pos-1;
 	$uri = substr( $uri, 0, -$len );
 }
-	?>
-	<table id="result">		
-<?php
-$headers = new result_headers($uri);
-$headers->printOut($uri);
-
 if($result)
 {
-	$authorized = !$enable_security || assert_login(); 
-	echo("\n");
-	while ( $row = mysql_fetch_row($result) )
-	{
-		$sid = $row[6];
-		// process the row...
-		echo(
-				"<tr id=\"table_row\">\n" .
-				//cover
-				"\t<td id=\"art_col\">
-					<a class=\"NoColor\" href=\"./results.php?album=$row[3]&artist=$row[4]&amp;sortby=track\">
-					<img src=\"$art_location/xsmall/$row[0]\" width=\"50\" height=\"50\" alt=\"NA\"/>
-					</a>
-					</td>\n" .
-				// track
-				"\t<td align='center'>$row[1]</td>\n" .
-				// title
-				"\t<td class='Padded' align='left'>
-					<a href=\"details.php?sid=$sid\">$row[2]</a>
-					</td>\n" .
-				// album
-				"\t<td class='Padded' align='left'>
-					<a href=\"results.php?album=$row[3]&amp;sortby=track\">$row[3]</a>
-					</td>\n" .
-				// artist
-				"\t<td class='Padded' align='left'>
-					<a href=\"results.php?artist=$row[4]&amp;sortby=album.album,track\">$row[4]</a>
-					</td>\n"  );
-		// download link			
-		if( $authorized )
-		{
-			$incart = $row[7];
-			$removed = $row[8];
-			if($incart && !$removed) //was in cart and not removed
-			{
-				echo( "\t<td align='center'><i>added to cart</i></td>\n" );
-				echo( "\t<td align='center'><i>added to cart</i></td>\n" );	
-			}
-			else
-			{
-				if($enable_direct_download)
-				{
-					echo( "\t<td align='center'>
-								<a href=\"$music_location$row[5]\">download</a>
-							</td>\n" );
-				}
-				else
-				{
-					echo( "\t<td align='center'>
-								<a href=\"./php/download.php?sid=$sid\">download</a>
-							</td>\n" );
-				}
-				echo( "\t<td align='center'>
-								<a href=\"./php/add_to_cart.php?sid=$sid\">add to cart</a>
-							</td>\n" );
-			}
-		}
-		else
-		{
-			echo( "\t<td align='center'><i>NA</i></td>\n" );
-			echo( "\t<td align='center'><i>NA</i></td>\n" );	
-		}
-		echo("</tr>\n");
-	}
+	printTable($result);
 }
-//mysql_close($db);
+mysql_close($db);
 		?>
-	</table>	
-	
 	<br /><br />
 	<center>
 <?php
-
 	$links = $nav->getlinks("all", "on");
 	if($links != null)
 	{
@@ -199,7 +126,6 @@ if($result)
 		  echo $links[$y] . "&nbsp;&nbsp;";
 		}
 	}
-
 	?>
 	<br />
 	<br />	

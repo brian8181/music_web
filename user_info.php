@@ -13,24 +13,21 @@ $_SESSION['_PAGE'] = $_SERVER['REQUEST_URI'];
 </head>
 	<body>
 	<div class="text_area">
-   
 <?php 
-$db = mysql_connect($db_address, $db_user_name, $db_password); mysql_select_db($db_name, $db);
+$db = mysql_connect($db_address, $db_user_name, $db_password); 
+mysql_select_db($db_name, $db);
 mysql_query("SET NAMES 'utf8'");
 mysql_close();
 include("./module/login_greeting.php"); 
                 ?> 
-				
 	<div class="box" style="text-align: center">
 		<h1>
 			[$title]
 		</h1>
 	</div>
-	
 <?php 
 include("./module/top_toolbar.php"); 
 		?>
-		
 		<hr />
 		<br />
 		

@@ -9,9 +9,9 @@ if( isset( $enable_security ) && $enable_security == true )
 		</td>
 		<td>
 		<?php
-		if( isset( $_SESSION['_USER'] ) )
+		if( isset( $_SESSION['USER_ID'] ) )
 		{
-			$local_user = $_SESSION['_USER'];
+			$local_user = $_SESSION['USER_NAME'];
 			echo( "<b>$local_user</b>&nbsp;<a href=\"logout.php\"><b>Logout</b></a>" );	
 			echo( "|&nbsp;<a href=\"./update_account.php\"><b>My Settings</b></a>" );
 			echo( "|&nbsp;<a href=\"./cart.php?nav_row=0\"><b>My Cart</b></a>" );

@@ -7,7 +7,7 @@ function add_data($data)
 
 function open_row()
 {
-	echo("<tr>");
+	echo("<tr id=\"table_row\">");
 }
 
 function close_row()

@@ -2,7 +2,6 @@
 session_start();
 include_once("./config/config.php");
 include_once("./php/functions.php");
-include_once("./php/results.php");
 include_once("./php/navbar.php");
 include_once("./php/html_functions.php");
 include_once("./module/standard_headers.php");
@@ -27,7 +26,8 @@ $style = assert_login() ? $_SESSION['USER_STYLE'] : "./css/$style";
 	<div class="text_area">
    
 <?php 
-$db = mysql_connect($db_address, $db_user_name, $db_password); mysql_select_db($db_name, $db);
+$db = mysql_connect($db_address, $db_user_name, $db_password);
+mysql_select_db($db_name, $db);
 mysql_query("SET NAMES 'utf8'");
 include("./module/login_greeting.php"); 
                 ?> 

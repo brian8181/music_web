@@ -1,5 +1,229 @@
 <?php
+// get the default query
+function get_default_query()
+{
+	$sql =  "SELECT art.file as art_file, track, title, album, artist.artist, song.file as song_file, song.id as sid, " .
+			"user_cart.user_id, user_cart.removed_ts FROM song " . 			
+			"LEFT JOIN artist ON artist.id = song.artist_id " .
+			"LEFT JOIN album ON album.id = song.album_id " .
+			"LEFT JOIN art ON song.art_id = art.id " . 
+			"LEFT JOIN user_cart ON song.id = user_cart.song_id AND (user_id IS NULL OR removed_ts IS NULL)";
+	return $sql;	
+}
+// get all lyrics
+function get_all_lyrics()
+{
+	$sql = get_default_query();
+	return "$sql WHERE NOT lyrics IS NULL";
+}
+// get default playlist
+function get_playlist($pid)
+{
+	$sql = "SELECT art.file as art_file, track, title, album, artist.artist, song.file as song_file, song.id as sid,
+			user_cart.user_id, user_cart.removed_ts FROM song 
+			LEFT JOIN artist ON artist.id = song.artist_id
+			LEFT JOIN album ON album.id = song.album_id
+			LEFT JOIN art ON song.art_id = art.id
+			LEFT JOIN user_cart ON song.id = user_cart.song_id AND (user_id IS NULL OR removed_ts IS NULL )
+			LEFT JOIN playlist_songs ON song.id = playlist_songs.song_id
+			LEFT JOIN playlists ON playlists.id = playlist_songs.id
+			WHERE playlist_id=$pid ORDER BY `order`";
+	
+	return $sql;
+}
+// get a serarch
+function get_search($artist=null, $album=null, $title=null, $genre=null, $file=null, $lyrics=null, $sortby=null, $and=null, $pid=null)
+{
+	// check for wildcards & strip escape characters
+	if(isset($wildcard) && $wildcard == "on")
+	{
+		$album = str_replace( "*", "%", $album);
+		$album = str_replace( "?", "_", $album);
+		$artist = str_replace( "*", "%", $artist);
+		$artist = str_replace( "?", "_", $artist);
+		$title = str_replace( "*", "%", $title);
+		$title = str_replace( "?", "_", $title);
+		$genre = str_replace( "*", "%", $genre);
+		$genre = str_replace( "?", "_", $genre);
+		$file = str_replace( "*", "%", $file);
+		$file = str_replace( "?", "_", $file);
+		$lyrics = str_replace( "*", "%", $lyrics);
+		$lyrics = str_replace( "?", "_", $lyrics);
+	}
+	else
+	{
+		$album = !empty( $album ) ? "%$album%" : "";
+		$artist = !empty( $artist ) ? "%$artist%" : "";
+		$title = !empty( $title ) ? "%$title%" : "";
+		$genre = !empty( $genre ) ? "%$genre%" : "";
+		$file = !empty( $file ) ? "%$file%" : "";
+		$lyrics = !empty( $lyrics ) ? "%$lyrics%" : "";
+	}
+	$album = mysql_real_escape_string( $album );
+	$artist = mysql_real_escape_string( $artist );
+	$title = mysql_real_escape_string( $title );
+	$genre = mysql_real_escape_string( $genre );
+	$file = mysql_real_escape_string( $file );
+	
+	// Build SQL
+	$sql = get_default_query();
+	
+	$operator = '';
+	
+	//echo( $sql );
+	$sql = "$sql WHERE";
+	if( !empty( $artist ) )
+	{
+		$sql = "$sql (`artist`.`artist` LIKE '$artist')";
+		$operator = isset($and) && ($and == "false") ? "OR" : "AND";
+	}
+	if( !empty( $album ) )
+	{
+		$sql = "$sql $operator (`album`.`album` LIKE '$album')";
+		$operator = isset($and) && ($and == "false") ? "OR" : "AND";
+	}
+	if( !empty( $title ) )
+	{
+		$sql = "$sql $operator (`song`.`title` LIKE '$title')";
+		$operator = isset($and) && ($and == "false") ? "OR" : "AND";
+	}
+	if( !empty( $genre ) )
+	{
+		$sql = "$sql $operator (`song`.`genre` LIKE '$genre')";
+		$operator = isset($and) && ($and == "false") ? "OR" : "AND";
+	}
+	if( !empty( $file ) )
+	{
+		$sql = "$sql $operator (`song`.`file` LIKE '$file')";
+	}
+	if( !empty( $lyrics ) )
+	{
+		$sql = "$sql $operator (`song`.`lyrics` LIKE '$lyrics')";
+	}
+	if( !empty( $sortby ) )
+	$sql = "$sql ORDER BY $sortby";
+	return $sql;	
+}
+// get user cart
+function get_my_cart($uid)
+{
+	$sql = "SELECT art.file as art_file, track, title, album, artist.artist, song.file, song.id as sid FROM user_cart
+		INNER JOIN song ON user_cart.song_id=song.id
+		LEFT JOIN artist ON artist.id = song.artist_id
+		LEFT JOIN album ON album.id = song.album_id
+		LEFT JOIN art ON song.art_id = art.id WHERE `user_cart`.user_id=$uid  AND removed_ts IS NULL";
+	return $sql;			
+}
+// add an item to user car
+function add_2_cart($uid, $sid, $db)
+{
+	$uid = mysql_real_escape_string( $uid );
+	$sid = mysql_real_escape_string( $sid );
+	// make sure it is not already present
+	$sql = "INSERT INTO user_cart (user_id, song_id) VALUES($uid, $sid)";
+	mysql_query($sql, $db);
+}
+// delete an item from user cart 
+function delete_from_cart($uid, $sid, $db)
+{
+	$uid = mysql_real_escape_string( $uid );
+	$sid = mysql_real_escape_string( $sid );
+	// make sure it is not already present
+	//$sql = "DELETE FROM user_cart WHERE user_id=$uid AND song_id=$sid";
+	$sql = "UPDATE user_cart SET removed_ts=NOW() WHERE user_id=$uid AND song_id=$sid";
+	mysql_query($sql, $db);
+}
+// print result table
+function printTable($result)
+{
+	// print headers
+	?>
+	    <table id="result">
+	    <tr class="header_row">
+		<th align="center">Cover</th>
+		<th align="center"><a class="Header" href="$uri&amp;sortby=track">Track</a></th>
+		<th align="center"><a class="Header" href="$uri&amp;sortby=title">Title</a></th>
+		<th align="center"><a class="Header" href="$uri&amp;sortby=album.album,track">Album</a></th>
+		<th align="center">
+			<a class="Header" href="$uri&amp;sortby=artist.artist">Artist</a>
+		</th>
+		<th>download</th>
+		<th>add</th>
+		</tr>
+	<?php		
 
+	$enable_security = $GLOBALS['enable_security'];
+	$enable_direct_download = $GLOBALS['enable_direct_download'];
+	$art_location = $GLOBALS['art_location'];
+	$music_location = $GLOBALS['music_location'];
+	$authorized = $authorized = !$enable_security || assert_login(); 
+	      
+	// print data
+	while( $row = mysql_fetch_assoc($result) )
+	{
+		$sid = $row['sid'];
+		$track = $row['track'];
+		$title = $row['title'];
+		$artist = $row['artist'];
+		$album = $row['album'];
+		$song_file = $row['song_file'];
+		$art_file = $row['art_file'];
+		
+		$row_html = 
+			"<td>
+				<a class=\"NoColor\" href=\"./results.php?album=$album&artist=$artist&amp;sortby=track\">
+					<img src=\"$art_location/xsmall/$art_file\" width=\"50\" height=\"50\" alt=\"NA\"/>
+				</a>
+			</td>
+			<td>$track</td>
+			<td>
+			    <a href=\"details.php?sid=$sid\">$title</a>
+			</td>
+			<td>
+			    <a href=\"results.php?album=$album&amp;sortby=track\">$album</a>
+			</td>
+			<td>
+			    <a href=\"results.php?artist=$artist&amp;sortby=album.album,track\">$artist</a>
+			</td>";
+				
+		if( $authorized )
+		{
+			$incart = $row['user_id'];
+			$removed = $row['removed_ts'];
+			if($incart && !$removed) //was in cart and not removed
+			{
+				$row_html =  "$row_html<td align='center'><i>added to cart</i></td>
+					<td align='center'><i>added to cart</i></td>";	
+			}
+			else
+			{
+				if($enable_direct_download)
+				{
+					$row_html =  "$row_html<td align='center'>
+						<a href=\"$music_location$song_file\">download</a></td>";
+				}
+				else
+				{
+					$row_html = "$row_html<td align='center'>
+						<a href=\"./php/download.php?sid=$sid\">download</a></td>";
+				}
+				$row_html = "$row_html<td align='center'>
+					<a href=\"./php/add_to_cart.php?sid=$sid\">add to cart</a></td>";
+			}
+		}
+		else
+		{
+			$row_html = "$row_html
+						<td align='center'><em>download</em></td>
+						<td align='center'><em>add to cart</em></td>";
+		}
+	   	echo("<tr id=\"table_row\">$row_html</tr>");
+	}
+	?>
+	</table>	
+	<?php
+}
+// get user row
 function get_user($user_name, $db)
 {
 	$user_name = mysql_real_escape_string($user_name);
@@ -48,9 +272,7 @@ function create_account($user_name, $password, $full_name, $email, $question_id,
 	// make sure it inserted
 	return false;
 }
-//////////////////////////////////////
 // auths user and sets session vars //
-//////////////////////////////////////
 function set_session($user, $pass, $db)
 {
 	$sql = "SELECT user.id, `user`, `group`, `password`, email, full_name, `style`.`id`, `style`.`file` FROM `user` " . 
@@ -62,8 +284,8 @@ function set_session($user, $pass, $db)
 	if( mysql_num_rows($result) )
 	{
 		$row = mysql_fetch_row($result);
-		$_SESSION['_USER_ID'] = $row[0]; 
-		$_SESSION['_USER'] = $row[1];
+		$_SESSION['USER_ID'] = $row[0]; 
+		$_SESSION['USER_NAME'] = $row[1];
 		$_SESSION['USER_PASSWORD'] = $row[3];
 		$_SESSION['USER_EMAIL'] = $row[4];
 		$_SESSION['USER_FULLNAME'] = $row[5];
@@ -75,12 +297,12 @@ function set_session($user, $pass, $db)
 			$grp = $row[2];
 			$groups[$grp] = 1;
 		}while( $row == mysql_fetch_row($result) );
-		$_SESSION['_GROUPS'] = $groups;
+		$_SESSION['USER_GROUPS'] = $groups;
 		return true;
 	}
 	return false;
 }
-
+// update user account
 function update_account($user_name, $password, $full_name, $email, $style_id, $db)
 {
 	$sql = "UPDATE `user` SET `password`='$password', `full_name`='$full_name', `email`='$email', `style_id`=$style_id " .
@@ -89,27 +311,21 @@ function update_account($user_name, $password, $full_name, $email, $style_id, $d
 	// make sure it inserted -1 = failed
 	return ( mysql_affected_rows($db) > -1 );
 }
-
-function update_settings($user_name, $style_id, $db)
-{
-		
-}
-
 // validate user is logged in 
 function assert_login()
 {
-	if( isset($_SESSION['_USER']) && isset($_SESSION['_GROUPS']) )
+	if( isset($_SESSION['USER_NAME']) && isset($_SESSION['USER_GROUPS']) )
 	{
 		return true;
 	}
 	return false;
 }
-
+// assert user in group
 function assert_group($group)
 {
 	if(assert_login())
 	{
-		$groups_loc = $_SESSION['_GROUPS']; 
+		$groups_loc = $_SESSION['USER_GROUPS']; 
 		if(array_key_exists('admin', $groups_loc))
 		{
 			return true;
@@ -117,7 +333,7 @@ function assert_group($group)
 	}
 	return false;
 }
-
+// validate user pass strength
 function validate_pass($password)
 {
 	if(
@@ -137,5 +353,4 @@ function validate_pass($password)
 		return false;
 	} 
 }
-
 ?>

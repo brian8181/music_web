@@ -2,14 +2,14 @@
 session_start();
 include_once("./config/config.php");
 include_once("./php/functions.php");
-if( !isset( $_SESSION['_USER'] ) || !isset( $_SESSION['_GROUPS'] ) )
+if( !isset( $_SESSION['USER_NAME'] ) || !isset( $_SESSION['USER_GROUPS'] ) )
 {
 	$user = null;
 	$pass = null;
-	if( isset($_GET['_USER']) && isset($_GET['_PASSWORD']) ) 
+	if( isset($_GET['user']) && isset($_GET['pass']) ) 
 	{
-		$user = $_GET['_USER'];
-		$pass = $_GET['_PASSWORD'];
+		$user = $_GET['user'];
+		$pass = $_GET['pass'];
 		$db = mysql_connect($db_address, $db_user_name, $db_password);
 		mysql_select_db($db_name, $db);
 		
@@ -58,10 +58,10 @@ $style = assert_login() ? $_SESSION['USER_STYLE'] : "./css/$style";
 			var save = form.elements['_SAVE'].checked;
 			if(save != false)
 			{
-				var user = form.elements['_USER'].value;
-				var auth = form.elements['_PASSWORD'].value;
+				var user = form.elements['user'].value;
+				var pass = form.elements['pass'].value;
 				setCookie('user', user, 30);
-				setCookie('pass', auth, 30);
+				setCookie('pass', pass, 30);
 			}
 			else
 			{
@@ -91,22 +91,22 @@ $style = assert_login() ? $_SESSION['USER_STYLE'] : "./css/$style";
 			<fieldset>
 			<legend>User Login:</legend>
 			<table>
-				<tr><td><label for="user">User:&nbsp;&nbsp;</label></td><td><input type="text" name="_USER" value="<?php if (isset($user)) { echo $user; } ?>" /></td></tr>
-				<tr><td><label for="password">Password:&nbsp;&nbsp;</label></td><td><input type="password" name="_PASSWORD" value="<?php if (isset($pass)) { echo $pass; } ?>" /></td></tr>
-				<tr><td><label for="save">Save:&nbsp;&nbsp;</label></td><td><input type="checkbox" name="_SAVE" /></td></tr>
+				<tr><td><label for="user">User:&nbsp;&nbsp;</label></td><td><input type="text" name="user" value="<?php if (isset($user)) { echo $user; } ?>" /></td></tr>
+				<tr><td><label for="password">Password:&nbsp;&nbsp;</label></td><td><input type="password" name="pass" value="<?php if (isset($pass)) { echo $pass; } ?>" /></td></tr>
+				<tr><td><label for="save">Save:&nbsp;&nbsp;</label></td><td><input type="checkbox" name="save" /></td></tr>
 				<tr><td>&nbsp;</td><td><input type="submit" value="Submit" /></td></tr>
 				<tr><td colspan="2" ><label for="msg"><?php if( isset($message) ) echo("<div align=\"center\"><em>$message</em></div>"); ?></label></td></tr>
 			</table>
 			</fieldset>
 			<script type="text/javascript">
 				var user = checkUser('user');
-				var auth = checkAuth('pass');
-				if(user != null && auth != null)
+				var pass = checkAuth('pass');
+				if(user != null && pass != null)
 				{
 					// fill text boxes
-					document.forms[0].elements['_USER'].value = user;
-					document.forms[0].elements['_PASSWORD'].value = pass;
-					document.forms[0].elements['_SAVE'].checked = true;
+					document.forms[0].elements['user'].value = user;
+					document.forms[0].elements['pass'].value = pass;
+					document.forms[0].elements['save'].checked = true;
 				}
 			</script>
 	</form>

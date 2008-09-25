@@ -2,7 +2,6 @@
 session_start();
 include_once("./config/config.php");
 include_once("./php/functions.php");
-
 if( !isset( $_SESSION['_USER'] ) || !isset( $_SESSION['_GROUPS'] ) )
 {
 	$_SESSION['_PAGE'] = $_SERVER['PHP_SELF'];
@@ -102,10 +101,8 @@ include("./module/login_greeting.php");
 <?php 
 include("./module/top_toolbar.php"); 
 	?>
-
 		<hr />
 		<br />
-	
 		<div style="text-align: center">
 		<form action="<?php echo $_SERVER['SCRIPT_NAME'] ?>" method="get" enctype="text/plain" >
 			<input type="text" name="filter" size="6" style="text-align: center;" />
@@ -136,8 +133,8 @@ else
 {
 	$filter = "%";
 }
-$filter = mysql_real_escape_string( $filter );
 
+$filter = mysql_real_escape_string( $filter );
 $sql = "SELECT `id`, `user` FROM `user` WHERE `user` LIKE '$filter' ORDER BY `user`.`user`";
 $result = mysql_query($sql, $db);
 
@@ -194,7 +191,6 @@ foreach($users as $uid => $local_user)
 }
 mysql_close();
 		?>
-		
         </table>
         <br />
         <input type="reset" onclick="enable_all()" />

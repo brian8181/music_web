@@ -58,7 +58,7 @@ while ( $row = mysql_fetch_array($result, MYSQL_NUM) )
 	$count_result = mysql_query($sql);
 	$count_row = mysql_fetch_array($count_result, MYSQL_NUM);
 	$count = $count_row[0]; 
-	echo( "<td><a href=\"./results.php?query_type=playlist&pid=$id&nav_row=0\">$name</a><br /></td>" );
+	echo( "<td><a href=\"./view_playlist.php?pid=$id&nav_row=0\">$name</a><br /></td>" );
 	echo( "<td style=\"text-align: center\"><em>$count</em></td>" );
 	echo("</tr>");
 }

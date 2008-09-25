@@ -15,7 +15,7 @@ $style = assert_login() ? $_SESSION['USER_STYLE'] : "./css/$style";
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 
 <head>
-<title>Advanced Query Page</title>
+<title><?php echo($advanced_title) ?></title>
 <link rel="stylesheet" type="text/css" href="<?php echo($style) ?>" />
 </head>
 <body>
@@ -26,7 +26,7 @@ include("./module/login_greeting.php");
 
 <!-- Display Title -->
 <div class="box" style="text-align: center">
-<h1>Advanced Music Query</h1>
+<h1><?php echo($advanced_title) ?></h1>
 </div>
 
 <!-- Navagation Bar --> 
