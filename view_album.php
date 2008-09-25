@@ -49,6 +49,7 @@ include("./module/top_toolbar.php");
 <?php 
 $sql = get_default_query();
 $sql =  "$sql WHERE album_id=$album_id ORDER BY track";
+$nav_row = isset($_GET['nav_row']) ? $_GET['nav_row'] : 0;
 printTable($sql, $db);
 mysql_close($db);
 	?>		

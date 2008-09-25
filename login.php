@@ -71,11 +71,17 @@ $style = assert_login() ? $_SESSION['USER_STYLE'] : "./css/$style";
 			}
 		}
 	</script>
+	<!-- style overrides -->
 	<style type="text/css">
 	body 
 	{
-		margin-left:30%;
-		margin-right:30%;
+		margin-left:25%;
+		margin-right:25%;
+	}
+	div.text_area
+	{
+		min-width: 300px;
+		min-width: 400px;
 	}
 	</style>
 </head>

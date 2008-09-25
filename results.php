@@ -84,7 +84,7 @@ if( !isset( $query_type ) ) $query_type = "default";
 $uid = isset($_SESSION['USER_ID']) ? $_SESSION['USER_ID'] : null;
 $sql = get_search(
 	$artist, $album, $title, $genre, $file, $lyrics, $sortby, $and, $pid );
-
+$nav_row = isset($_GET['nav_row']) ? $_GET['nav_row'] : 0;
 printTable($sql, $db);
 mysql_close($db);
 		?>

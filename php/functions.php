@@ -114,6 +114,17 @@ function get_my_cart($uid)
 		LEFT JOIN art ON song.art_id = art.id WHERE `user_cart`.user_id=$uid  AND removed_ts IS NULL";
 	return $sql;			
 }
+// get user cart
+function get_my_downloads($uid)
+{
+	$sql = "SELECT art.file as art_file, track, title, album, artist.artist, song.file, song.id as sid,
+	    download.insert_ts FROM download
+		INNER JOIN song ON download.song_id=song.id
+		LEFT JOIN artist ON artist.id = song.artist_id
+		LEFT JOIN album ON album.id = song.album_id
+		LEFT JOIN art ON song.art_id = art.id WHERE `download`.user_id=$uid";
+	return $sql;			
+}
 // add an item to user car
 function add_2_cart($uid, $sid, $db)
 {
@@ -136,6 +147,8 @@ function delete_from_cart($uid, $sid, $db)
 // print result table
 function printTable($sql, $db)
 {
+	global $nav_row;
+	
 	//nav bar
 	$nav = new navbar;
 	$nav->numrowsperpage = 50;
@@ -166,11 +179,11 @@ function printTable($sql, $db)
 	    <table id="result">
 	    <tr class="header_row">
 		<th align="center">Cover</th>
-		<th align="center"><a class="Header" href="$uri&amp;sortby=track">Track</a></th>
-		<th align="center"><a class="Header" href="$uri&amp;sortby=title">Title</a></th>
-		<th align="center"><a class="Header" href="$uri&amp;sortby=album.album,track">Album</a></th>
+		<th align="center"><a class="white_yellow" href="$uri&amp;sortby=track">Track</a></th>
+		<th align="center"><a class="white_yellow" href="$uri&amp;sortby=title">Title</a></th>
+		<th align="center"><a class="white_yellow" href="$uri&amp;sortby=album.album,track">Album</a></th>
 		<th align="center">
-			<a class="Header" href="$uri&amp;sortby=artist.artist">Artist</a>
+			<a class="white_yellow" href="$uri&amp;sortby=artist.artist">Artist</a>
 		</th>
 		<th>download</th>
 		<th>add</th>
@@ -233,14 +246,14 @@ function printTable($sql, $db)
 						<a href=\"./php/download.php?sid=$sid\">download</a></td>";
 				}
 				$row_html = "$row_html<td align='center'>
-					<a href=\"./php/add_to_cart.php?sid=$sid\">add to cart</a></td>";
+					<a href=\"./php/add_to_cart.php?sid=$sid\">add&nbsp;to&nbsp;cart</a></td>";
 			}
 		}
 		else
 		{
 			$row_html = "$row_html
 						<td align='center'><em>download</em></td>
-						<td align='center'><em>add to cart</em></td>";
+						<td align='center'><em>add&nbsp;to&nbsp;cart</em></td>";
 		}
 	   	echo("<tr id=\"table_row\">$row_html</tr>");
 	}

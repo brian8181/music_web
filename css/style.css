@@ -12,6 +12,19 @@ body
  	text-align: left;
 }
 
+a:link.white_yellow { 
+	color: white; 
+	text-decoration: none;
+}
+a:visited.white_yellow { 
+	color: white;
+	text-decoration: none; 
+}
+a:hover.white_yellow { 
+	color: yellow;
+	text-decoration: none; 
+}
+
 a:link.NoColor { 
 	color: transparent; 
 }
@@ -45,6 +58,7 @@ div.box
 
 div.text_area
 {
+	min-width: 800px;
 	background-color: white;
 	padding: 10px;
 	border: black 1px solid;
@@ -68,7 +82,7 @@ table#result
     padding: 5px;	
     border-color: #FFFFFF;
     background-color: #FFFFFF;
-    width:80%;
+    width:90%;
     margin-left:auto;
     margin-right:auto
 }

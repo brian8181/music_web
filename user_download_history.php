@@ -43,8 +43,9 @@ include("./module/top_toolbar.php");
 		?>
 		
 		<hr />
-<?php 
-$sql = build_query('my_downloads');
+<?php
+$uid =  $_SESSION['USER_ID'];
+$sql = get_my_downloads($uid);
 
 if(isset($_GET['nav_row']))
 {
@@ -71,8 +72,15 @@ if($result) {
 ?>
 		
 		<table id="result">		
-		<tr id ="header_row">
-			<?php get_result_headers($uri); ?>
+		<tr class="header_row">
+			<th align="center">Cover</th>
+			<th align="center"><a class="white_yellow" href="$uri&amp;sortby=track">Track</a></th>
+			<th align="center"><a class="white_yellow" href="$uri&amp;sortby=title">Title</a></th>
+			<th align="center"><a class="white_yellow" href="$uri&amp;sortby=album.album,track\">Album</a></th>
+			<th align="center">
+				<a class="white_yellow" href="$uri&amp;sortby=artist.artist">Artist</a>
+			</th>
+			<th align="center">date</th>
 		</tr>
 		<?php
 			while( $row = mysql_fetch_assoc($result) )
@@ -84,20 +92,24 @@ if($result) {
 				add_data($row['title']);
 				add_data($row['album']);
 				add_data($row['artist']);
+				add_data($row['insert_ts']);
 				close_row();					
 			}
 		?>
 		</table>
+	<br />
+	<center>
 <?php
 	$links = $nav->getlinks("all", "on");
-	/*if($links != null)
+	if($links != null)
 	{
 		for ($y = 0; $y < count($links); $y++) {
 		  echo $links[$y] . "&nbsp;&nbsp;";
 		}
-	}*/
+	}
 	?>
-	
+	</center>
+	<br />
 	<hr />
 
 <?php
