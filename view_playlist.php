@@ -2,6 +2,7 @@
 session_start();
 include_once("./config/config.php");
 include_once("./php/functions.php");
+include_once("./php/navbar.php");
 $uri = $_SERVER['REQUEST_URI'];
 $style = assert_login() ? $_SESSION['USER_STYLE'] : "./css/$style";
 $pid = isset($_GET['pid']) ? $_GET['pid'] : null;
@@ -48,11 +49,7 @@ include("./module/top_toolbar.php");
 		<br />
 <?php 
 $sql = get_playlist($pid);
-$result = mysql_query($sql, $db); 
-if($result)
-{
-	printTable($result);
-}
+printTable($sql, $db);
 mysql_close($db);
 	?>		
 

@@ -1,6 +1,7 @@
 <?php
 session_start();
 include_once("./config/config.php");
+include_once("./php/navbar.php");
 include_once("./php/functions.php");
 // init vars
 $logged_in = assert_login();
@@ -48,11 +49,7 @@ include("./module/top_toolbar.php");
 <?php 
 $sql = get_default_query();
 $sql =  "$sql WHERE album_id=$album_id ORDER BY track";
-$result = mysql_query($sql, $db); 
-if($result)
-{
-	printTable($result);
-}
+printTable($sql, $db);
 mysql_close($db);
 	?>		
 		<br />

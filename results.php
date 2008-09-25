@@ -85,52 +85,11 @@ $uid = isset($_SESSION['USER_ID']) ? $_SESSION['USER_ID'] : null;
 $sql = get_search(
 	$artist, $album, $title, $genre, $file, $lyrics, $sortby, $and, $pid );
 
-$nav_row  = isset($_GET['nav_row'])  ? $_GET['nav_row']  : null;
-$nav = new navbar();
-$nav->numrowsperpage = 50;
-$result = $nav->execute($sql, $db, "mysql");
-
-// get totals
-$total = $nav->total;
-$start_number = $nav->start_number;
-$end_number = $nav->end_number;
-
-if($result) {
-	$num_rows = mysql_num_rows($result);
-	echo( "<br /><br /><b>Showing $start_number - $end_number of $total</b>" );
-}
-$uri = $_SERVER['REQUEST_URI'];
-			?>
-		<br /><br />	
-<?php
-// Remove "sortby" from URI
-$pos = strrpos($uri, "sortby");
-if ( ! ($pos === false) ) {  
-	$len = strlen($uri);
-	$len -= $pos-1;
-	$uri = substr( $uri, 0, -$len );
-}
-if($result)
-{
-	printTable($result);
-}
+printTable($sql, $db);
 mysql_close($db);
 		?>
-	<br /><br />
-	<center>
-<?php
-	$links = $nav->getlinks("all", "on");
-	if($links != null)
-	{
-		for ($y = 0; $y < count($links); $y++) {
-		  echo $links[$y] . "&nbsp;&nbsp;";
-		}
-	}
-	?>
-	<br />
 	<br />	
 	<hr />
-	</center>
 <?php
 include("./module/bottom_toolbar.php");
 include("./module/contact_info.php");

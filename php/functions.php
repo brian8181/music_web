@@ -134,8 +134,33 @@ function delete_from_cart($uid, $sid, $db)
 	mysql_query($sql, $db);
 }
 // print result table
-function printTable($result)
+function printTable($sql, $db)
 {
+	//nav bar
+	$nav = new navbar;
+	$nav->numrowsperpage = 50;
+	$result = $nav->execute($sql, $db, "mysql");
+	//get counts
+	$total = $nav->total;
+	$start_number = $nav->start_number;
+	$end_number = $nav->end_number;
+	
+	$uri = $_SERVER['REQUEST_URI'];
+
+	// Remove "sortby" from URI
+	$pos = strrpos($uri, "sortby");
+	if ( ! ($pos === false) ) {  
+		$len = strlen($uri);
+		$len -= $pos-1;
+		$uri = substr( $uri, 0, -$len );
+	}
+
+	// print count
+	if($result) {
+		$num_rows = mysql_num_rows($result);
+		echo( "<br /><br /><b>Showing $start_number - $end_number of $total</b>" );
+	}
+	
 	// print headers
 	?>
 	    <table id="result">
@@ -220,8 +245,20 @@ function printTable($result)
 	   	echo("<tr id=\"table_row\">$row_html</tr>");
 	}
 	?>
-	</table>	
+	</table>
+	<br />
 	<?php
+	
+	echo("<center>");
+	// print nav bar
+	$links = $nav->getlinks("all", "on");
+	if($links != null)
+	{
+		for ($y = 0; $y < count($links); $y++) {
+		  echo $links[$y] . "&nbsp;&nbsp;";
+		}
+	}
+	echo("</center>");
 }
 // get user row
 function get_user($user_name, $db)
