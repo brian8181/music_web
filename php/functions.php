@@ -235,7 +235,7 @@ function printTable($sql, $db)
 			if($incart && !$removed) //was in cart and not removed
 			{
 				$row_html =  "$row_html<td align='center'><i>added to cart</i></td>
-					<td align='center'><i>delete</i></td>";	
+					<td align='center'><a href=\"./php/delete_from_cart.php?sid=$sid\">delete</a></td>";	
 			}
 			else
 			{
