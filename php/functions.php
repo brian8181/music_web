@@ -32,7 +32,9 @@ function get_playlist($pid)
 	return $sql;
 }
 // get a serarch
-function get_search($artist=null, $album=null, $title=null, $genre=null, $file=null, $lyrics=null, $sortby=null, $and=null, $pid=null)
+function get_search( $artist=null, $album=null, $title=null, 
+					 $genre=null,  $file=null,  $lyrics=null, 
+					 $sortby=null, $and=null, $direction=null )
 {
 	// check for wildcards & strip escape characters
 	if(isset($wildcard) && $wildcard == "on")
@@ -75,40 +77,42 @@ function get_search($artist=null, $album=null, $title=null, $genre=null, $file=n
 	if( !empty( $artist ) )
 	{
 		$sql = "$sql (`artist`.`artist` LIKE '$artist')";
-		$operator = isset($and) && ($and == "false") ? "OR" : "AND";
+		$operator = ($and == "false") ? "OR" : "AND";
 	}
 	if( !empty( $album ) )
 	{
 		$sql = "$sql $operator (`album`.`album` LIKE '$album')";
-		$operator = isset($and) && ($and == "false") ? "OR" : "AND";
+		$operator = ($and == "false") ? "OR" : "AND";
 	}
 	if( !empty( $title ) )
 	{
 		$sql = "$sql $operator (`song`.`title` LIKE '$title')";
-		$operator = isset($and) && ($and == "false") ? "OR" : "AND";
+		$operator = ($and == "false") ? "OR" : "AND";
 	}
 	if( !empty( $genre ) )
 	{
 		$sql = "$sql $operator (`song`.`genre` LIKE '$genre')";
-		$operator = isset($and) && ($and == "false") ? "OR" : "AND";
+		$operator = ($and == "false") ? "OR" : "AND";
 	}
 	if( !empty( $file ) )
 	{
 		$sql = "$sql $operator (`song`.`file` LIKE '$file')";
+		$operator = ($and == "false") ? "OR" : "AND";
 	}
 	if( !empty( $lyrics ) )
 	{
 		$sql = "$sql $operator (`song`.`lyrics` LIKE '$lyrics')";
 	}
 	if( !empty( $sortby ) )
-	$sql = "$sql ORDER BY $sortby";
+	$sql = "$sql ORDER BY $sortby $direction";
 	return $sql;	
 }
 // get user cart
 function get_my_cart($uid)
 {
-	$sql = "SELECT art.file as art_file, track, title, album, artist.artist, song.file, song.id as sid FROM user_cart
-		INNER JOIN song ON user_cart.song_id=song.id
+	$sql = "SELECT art.file as art_file, track, title, album, artist.artist, song.file as song_file, song.id as sid,
+		user_cart.user_id, user_cart.removed_ts FROM song 
+		INNER JOIN user_cart ON user_cart.song_id=song.id
 		LEFT JOIN artist ON artist.id = song.artist_id
 		LEFT JOIN album ON album.id = song.album_id
 		LEFT JOIN art ON song.art_id = art.id WHERE `user_cart`.user_id=$uid  AND removed_ts IS NULL";
@@ -179,14 +183,14 @@ function printTable($sql, $db)
 	    <table id="result">
 	    <tr class="header_row">
 		<th align="center">Cover</th>
-		<th align="center"><a class="white_yellow" href="$uri&amp;sortby=track">Track</a></th>
-		<th align="center"><a class="white_yellow" href="$uri&amp;sortby=title">Title</a></th>
-		<th align="center"><a class="white_yellow" href="$uri&amp;sortby=album.album,track">Album</a></th>
+		<th align="center"><a class="white_yellow" href="<?php echo($uri) ?>&amp;sortby=track">Track</a></th>
+		<th align="center"><a class="white_yellow" href="<?php echo($uri) ?>&amp;sortby=title">Title</a></th>
+		<th align="center"><a class="white_yellow" href="<?php echo($uri) ?>&amp;sortby=album.album,track">Album</a></th>
 		<th align="center">
 			<a class="white_yellow" href="$uri&amp;sortby=artist.artist">Artist</a>
 		</th>
 		<th>download</th>
-		<th>add</th>
+		<th>cart</th>
 		</tr>
 	<?php		
 
@@ -231,7 +235,7 @@ function printTable($sql, $db)
 			if($incart && !$removed) //was in cart and not removed
 			{
 				$row_html =  "$row_html<td align='center'><i>added to cart</i></td>
-					<td align='center'><i>added to cart</i></td>";	
+					<td align='center'><i>delete</i></td>";	
 			}
 			else
 			{
@@ -325,6 +329,8 @@ function create_account($user_name, $password, $full_name, $email, $question_id,
 // auths user and sets session vars //
 function set_session($user, $pass, $db)
 {
+	$user = mysql_real_escape_string($user);
+	$pass = mysql_real_escape_string($pass);
 	$sql = "SELECT user.id, `user`, `group`, `password`, email, full_name, `style`.`id`, `style`.`file` FROM `user` " . 
 			"INNER JOIN `user_group` ON `user`.id=`user_id` " . 
 			"INNER JOIN `group` ON `user_group`.`group_id`=`group`.id " .

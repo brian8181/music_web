@@ -37,6 +37,9 @@ $lyrics     = isset($_GET['lyrics'])     ? $_GET['lyrics']     : null;
 $and        = isset($_GET['and'])        ? $_GET['and']        : null;
 $wildcard   = isset($_GET['wildcard'])   ? $_GET['wildcard']   : null;
 $sortby     = isset($_GET['sortby'])     ? $_GET['sortby']     : null;
+$direction  = isset($_GET['$direction']) ? $_GET['$direction'] : null;
+// toogle
+$direction = $direction = 'ASC' ? 'DESC' : 'ASC';
 // playlist
 $pid         = isset($_GET['pid'])         ? $_GET['pid']         : null;
 // deprecated!! used with - case "quick_search" 
@@ -83,7 +86,7 @@ if( !isset( $query_type ) ) $query_type = "default";
 // build the sql query
 $uid = isset($_SESSION['USER_ID']) ? $_SESSION['USER_ID'] : null;
 $sql = get_search(
-	$artist, $album, $title, $genre, $file, $lyrics, $sortby, $and, $pid );
+	$artist, $album, $title, $genre, $file, $lyrics, $sortby, $and, $direction );
 $nav_row = isset($_GET['nav_row']) ? $_GET['nav_row'] : 0;
 printTable($sql, $db);
 mysql_close($db);

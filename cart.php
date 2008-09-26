@@ -12,7 +12,8 @@ if(!assert_login())
 	header( "Location: ./login.php" );
 	exit(); 		
 }
-$style = "./css/$style";
+$uid = $_SESSION['USER_ID'];
+$style = $_SESSION['USER_STYLE'];
 		?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -43,63 +44,11 @@ include("./module/top_toolbar.php");
 		
 		<hr />
 <?php 
-
-if(isset($_GET['nav_row']))
-{
-	$nav_row = $_GET['nav_row'];
-}
-else
-{
-	$_GET['nav_row'] = $nav_row = 0;
-}
-
-$uid = $_SESSION['USER_ID'];
 $sql = get_my_cart($uid);
-
-$nav = new navbar;
-$nav->numrowsperpage = 50;
-$result = $nav->execute($sql, $db, "mysql");
-$total = $nav->total;
-$start_number = $nav->start_number;
-$end_number = $nav->end_number;
-
-			
-if($result) {
-	$num_rows = mysql_num_rows($result);
-	echo( "<br /><br /><b>Showing $start_number - $end_number of $total</b>" );
-}
-?>
-		
-		<table id="result">		
-		<tr id ="header_row">
-			<?php get_result_headers($uri); ?>
-		</tr>
-		<?php
-			
-			while( $row = mysql_fetch_assoc($result) )
-			{
-				$sid = $row['sid'];
-				open_row();
-				add_data( "<img src=\"$art_location/xsmall/" . $row['art_file'] . "\" />" );
-				add_data($row['track']);
-				add_data($row['title']);
-				add_data($row['album']);
-				add_data($row['artist']);
-				add_data("<a href=\"./php/download.php?sid=$sid\">download</a>");
-				add_data("<a href=\"./php/delete_from_cart.php?sid=$sid\">delete</a>");
-				close_row();					
-			}
-		?>
-		</table>
-<?php
-	$links = $nav->getlinks("all", "on");
-	/*if($links != null)
-	{
-		for ($y = 0; $y < count($links); $y++) {
-		  echo $links[$y] . "&nbsp;&nbsp;";
-		}
-	}*/
-	?>
+$nav_row = isset($_GET['nav_row']) ? $_GET['nav_row'] : 0;
+printTable($sql, $db);
+mysql_close($db);
+	?>	
 	
 	<hr />
 

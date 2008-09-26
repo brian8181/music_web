@@ -25,6 +25,19 @@ a:hover.white_yellow {
 	text-decoration: none; 
 }
 
+a:link.yellow_white { 
+	color: yellow; 
+	text-decoration: none;
+}
+a:visited.yellow_white { 
+	color: yellow;
+	text-decoration: none; 
+}
+a:hover.yellow_white { 
+	color: white;
+	text-decoration: none; 
+}
+
 a:link.NoColor { 
 	color: transparent; 
 }
