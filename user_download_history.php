@@ -54,23 +54,28 @@ else
 $nav = new navbar;
 $nav->numrowsperpage = 50;
 $result = $nav->execute($sql, $db, "mysql");
-$total = $nav->total;
-$start_number = $nav->start_number;
-$end_number = $nav->end_number;
+
+// Remove "sortby" from URI
+$pos = strrpos($uri, "sortby");
+if ( ! ($pos === false) ) {  
+	$len = strlen($uri);
+	$len -= $pos-1;
+	$uri = substr( $uri, 0, -$len );
+}
 			
 if($result) {
 	$num_rows = mysql_num_rows($result);
-	echo( "<br /><br /><b>Showing $start_number - $end_number of $total</b>" );
+	echo( "<br /><br /><b>Showing $nav->start_number - $nav->end_number of $nav->total</b>" );
 }
 ?>
 		<table id="result">		
 		<tr class="header_row">
 			<th align="center">Cover</th>
-			<th align="center"><a class="white_yellow" href="$uri&amp;sortby=track">Track</a></th>
-			<th align="center"><a class="white_yellow" href="$uri&amp;sortby=title">Title</a></th>
-			<th align="center"><a class="white_yellow" href="$uri&amp;sortby=album.album,track\">Album</a></th>
+			<th align="center"><a class="white_yellow" href="<?php echo($uri); ?>&amp;sortby=track">Track</a></th>
+			<th align="center"><a class="white_yellow" href="<?php echo($uri); ?>&amp;sortby=title">Title</a></th>
+			<th align="center"><a class="white_yellow" href="<?php echo($uri); ?>&amp;sortby=album.album,track\">Album</a></th>
 			<th align="center">
-				<a class="white_yellow" href="$uri&amp;sortby=artist.artist">Artist</a>
+				<a class="white_yellow" href="<?php echo($uri); ?>&amp;sortby=artist.artist">Artist</a>
 			</th>
 			<th align="center">date</th>
 		</tr>

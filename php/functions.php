@@ -277,6 +277,28 @@ function printTable($sql, $db)
 	}
 	echo("</center>");
 }
+function get_sort_order($col_click, $order, $direction)
+{
+	$order = "sortby";
+	if($new_order == $current)
+	{
+		$direction = $direction = 'ASC' ? 'DESC' : 'ASC';	
+	}
+	else
+	{
+		$direction = "ASC";
+	}
+	switch($new_order)
+	{
+		case 'track':
+			 $order = "track $direction"; 
+			 break;
+		case 'title':
+			break;
+		case 'album':
+			break;	
+	}
+}
 // get user row
 function get_user($user_name, $db)
 {

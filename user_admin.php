@@ -2,14 +2,14 @@
 session_start();
 include_once("./config/config.php");
 include_once("./php/functions.php");
-if( !isset( $_SESSION['_USER'] ) || !isset( $_SESSION['_GROUPS'] ) )
+if( !isset( $_SESSION['USER_ID'] ) )
 {
 	$_SESSION['RETURN_PAGE'] = $_SERVER['PHP_SELF'];
 	header( "Location: ./login.php" );
 	exit();
 }
 
-$groups_loc = $_SESSION['_GROUPS']; 
+$groups_loc = $_SESSION['USER_GROUPS']; 
 if(!array_key_exists('admin', $groups_loc))
 {
 	echo( "<div style=\"text-align: center\"><h3>Sorry, your are not authorized to access the page.</h3></div>" );	
@@ -20,7 +20,6 @@ $style = assert_login() ? $_SESSION['USER_STYLE'] : "./css/$style";
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Headers -->
 <head>
     <title>User Admin Page</title>
     <link rel="stylesheet" type="text/css" href="<?php echo($style) ?>" />
@@ -101,7 +100,6 @@ include("./module/login_greeting.php");
 <?php 
 include("./module/top_toolbar.php"); 
 	?>
-		<hr />
 		<br />
 		<div style="text-align: center">
 		<form action="<?php echo $_SERVER['SCRIPT_NAME'] ?>" method="get" enctype="text/plain" >
@@ -218,16 +216,9 @@ mysql_close();
 		}
 			?>
         </center>
-            <br />
-            <hr>
-            <!-- Navagation Bar -->
-			<?php 
-			include("./module/bottom_toolbar.php"); 
-			include("./module/contact_info.php");
-            	?>
-            <br />
+           
 <?php
-include("./module/version.php");
+include("./module/footer.php");
 	?>
        </div>
     </body>

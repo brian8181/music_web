@@ -2,11 +2,11 @@
 session_start();
 include_once("../config/config.php");
 
-if( !isset( $_SESSION['_USER'] ) || !isset( $_SESSION['_GROUPS'] ) )
+if( !isset( $_SESSION['USER_ID'] ) )
 {
 	exit();
 }
-$groups_loc = $_SESSION['_GROUPS']; 
+$groups_loc = $_SESSION['USER_GROUPS']; 
 if(!array_key_exists('admin', $groups_loc))
 {
 	exit();
