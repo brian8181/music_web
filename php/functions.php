@@ -187,7 +187,7 @@ function printTable($sql, $db)
 		<th align="center"><a class="white_yellow" href="<?php echo($uri) ?>&amp;sortby=title">Title</a></th>
 		<th align="center"><a class="white_yellow" href="<?php echo($uri) ?>&amp;sortby=album.album,track">Album</a></th>
 		<th align="center">
-			<a class="white_yellow" href="$uri&amp;sortby=artist.artist">Artist</a>
+			<a class="white_yellow" href="<?php echo($uri) ?>&amp;sortby=artist.artist">Artist</a>
 		</th>
 		<th>download</th>
 		<th>cart</th>

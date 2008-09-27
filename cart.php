@@ -5,7 +5,7 @@ include_once("./php/functions.php");
 include_once("./php/navbar.php");
 include_once("./php/html_functions.php");
 $uri = $_SERVER['REQUEST_URI'];
-$_SESSION['_PAGE'] = $uri;
+$_SESSION['RETURN_PAGE'] = $uri;
 if(!assert_login())
 {
 	header( "Location: ./login.php" );
@@ -36,16 +36,12 @@ include("./module/login_greeting.php");
 	</div>
 <?php 
 include("./module/top_toolbar.php"); 
-	?>
-	<hr />
-<?php 
+	
 $sql = get_my_cart($uid);
 $nav_row = isset($_GET['nav_row']) ? $_GET['nav_row'] : 0;
 printTable($sql, $db);
 mysql_close($db);
-	?>	
-	<hr />
-<?php
+
 include("./module/bottom_toolbar.php");
 include("./module/contact_info.php");
 	?>

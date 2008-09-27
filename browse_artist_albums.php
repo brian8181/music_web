@@ -2,8 +2,8 @@
 session_start();
 include_once("./config/config.php");
 include_once("./php/functions.php");
-isset( $_SESSION['_PAGE'] ) ? $back = $_SESSION['_PAGE'] : $back = "./browse_artist.php";
-$_SESSION['_PAGE'] = $_SERVER['REQUEST_URI'];
+isset( $_SESSION['RETURN_PAGE'] ) ? $back = $_SESSION['RETURN_PAGE'] : $back = "./browse_artist.php";
+$_SESSION['RETURN_PAGE'] = $_SERVER['REQUEST_URI'];
 $style = assert_login() ? $_SESSION['USER_STYLE'] : "./css/$style";
 		?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

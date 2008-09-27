@@ -2,7 +2,7 @@
 session_start();
 include_once("./config/config.php");
 include_once("./php/functions.php");
-$_SESSION['_PAGE'] = $_SERVER['REQUEST_URI'];
+$_SESSION['RETURN_PAGE'] = $_SERVER['REQUEST_URI'];
 if(!assert_login())
 {
 	header( "Location: ./login.php" );

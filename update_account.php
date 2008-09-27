@@ -7,17 +7,17 @@ if(assert_login() == false)
 	exit();
 }
 
-$style = assert_login() ? $_SESSION['USER_STYLE'] : "./css/$style";
 $db = mysql_connect($db_address, $db_user_name, $db_password);
 mysql_select_db($db_name, $db);
 mysql_query("SET NAMES 'utf8'");
 // first get current settings from session 
-$user_id = $_SESSION['USER_ID'];
-$user_name = $_SESSION['USER_NAME'];
+$user_id    = $_SESSION['USER_ID'];
+$user_name  = $_SESSION['USER_NAME'];
 $password   = $_SESSION['USER_PASSWORD'];
 $full_name  = $_SESSION['USER_FULLNAME'];
 $user_email = $_SESSION['USER_EMAIL'];
-$style_id  = $_SESSION['USER_STYLE_ID'];
+$style      = $_SESSION['USER_STYLE'];
+$style_id   = $_SESSION['USER_STYLE_ID'];
 	?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -116,7 +116,7 @@ if( !empty($password) && !empty($password2) && !empty($full_name) && !empty($use
 			}
 			else
 			{
-				echo( "Sorry account could not be updated plesae try agion later (unknown Error)." );
+				echo( "Sorry account could not be updated plesae try again later (unknown Error)." );
 			}	
 			mysql_close($db);
 		}

@@ -2,10 +2,10 @@
 session_start();
 include_once("./config/config.php");
 include_once("./php/functions.php");
-$_SESSION['_PAGE']  = $_SERVER['REQUEST_URI'];
-$_SESSION['_SEARCH_PAGE'] = $_SESSION['_PAGE'];
+$_SESSION['RETURN_PAGE']  = $_SERVER['REQUEST_URI'];
+$_SESSION['_SEARCH_PAGE'] = $_SESSION['RETURN_PAGE'];
 $style = assert_login() ? $_SESSION['USER_STYLE'] : "./css/$style";
-			    ?>
+	?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
@@ -69,8 +69,6 @@ echo($search_title);
 $enable_quick_search = false; 
 include("./module/top_toolbar.php"); 
 	?>
-	<hr />
-	<br />
 	<br />
 	<form name="search_form" onsubmit="return on_submit(search_form)" action="results.php" method="get">
 		<div style="text-align: center">
@@ -111,17 +109,14 @@ include("./module/top_toolbar.php");
 	<br />
 	<br />
 	<br />
-	<br />
-	<hr />
-
 <?php
 include("./module/bottom_toolbar.php");
 include("./module/contact_info.php");
-			?>
-			<br />
+	?>
+	<br />
 <?php
 include("./module/version.php");
-			    ?>
+	?>
 	</div>
 	</body>
 </html>

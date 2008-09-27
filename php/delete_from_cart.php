@@ -11,9 +11,9 @@ if( assert_login() )
 	if( isset($_GET['sid']) )
 	{
 		delete_from_cart($uid, $_GET['sid'], $db);
-		if( isset( $_SESSION['_PAGE'] ) )
+		if( isset( $_SESSION['RETURN_PAGE'] ) )
 		{
-			$page = $_SESSION['_PAGE'];
+			$page = $_SESSION['RETURN_PAGE'];
 			header( "Location: $page" ); 
 		} 
 		else 

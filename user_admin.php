@@ -4,7 +4,7 @@ include_once("./config/config.php");
 include_once("./php/functions.php");
 if( !isset( $_SESSION['_USER'] ) || !isset( $_SESSION['_GROUPS'] ) )
 {
-	$_SESSION['_PAGE'] = $_SERVER['PHP_SELF'];
+	$_SESSION['RETURN_PAGE'] = $_SERVER['PHP_SELF'];
 	header( "Location: ./login.php" );
 	exit();
 }

@@ -6,7 +6,7 @@ include_once("./php/navbar.php");
 include_once("./php/html_functions.php");
 include_once("./module/standard_headers.php");
 $uri = $_SERVER['REQUEST_URI'];
-$_SESSION['_PAGE'] = $uri;
+$_SESSION['RETURN_PAGE'] = $uri;
 if(!assert_login())
 {
 	header( "Location: ./login.php" );

@@ -2,9 +2,10 @@
 session_start();
 include_once("./config/config.php");
 include_once("./php/functions.php");
-$_SESSION['_PAGE'] = $_SERVER['REQUEST_URI'];
+include_once("./php/navbar.php");
+$_SESSION['RETURN_PAGE'] = $_SERVER['REQUEST_URI'];
 $style = assert_login() ? $_SESSION['USER_STYLE'] : "./css/$style";
-		?>
+	?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 
@@ -29,9 +30,7 @@ include("./module/login_greeting.php");
 <?php
 include("./module/top_toolbar.php"); 
 	?>
-          
-		  <hr />
-          <div align="center">
+	<div align="center">
 <?php
 
 //get set variables
@@ -95,10 +94,7 @@ else{
           
 <?php
 
-// including the navbar class
-include_once("./php/navbar.php");
 $nav = new navbar();
-
 $sql = '';
 if( $letter != 'T' )
 {
@@ -157,19 +153,16 @@ for ($y = 0; $y < count($links); $y++)
 	echo $links[$y] . "&nbsp;&nbsp;";
 }
 mysql_close( $db );
-				?>
+	?>
  	</div>
-    <br />
-	<hr />	         
 <?php
 include("./module/bottom_toolbar.php");
 include("./module/contact_info.php");
-			    ?>
-         <br />
+	?>
+	<br />
 <?php
 include("./module/version.php");
-			    ?>
-         
+	?>
 	</div>
-  </body>
+	</body>
 </html>

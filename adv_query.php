@@ -2,41 +2,35 @@
 session_start();
 include_once("./config/config.php");
 include_once("./php/functions.php");
-$_SESSION['_PAGE']  = $_SERVER['REQUEST_URI'];
-$_SESSION['_SEARCH_PAGE'] = $_SESSION['_PAGE'];
+$_SESSION['RETURN_PAGE']  = $_SERVER['REQUEST_URI'];
+$_SESSION['_SEARCH_PAGE'] = $_SESSION['RETURN_PAGE'];
 $last_query = isset($_SESSION['_QUERY']) ? $_SESSION['_QUERY'] : null;
 if($last_query != null)
 {
 	parse_str($last_query);
 }
 $style = assert_login() ? $_SESSION['USER_STYLE'] : "./css/$style";
-?>
+	?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-
 <head>
 <title><?php echo($advanced_title) ?></title>
 <link rel="stylesheet" type="text/css" href="<?php echo($style) ?>" />
 </head>
 <body>
+
 <div class="text_area">
 <?php 
 include("./module/login_greeting.php");
-?> 
-
-<!-- Display Title -->
+	?> 
 <div class="box" style="text-align: center">
 <h1><?php echo($advanced_title) ?></h1>
 </div>
 
-<!-- Navagation Bar --> 
 <?php
 $enable_quick_search = false;
 include("./module/top_toolbar.php");
 	?>
-
-<hr />
-<br />
 <center>
 <form action="results.php" method="get">
 <table>
@@ -92,15 +86,14 @@ include("./module/top_toolbar.php");
 <br />
 </form>
 </center>
-
-<hr />
-
-	<?php
-	include("./module/bottom_toolbar.php");
-	include("./module/contact_info.php");
-	?> <br />
-	<?php
-	include("./module/version.php");
-	?></div>
+<?php
+include("./module/bottom_toolbar.php");
+include("./module/contact_info.php");
+	?> 
+	<br />
+<?php
+include("./module/version.php");
+	?>
+	</div>
 </body>
 </html>

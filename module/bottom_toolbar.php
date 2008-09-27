@@ -1,3 +1,5 @@
+<br />
+<hr />
 <table align="center">
   <tr>
     <td align="center">

@@ -22,6 +22,7 @@ if($result)
 		$album_name = $row[0];
 	}
 }
+$_SESSION['RETURN_PAGE'] = $_SERVER['REQUEST_URI'];
 	?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -43,23 +44,17 @@ include("./module/login_greeting.php");
 	</div>
 <?php 
 include("./module/top_toolbar.php"); 
-		?>
-		<hr />
-		<br />
-<?php 
+
 $sql = get_default_query();
 $sql =  "$sql WHERE album_id=$album_id ORDER BY track";
 $nav_row = isset($_GET['nav_row']) ? $_GET['nav_row'] : 0;
 printTable($sql, $db);
 mysql_close($db);
-	?>		
-		<br />
-		<hr />
-<?php
+
 include("./module/bottom_toolbar.php");
 include("./module/contact_info.php");
-			?>
-		<br />
+	?>
+	<br />
 <?php
 include("./module/version.php");
 			    ?>

@@ -4,7 +4,7 @@ include_once("./config/config.php");
 include_once("./php/functions.php");
 if( assert_login())
 {
-	$_SESSION['_PAGE'] = $_SERVER['REQUEST_URI'];	
+	$_SESSION['RETURN_PAGE'] = $_SERVER['REQUEST_URI'];	
 	$style = $_SESSION['USER_STYLE'];
 }
 else

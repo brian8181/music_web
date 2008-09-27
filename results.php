@@ -4,7 +4,7 @@ include_once("./config/config.php");
 include_once("./php/functions.php");
 include_once("./php/navbar.php");
 isset( $_SESSION['_SEARCH_PAGE'] ) ? $back = $_SESSION['_SEARCH_PAGE'] : $back = "./query.php";
-$_SESSION['_PAGE']  = $_SERVER['REQUEST_URI'];
+$_SESSION['RETURN_PAGE']  = $_SERVER['REQUEST_URI'];
 $_SESSION['_QUERY'] = $_SERVER['QUERY_STRING'];
 $style = assert_login() ? $_SESSION['USER_STYLE'] : "./css/$style";
 ?>
@@ -57,21 +57,19 @@ $sql = "INSERT INTO `query_log` (`query_type`, `album`, `artist`, `title`, `genr
 (!empty($sortby) ? "'$sortby'" : "NULL") . ", " .
 	"'$remote_ip'" . ")";
 mysql_query($sql);
-?> <?php
 include("./module/login_greeting.php");
-?>
-
+	?>
 <div class="box" style="text-align: center">
-<h1><?php 
-echo($results_title);
-?></h1>
+<h1>
+<?php 
+	echo($results_title);
+	?>
+</h1>
 </div>
 
 <?php
 include("./module/top_toolbar.php");
 ?>
-<hr />
-<br />
 <center><a href="<?php echo($back) ?>"><b>Back To Search</b></a></center>
 <?php
 if( !isset( $query_type ) ) $query_type = "default";
@@ -83,15 +81,14 @@ $artist, $album, $title, $genre, $file, $lyrics, $sortby, $and, $direction );
 $nav_row = isset($_GET['nav_row']) ? $_GET['nav_row'] : 0;
 printTable($sql, $db);
 mysql_close($db);
-?> <br />
-<hr />
-<?php
+
 include("./module/bottom_toolbar.php");
 include("./module/contact_info.php");
-?> <br />
-
+	?> 
+<br />
 <?php
 include("./module/version.php");
-?></div>
+	?>
+</div>
 </body>
 </html>

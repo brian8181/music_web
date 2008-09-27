@@ -15,7 +15,7 @@ if( !isset( $_SESSION['USER_NAME'] ) || !isset( $_SESSION['USER_GROUPS'] ) )
 		
 		if( set_session($user, $pass, $db ) )
 		{
-			if( isset($_SESSION['_PAGE']) )
+			if( isset($_SESSION['RETURN_PAGE']) )
 			{
 				$page = $_SESSION['_PAGE'];
 				header( "Location: $page" ); 
