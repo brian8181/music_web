@@ -2,7 +2,7 @@
 // get the default query
 function get_default_query()
 {
-	$sql =  "SELECT art.file as art_file, track, title, album, artist.artist, song.file as song_file, song.id as sid, " .
+	$sql =  "SELECT art.file as art_file, track, title, album, artist.artist as artist, song.file as song_file, song.id as sid, " .
 			"user_cart.user_id, user_cart.removed_ts FROM song " . 			
 			"LEFT JOIN artist ON artist.id = song.artist_id " .
 			"LEFT JOIN album ON album.id = song.album_id " .
@@ -34,7 +34,7 @@ function get_playlist($pid)
 // get a serarch
 function get_search( $artist=null, $album=null, $title=null, 
 					 $genre=null,  $file=null,  $lyrics=null, 
-					 $sortby=null, $and=null, $direction=null )
+					 $sortby=null, $and=null )
 {
 	// check for wildcards & strip escape characters
 	if(isset($wildcard) && $wildcard == "on")
@@ -104,7 +104,7 @@ function get_search( $artist=null, $album=null, $title=null,
 		$sql = "$sql $operator (`song`.`lyrics` LIKE '$lyrics')";
 	}
 	if( !empty( $sortby ) )
-	$sql = "$sql ORDER BY $sortby $direction";
+	$sql = "$sql ORDER BY $sortby";
 	return $sql;	
 }
 // get user cart
@@ -151,8 +151,8 @@ function delete_from_cart($uid, $sid, $db)
 // print result table
 function printTable($sql, $db)
 {
-	global $nav_row;
-	
+	global $nav_row, $col_clicked, $order_dir;
+			
 	//nav bar
 	$nav = new navbar;
 	$nav->numrowsperpage = 50;
@@ -161,16 +161,28 @@ function printTable($sql, $db)
 	$total = $nav->total;
 	$start_number = $nav->start_number;
 	$end_number = $nav->end_number;
-	
-	$uri = $_SERVER['REQUEST_URI'];
 
-	// Remove "sortby" from URI
-	$pos = strrpos($uri, "sortby");
-	if ( ! ($pos === false) ) {  
-		$len = strlen($uri);
-		$len -= $pos-1;
-		$uri = substr( $uri, 0, -$len );
+	// build a custom query string - for anchor tags
+	$query = "?";
+	foreach ($_GET as $key => $value)
+	{
+        switch ($key)
+        {
+			case "album":
+			case "artist":
+			case "title":
+			case "file":
+			case "genre":
+			case "comments":
+			case "listOption":
+			case "and":	
+			case "order_by":
+			case "order_dir":						
+            	$query .= "$key=$value&";
+            	break;
+         }
 	}
+	$query = rtrim($query, '&'); // trim off last &
 
 	// print count
 	if($result) {
@@ -183,11 +195,26 @@ function printTable($sql, $db)
 	    <table id="result">
 	    <tr class="header_row">
 		<th align="center">Cover</th>
-		<th align="center"><a class="white_yellow" href="<?php echo($uri) ?>&amp;sortby=track">Track</a></th>
-		<th align="center"><a class="white_yellow" href="<?php echo($uri) ?>&amp;sortby=title">Title</a></th>
-		<th align="center"><a class="white_yellow" href="<?php echo($uri) ?>&amp;sortby=album.album,track">Album</a></th>
 		<th align="center">
-			<a class="white_yellow" href="<?php echo($uri) ?>&amp;sortby=artist.artist">Artist</a>
+			<a class="white_yellow" href="
+			<?php echo("$query&clicked=track") ?>">
+			Track
+			</a>
+		</th>
+		<th align="center">
+			<a class="white_yellow" href="
+			<?php echo("$query&clicked=title") ?>">
+			Title
+			</a>
+		</th>
+		<th align="center">
+			<a class="white_yellow" href="<?php echo("$query&clicked=album") ?>">Album</a>
+		</th>
+		<th align="center">
+			<a class="white_yellow" href="
+			<?php echo("$query&clicked=artist") ?>">
+			Artist
+			</a>
 		</th>
 		<th>download</th>
 		<th>cart</th>
@@ -198,7 +225,8 @@ function printTable($sql, $db)
 	$enable_direct_download = $GLOBALS['enable_direct_download'];
 	$art_location = $GLOBALS['art_location'];
 	$music_location = $GLOBALS['music_location'];
-	$authorized = $authorized = !$enable_security || assert_login(); 
+	$authorized = $authorized = !$enable_security || 
+		(assert_login() && assert_group('power_user')); 
 	      
 	// print data
 	while( $row = mysql_fetch_assoc($result) )
@@ -213,7 +241,7 @@ function printTable($sql, $db)
 		
 		$row_html = 
 			"<td>
-				<a class=\"NoColor\" href=\"./results.php?album=$album&artist=$artist&amp;sortby=track\">
+				<a class=\"NoColor\" href=\"./results.php?album=$album&artist=$artist&amp;order_by=artist,album,track,title\">
 					<img src=\"$art_location/xsmall/$art_file\" width=\"50\" height=\"50\" alt=\"NA\"/>
 				</a>
 			</td>
@@ -222,10 +250,10 @@ function printTable($sql, $db)
 			    <a href=\"details.php?sid=$sid\">$title</a>
 			</td>
 			<td>
-			    <a href=\"results.php?album=$album&amp;sortby=track\">$album</a>
+			    <a href=\"results.php?album=$album&amp;order_by=artist,album,track,title\">$album</a>
 			</td>
 			<td>
-			    <a href=\"results.php?artist=$artist&amp;sortby=album.album,track\">$artist</a>
+			    <a href=\"results.php?artist=$artist&amp;order_by=artist,album,track,title\">$artist</a>
 			</td>";
 				
 		if( $authorized )
@@ -277,27 +305,28 @@ function printTable($sql, $db)
 	}
 	echo("</center>");
 }
-function get_sort_order($col_click, $order, $direction)
+// get sort order
+function get_sort_order($order, $direction, $clicked)
 {
-	$order = "sortby";
-	if($new_order == $current)
+	$cols = explode(',', $order);
+	$sort_order = "";
+	$last_col = $cols[3];
+	if($last_col == $clicked)
 	{
-		$direction = $direction = 'ASC' ? 'DESC' : 'ASC';	
+		$direction = $direction = 'ASC' ? 'DESC' : 'ASC';
+		$sort_order = "$order $direction";				
 	}
 	else
 	{
-		$direction = "ASC";
+		foreach($cols as $col)
+		{
+			 if($col == $clicked)
+			 	continue;
+			 $sort_order = "$sort_order$col,";	
+		}
+		$sort_order = "$sort_order$clicked ASC"; 
 	}
-	switch($new_order)
-	{
-		case 'track':
-			 $order = "track $direction"; 
-			 break;
-		case 'title':
-			break;
-		case 'album':
-			break;	
-	}
+	return rtrim($sort_order, ',');
 }
 // get user row
 function get_user($user_name, $db)
@@ -431,4 +460,4 @@ function validate_pass($password)
 		return false;
 	} 
 }
-?>
+	?>

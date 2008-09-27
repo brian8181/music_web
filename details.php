@@ -47,7 +47,6 @@ include("./module/login_greeting.php");
 <div class="box" style="text-align: center">
 <h1><?php echo($details_title); ?></h1>
 </div>
-<br />
 <?php
 include("./module/top_toolbar.php");
 $sql = "SELECT track, title, album.album, artist.artist, genre, bitrate," .
@@ -60,7 +59,6 @@ $result = mysql_query($sql);
 $row = mysql_fetch_array($result, MYSQL_NUM);
 mysql_close($db);
 ?>
-<hr />
 <table class="Main" cellpadding="10" width="="100%">
 	<tr>
 		<td class="Padded" width="72%">
@@ -143,15 +141,10 @@ mysql_close($db);
 		</td>
 	</tr>
 </table>
-<hr />
 
-			<?php
-			include("./module/bottom_toolbar.php");
-			include("./module/contact_info.php");
-			?> <br />
-
-			<?php
-			include("./module/version.php");
-			?></div>
+<?php
+include("./module/footer.php");
+	?>
+	</div>
 </body>
 </html>

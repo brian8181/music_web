@@ -20,16 +20,10 @@ $style = assert_login() ? $_SESSION['USER_STYLE'] : "./css/$style";
 			  Music Statistics
 			</h1>
 		</div>
-
 <?php 
 include("./module/top_toolbar.php"); 
 		?>
-		
-<hr />
-<br />
-
 <div align="center">
-			
 <table>
      		
 <?php
@@ -131,21 +125,10 @@ $row = mysql_fetch_row($result);
 
 </div>
 
-<br />
-<hr />
-	
 <?php
 mysql_close($db);
-include("./module/bottom_toolbar.php");
-include("./module/contact_info.php");
+include("./module/footer.php");
 	?>
-			
-	<br />
-
-<?php
-include("./module/version.php");
-	?>
-				
   </div>
   </body>
 </html>

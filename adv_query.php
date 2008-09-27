@@ -83,7 +83,6 @@ include("./module/top_toolbar.php");
 <br />
 <input type="submit" value="Search" />&nbsp; Use&nbsp;wildcards: <input name="wildcard" type="checkbox" value="on" 
 <?php if( isset($wildcard) ) echo("checked=\"checked\""); ?> /><br />
-<br />
 </form>
 </center>
 <?php

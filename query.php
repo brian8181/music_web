@@ -70,14 +70,15 @@ $enable_quick_search = false;
 include("./module/top_toolbar.php"); 
 	?>
 	<br />
+	<br />
+	<br />
+	
 	<form name="search_form" onsubmit="return on_submit(search_form)" action="results.php" method="get">
 		<div style="text-align: center">
 
 			<div style="text-align: center">
 				<h3>Search For:  </h3>
 			</div>
-			<input type="hidden" name="query_type" value="default" />
-			<input type="hidden" name="and" value="false" />
 			<input type="text" name="album" align="right"value="<?php if (isset($txtSearch)) { echo $txtSearch; } ?>"/>
 			<input type="hidden" name="artist" />
 			<input type="hidden" name="title" />
@@ -86,8 +87,8 @@ include("./module/top_toolbar.php");
 			<input type="hidden" name="comments" />
 			<input type="hidden" name="lyrics" />
 			<input type="hidden" name="and" value="false" />
-			<input type="hidden" name="wildcard" value="off" />
-			<input type="hidden" name="sortby" />
+			<input type="hidden" name="order_by" value="<?php echo( $default_order ) ?>" />
+			<input type="hidden" name="order_dir" value="<?php echo( $default_order_direction ) ?>" />
 			<input type="submit" value="Search" />
 			in fields 
 			<!-- Options DropList -->

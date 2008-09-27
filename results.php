@@ -21,8 +21,6 @@ $style = assert_login() ? $_SESSION['USER_STYLE'] : "./css/$style";
 $db = mysql_connect($db_address, $db_user_name, $db_password);
 mysql_select_db($db_name, $db);
 mysql_query("SET NAMES 'utf8'");
-
-$query_type = isset($_GET['query_type']) ? $_GET['query_type'] : null;
 $album      = isset($_GET['album'])      ? $_GET['album']      : null;
 $artist     = isset($_GET['artist'])     ? $_GET['artist']     : null;
 $title      = isset($_GET['title'])      ? $_GET['title']      : null;
@@ -32,26 +30,10 @@ $comments   = isset($_GET['comments'])   ? $_GET['comments']   : null;
 $lyrics     = isset($_GET['lyrics'])     ? $_GET['lyrics']     : null;
 $and        = isset($_GET['and'])        ? $_GET['and']        : null;
 $wildcard   = isset($_GET['wildcard'])   ? $_GET['wildcard']   : null;
-$sortby     = isset($_GET['sortby'])     ? $_GET['sortby']     : null;
-$direction  = isset($_GET['$direction']) ? $_GET['$direction'] : null;
-$direction = $direction = 'ASC' ? 'DESC' : 'ASC';
-$pid         = isset($_GET['pid'])         ? $_GET['pid']         : null;
-// logging
-$remote_ip = $_SERVER['REMOTE_ADDR'];
-$sql = "INSERT INTO `query_log` (`query_type`, `album`, `artist`, `title`, `genre`, `file`, `comments`, `lyrics`, `and`, `wildcard`, `sortby`, `ip`) VALUES(" .
-(!empty($query_type) ? "'$query_type'" : "NULL") . ", " .
-(!empty($album) ? "'$album'" : "NULL") . ", " .
-(!empty($artist) ? "'$artist'" : "NULL") . ", " .
-(!empty($title) ? "'$title'" : "NULL") . ", " .
-(!empty($genre) ? "'$genre'" : "NULL") . ", " .
-(!empty($file) ? "'$file'" : "NULL") . ", " .
-(!empty($comments) ? "'$comments'" : "NULL") . ", " .
-(!empty($lyrics) ? "'$lyrics'" : "NULL") . ", " .
-(!empty($and) ? "'$and'" : "NULL") . ", " .
-(!empty($wildcard) ? "'$wildcard'" : "NULL") . ", " .
-(!empty($sortby) ? "'$sortby'" : "NULL") . ", " .
-	"'$remote_ip'" . ")";
-mysql_query($sql);
+$order_by   = isset($_GET['order_by'])     ? $_GET['order_by']     : $default_order;
+$order_dir  = isset($_GET['order_dir']) ? $_GET['order_dir'] : $default_order_direction;
+$clicked  = isset($_GET['clicked']) ? $_GET['clicked'] : null;
+$pid        = isset($_GET['pid'])         ? $_GET['pid']         : null;
 include("./module/login_greeting.php");
 	?>
 <div class="box" style="text-align: center">
@@ -66,12 +48,14 @@ include("./module/top_toolbar.php");
 	?>
 <center><a href="<?php echo($back) ?>"><b>Back To Search</b></a></center>
 <?php
-if( !isset( $query_type ) ) $query_type = "default";
 
 // build the sql query
 $uid = isset($_SESSION['USER_ID']) ? $_SESSION['USER_ID'] : null;
+// get order by 
+//$order_by = get_sort_order($order_by, $order_dir, $clicked);
+
 $sql = get_search(
-$artist, $album, $title, $genre, $file, $lyrics, $sortby, $and, $direction );
+$artist, $album, $title, $genre, $file, $lyrics, $order_by, $and, $order_dir );
 $nav_row = isset($_GET['nav_row']) ? $_GET['nav_row'] : 0;
 printTable($sql, $db);
 mysql_close($db);

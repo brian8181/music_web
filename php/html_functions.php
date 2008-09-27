@@ -15,7 +15,7 @@ function close_row()
 	echo("<tr>");
 }
 
-function print_img_srck($path)
+function print_img_src($path)
 {
 	echo("<img src=\"$path\" />");	
 }
