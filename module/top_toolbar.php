@@ -19,4 +19,3 @@ include("toolbar_items.php");
   </tr>
 </table>
 <hr />
-<br />

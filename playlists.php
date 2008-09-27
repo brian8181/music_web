@@ -25,29 +25,25 @@ else
 <?php 
 include("./module/login_greeting.php"); 
 	?>
-		<div class="box" style="text-align: center">
-		<center>
-			<h1>Playlists</h1>
-		</center>
-		</div>
+	<div class="box" style="text-align: center">
+	<center>
+		<h1>Playlists</h1>
+	</center>
+	</div>
 <?php 
 include("./module/top_toolbar.php"); 
-	?>
-		<hr />
-		<center>
-<?php
 $db = $db = mysql_connect($db_address, $db_user_name, $db_password);
 mysql_select_db($db_name, $db);
-
 $sql = "SELECT id, name from playlists ORDER BY name";
 $result = mysql_query($sql);
 	?>
-		<!-- move formating to css -->
-		<table>
-		<tr>
-			<th style="text-align: left">Name</th>
-			<th style="text-align: center">Count</th>
-		</tr>
+	<!-- move formating to css -->
+	<center>
+	<table>
+	<tr>
+		<th style="text-align: left">Name</th>
+		<th style="text-align: center">Count</th>
+	</tr>
 <?php 
 while ( $row = mysql_fetch_array($result, MYSQL_NUM) )
 {
@@ -64,14 +60,13 @@ while ( $row = mysql_fetch_array($result, MYSQL_NUM) )
 }
 mysql_close($db);
 	?>
-		</table>			
-		</center>
-		<hr />
+	</table>			
+	</center>
 <?php
 include("./module/bottom_toolbar.php");
 include("./module/contact_info.php");
 	?>
-		<br />
+	<br />
 <?php
 include("./module/version.php");
 	?>

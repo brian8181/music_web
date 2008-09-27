@@ -12,8 +12,8 @@ if(!assert_login())
 	header( "Location: ./login.php" );
 	exit(); 		
 }
-$style = "./css/$style";
-		?>
+$style = $_SESSION['USER_STYLE'];
+	?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
@@ -30,20 +30,15 @@ $db = mysql_connect($db_address, $db_user_name, $db_password);
 mysql_select_db($db_name, $db);
 mysql_query("SET NAMES 'utf8'");
 include("./module/login_greeting.php"); 
-                ?> 
-
+	 ?> 
 	<div class="box" style="text-align: center">
 		<h1>
 			My Downloads
 		</h1>
 	</div>
-	
 <?php 
 include("./module/top_toolbar.php"); 
-		?>
-		
-		<hr />
-<?php
+
 $uid =  $_SESSION['USER_ID'];
 $sql = get_my_downloads($uid);
 
@@ -56,21 +51,18 @@ else
 	$_GET['nav_row'] = $nav_row = 0;
 }
 
-
 $nav = new navbar;
 $nav->numrowsperpage = 50;
 $result = $nav->execute($sql, $db, "mysql");
 $total = $nav->total;
 $start_number = $nav->start_number;
 $end_number = $nav->end_number;
-
 			
 if($result) {
 	$num_rows = mysql_num_rows($result);
 	echo( "<br /><br /><b>Showing $start_number - $end_number of $total</b>" );
 }
 ?>
-		
 		<table id="result">		
 		<tr class="header_row">
 			<th align="center">Cover</th>
@@ -109,19 +101,14 @@ if($result) {
 	}
 	?>
 	</center>
-	<br />
-	<hr />
-
 <?php
 include("./module/bottom_toolbar.php");
 include("./module/contact_info.php");
-			?>
-
-		<br />
-
+	?>
+	<br />
 <?php
 include("./module/version.php");
-			    ?>
+	?>
 	</div>	
 	</body>
 </html>

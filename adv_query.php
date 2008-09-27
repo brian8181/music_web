@@ -24,7 +24,7 @@ $style = assert_login() ? $_SESSION['USER_STYLE'] : "./css/$style";
 include("./module/login_greeting.php");
 	?> 
 <div class="box" style="text-align: center">
-<h1><?php echo($advanced_title) ?></h1>
+	<h1><?php echo($advanced_title) ?></h1>
 </div>
 
 <?php

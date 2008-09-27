@@ -30,35 +30,21 @@ if($result)
 </head>
 	<body>
 	<div class="text_area">
-   
 <?php 
 include("./module/login_greeting.php"); 
 	?> 
 	<div class="box" style="text-align: center">
-		<h1>
-			<?php echo($playlist_name) ?>
-		</h1>
+		<h1><?php echo($playlist_name) ?></h1>
 	</div>
 <?php 
 include("./module/top_toolbar.php"); 
-	?>
-		<hr />
-		<br />
-<?php 
+
 $sql = get_playlist($pid);
 $nav_row = isset($_GET['nav_row']) ? $_GET['nav_row'] : 0;
 printTable($sql, $db);
 mysql_close($db);
-	?>		
-		<br />
-		<hr />
-<?php
-include("./module/bottom_toolbar.php");
-include("./module/contact_info.php");
-	?>
-		<br />
-<?php
-include("./module/version.php");
+
+include("./module/footer.php");
 	?>
 	</div>	
 	</body>

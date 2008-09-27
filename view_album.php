@@ -51,12 +51,7 @@ $nav_row = isset($_GET['nav_row']) ? $_GET['nav_row'] : 0;
 printTable($sql, $db);
 mysql_close($db);
 
-include("./module/bottom_toolbar.php");
-include("./module/contact_info.php");
-	?>
-	<br />
-<?php
-include("./module/version.php");
+include("./module/footer.php");
 			    ?>
 	</div>	
 	</body>
