@@ -47,10 +47,9 @@ if( isset( $enable_quick_search ) && $enable_quick_search == true )
 	?>
 	 <td align="center">
         <form name="toolbar" onsubmit="on_quick_submit(toolbar)" method="get" action="results.php">
-          <input type="hidden" name="query_type" value="default" />
-          <input type="hidden" name="and" value="false" />
           <input type="hidden" name="artist" />
           <input type="hidden" name="title" />
+          <input type="hidden" name="and" value="false" />
           <div class="white" style="text-align: center">
             <strong>
               <em>Quick Search:</em>

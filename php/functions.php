@@ -310,7 +310,7 @@ function get_sort_order($order, $direction, $clicked)
 {
 	$cols = explode(',', $order);
 	$sort_order = "";
-	$last_col = $cols[3];
+	$last_col = $cols[0];
 	if($last_col == $clicked)
 	{
 		$direction = $direction = 'ASC' ? 'DESC' : 'ASC';
@@ -324,9 +324,10 @@ function get_sort_order($order, $direction, $clicked)
 			 	continue;
 			 $sort_order = "$sort_order$col,";	
 		}
-		$sort_order = "$sort_order$clicked ASC"; 
+		$sort_order = rtrim($sort_order, ',');
+		$sort_order = "$clicked,$sort_order ASC"; 
 	}
-	return rtrim($sort_order, ',');
+	return $sort_order; 
 }
 // get user row
 function get_user($user_name, $db)

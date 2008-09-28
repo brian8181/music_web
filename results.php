@@ -30,8 +30,8 @@ $comments   = isset($_GET['comments'])   ? $_GET['comments']   : null;
 $lyrics     = isset($_GET['lyrics'])     ? $_GET['lyrics']     : null;
 $and        = isset($_GET['and'])        ? $_GET['and']        : null;
 $wildcard   = isset($_GET['wildcard'])   ? $_GET['wildcard']   : null;
-$order_by   = isset($_GET['order_by'])     ? $_GET['order_by']     : $default_order;
-$order_dir  = isset($_GET['order_dir']) ? $_GET['order_dir'] : $default_order_direction;
+$order_by   = isset($_GET['order_by'])   ? $_GET['order_by']     : $default_order;
+$order_dir  = isset($_GET['order_dir'])  ? $_GET['order_dir'] : $default_order_direction;
 $clicked  = isset($_GET['clicked']) ? $_GET['clicked'] : null;
 $pid        = isset($_GET['pid'])         ? $_GET['pid']         : null;
 include("./module/login_greeting.php");
@@ -52,7 +52,7 @@ include("./module/top_toolbar.php");
 // build the sql query
 $uid = isset($_SESSION['USER_ID']) ? $_SESSION['USER_ID'] : null;
 // get order by 
-//$order_by = get_sort_order($order_by, $order_dir, $clicked);
+$order_by = get_sort_order($order_by, $order_dir, $clicked);
 
 $sql = get_search(
 $artist, $album, $title, $genre, $file, $lyrics, $order_by, $and, $order_dir );
