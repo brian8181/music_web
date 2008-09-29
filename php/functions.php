@@ -34,7 +34,7 @@ function get_playlist($pid)
 // get a serarch
 function get_search( $artist=null, $album=null, $title=null, 
 					 $genre=null,  $file=null,  $lyrics=null, 
-					 $sortby=null, $and=null )
+					 $order_by=null, $and=null )
 {
 	// check for wildcards & strip escape characters
 	if(isset($wildcard) && $wildcard == "on")
@@ -103,8 +103,8 @@ function get_search( $artist=null, $album=null, $title=null,
 	{
 		$sql = "$sql $operator (`song`.`lyrics` LIKE '$lyrics')";
 	}
-	if( !empty( $sortby ) )
-	$sql = "$sql ORDER BY $sortby";
+	if( !empty( $order_by ) )
+		$sql = "$sql ORDER BY $order_by";
 	return $sql;	
 }
 // get user cart
@@ -176,7 +176,6 @@ function printTable($sql, $db)
 			case "comments":
 			case "listOption":
 			case "and":	
-			case "order_by":
 			case "order_dir":						
             	$query .= "$key=$value&";
             	break;
@@ -189,30 +188,65 @@ function printTable($sql, $db)
 		$num_rows = mysql_num_rows($result);
 		echo( "<br /><br /><b>Showing $start_number - $end_number of $total</b>" );
 	}
-	
 	// print headers
 	?>
+		<script src="./script/querystring.enhanced.js" type="text/javascript"></script>
+		<script src="./script/functions.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			function on_header_click(link) 
+			{
+				var qs = new Querystring();
+				var order = qs.get("order_by");
+				var cols = order.split(",");
+				var pair = cols[0].split(" ");
+				var ret;
+				
+				var name = new String(link.name);
+				if(name == pair[0])
+				{
+					if( pair[1] == "ASC" )
+						ret = order.replace("ASC", "DESC", "gi");
+					else
+						ret = order.replace("DESC", "ASC", "gi");
+				}
+				else
+				{
+					order = "";
+					for( var i in cols )
+					{
+						pair = cols[i].split(" "); 
+						if(pair[0] == link.name)
+							continue;
+						order += cols[i] + ",";	
+					}
+					order = order.substr( 0, order.length-1 );
+					ret = link.name +  " ASC," + order;
+				}
+				link.href += "&order_by=" + ret;
+			}
+		</script>
 	    <table id="result">
 	    <tr class="header_row">
 		<th align="center">Cover</th>
 		<th align="center">
-			<a class="white_yellow" href="
-			<?php echo("$query&clicked=track") ?>">
+			<a class="white_yellow" name="track" onclick="on_header_click(this)" 
+			href="<?php echo($query) ?>">
 			Track
 			</a>
 		</th>
 		<th align="center">
-			<a class="white_yellow" href="
-			<?php echo("$query&clicked=title") ?>">
+			<a class="white_yellow" name="title" onclick="on_header_click(this)"
+			 href="<?php echo("$query&clicked=title") ?>">
 			Title
 			</a>
 		</th>
 		<th align="center">
-			<a class="white_yellow" href="<?php echo("$query&clicked=album") ?>">Album</a>
+			<a class="white_yellow" name="album" onclick="on_header_click(this)" 
+			href="<?php echo("$query&clicked=album") ?>">Album</a>
 		</th>
 		<th align="center">
-			<a class="white_yellow" href="
-			<?php echo("$query&clicked=artist") ?>">
+			<a class="white_yellow" name="artist" onclick="on_header_click(this)" 
+			href="<?php echo("$query&clicked=artist") ?>">
 			Artist
 			</a>
 		</th>
@@ -306,28 +340,29 @@ function printTable($sql, $db)
 	echo("</center>");
 }
 // get sort order
-function get_sort_order($order, $direction, $clicked)
+function get_sort_order(&$order, &$direction, $clicked)
 {
 	$cols = explode(',', $order);
-	$sort_order = "";
 	$last_col = $cols[0];
 	if($last_col == $clicked)
 	{
 		$direction = $direction = 'ASC' ? 'DESC' : 'ASC';
-		$sort_order = "$order $direction";				
+		$order_sql = "$order $direction";				
 	}
 	else
 	{
+		$order = "";
 		foreach($cols as $col)
 		{
 			 if($col == $clicked)
 			 	continue;
-			 $sort_order = "$sort_order$col,";	
+			 $order = "$order$col,";	
 		}
-		$sort_order = rtrim($sort_order, ',');
-		$sort_order = "$clicked,$sort_order ASC"; 
+		$order = rtrim($order, ',');
+		$order = "$clicked,$order";
+		$order_sql = "$order ASC"; 
 	}
-	return $sort_order; 
+	return $order_sql; 
 }
 // get user row
 function get_user($user_name, $db)

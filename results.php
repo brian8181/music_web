@@ -51,11 +51,16 @@ include("./module/top_toolbar.php");
 
 // build the sql query
 $uid = isset($_SESSION['USER_ID']) ? $_SESSION['USER_ID'] : null;
-// get order by 
-$order_by = get_sort_order($order_by, $order_dir, $clicked);
 
-$sql = get_search(
-$artist, $album, $title, $genre, $file, $lyrics, $order_by, $and, $order_dir );
+$order_sql = "";
+// get order by 
+//if($clicked != null)
+//	$order_sql = get_sort_order($order_by, $order_dir, $clicked);
+//else // default
+//	$order_sql = "$order_by $order_dir";
+
+
+$sql = get_search($artist, $album, $title, $genre, $file, $lyrics, $order_by, $and);
 $nav_row = isset($_GET['nav_row']) ? $_GET['nav_row'] : 0;
 printTable($sql, $db);
 mysql_close($db);
