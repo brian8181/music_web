@@ -232,21 +232,21 @@ function printTable($sql, $db)
 		<th align="center">
 			<a class="<?php echo( ($clicked == "track" ? "yellow_white" : "white_yellow") ) ?>"
 			name="track" onclick="on_header_click(this)" 
-			href="<?php echo("$query&clicked=track") ?>">
+			href="<?php echo("$query") ?>">
 			Track
 			</a>
 		</th>
 		<th align="center">
 			<a class="<?php echo( ($clicked == "title" ? "yellow_white" : "white_yellow") ) ?>"
 			name="title" onclick="on_header_click(this)"
-			href="<?php echo("$query&clicked=title") ?>">
+			href="<?php echo("$query") ?>">
 			Title
 			</a>
 		</th>
 		<th align="center">
 			<a class="<?php echo( ($clicked == "album" ? "yellow_white" : "white_yellow") ) ?>"
 			name="album" onclick="on_header_click(this)" 
-			href="<?php echo("$query&clicked=album") ?>">
+			href="<?php echo("$query") ?>">
 			Album
 			</a>
 		</th>

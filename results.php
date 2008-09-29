@@ -31,7 +31,6 @@ $lyrics     = isset($_GET['lyrics'])     ? $_GET['lyrics']     : null;
 $and        = isset($_GET['and'])        ? $_GET['and']        : null;
 $wildcard   = isset($_GET['wildcard'])   ? $_GET['wildcard']   : null;
 $order_by   = isset($_GET['order_by'])   ? $_GET['order_by']     : $default_order;
-$order_dir  = isset($_GET['order_dir'])  ? $_GET['order_dir'] : $default_order_direction;
 //infer sort col from order_by
 $strs = explode(' ', $order_by);
 $clicked  = $strs[0];

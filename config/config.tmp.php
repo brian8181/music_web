@@ -64,7 +64,6 @@ $enable_browse = false;
 $enable_security = false;
 // 0 or less = umlimited
 $page_result_limit = 0;
-\$default_order = "title,artist.artist,album,track";
-$default_order_direction = "ASC";
+$default_order = "artist ASC,album ASC,track ASC,title ASC";
 	
 ?>

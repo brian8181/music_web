@@ -88,7 +88,6 @@ include("./module/top_toolbar.php");
 			<input type="hidden" name="lyrics" />
 			<input type="hidden" name="and" value="false" />
 			<input type="hidden" name="order_by" value="<?php echo( $default_order ) ?>" />
-			<input type="hidden" name="order_dir" value="<?php echo( $default_order_direction ) ?>" />
 			<input type="submit" value="Search" />
 			in fields 
 			<!-- Options DropList -->
