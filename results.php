@@ -32,7 +32,9 @@ $and        = isset($_GET['and'])        ? $_GET['and']        : null;
 $wildcard   = isset($_GET['wildcard'])   ? $_GET['wildcard']   : null;
 $order_by   = isset($_GET['order_by'])   ? $_GET['order_by']     : $default_order;
 $order_dir  = isset($_GET['order_dir'])  ? $_GET['order_dir'] : $default_order_direction;
-$clicked  = isset($_GET['clicked']) ? $_GET['clicked'] : null;
+//infer sort col from order_by
+$strs = explode(' ', $order_by);
+$clicked  = $strs[0];
 $pid        = isset($_GET['pid'])         ? $_GET['pid']         : null;
 include("./module/login_greeting.php");
 	?>
@@ -53,13 +55,6 @@ include("./module/top_toolbar.php");
 $uid = isset($_SESSION['USER_ID']) ? $_SESSION['USER_ID'] : null;
 
 $order_sql = "";
-// get order by 
-//if($clicked != null)
-//	$order_sql = get_sort_order($order_by, $order_dir, $clicked);
-//else // default
-//	$order_sql = "$order_by $order_dir";
-
-
 $sql = get_search($artist, $album, $title, $genre, $file, $lyrics, $order_by, $and);
 $nav_row = isset($_GET['nav_row']) ? $_GET['nav_row'] : 0;
 printTable($sql, $db);

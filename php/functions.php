@@ -151,7 +151,7 @@ function delete_from_cart($uid, $sid, $db)
 // print result table
 function printTable($sql, $db)
 {
-	global $nav_row, $col_clicked, $order_dir;
+	global $nav_row, $clicked, $order_dir;
 			
 	//nav bar
 	$nav = new navbar;
@@ -188,6 +188,7 @@ function printTable($sql, $db)
 		$num_rows = mysql_num_rows($result);
 		echo( "<br /><br /><b>Showing $start_number - $end_number of $total</b>" );
 	}
+	
 	// print headers
 	?>
 		<script src="./script/querystring.enhanced.js" type="text/javascript"></script>
@@ -227,31 +228,37 @@ function printTable($sql, $db)
 		</script>
 	    <table id="result">
 	    <tr class="header_row">
-		<th align="center">Cover</th>
+		<th align="center">&nbsp;</th>
 		<th align="center">
-			<a class="white_yellow" name="track" onclick="on_header_click(this)" 
-			href="<?php echo($query) ?>">
+			<a class="<?php echo( ($clicked == "track" ? "yellow_white" : "white_yellow") ) ?>"
+			name="track" onclick="on_header_click(this)" 
+			href="<?php echo("$query&clicked=track") ?>">
 			Track
 			</a>
 		</th>
 		<th align="center">
-			<a class="white_yellow" name="title" onclick="on_header_click(this)"
-			 href="<?php echo("$query&clicked=title") ?>">
+			<a class="<?php echo( ($clicked == "title" ? "yellow_white" : "white_yellow") ) ?>"
+			name="title" onclick="on_header_click(this)"
+			href="<?php echo("$query&clicked=title") ?>">
 			Title
 			</a>
 		</th>
 		<th align="center">
-			<a class="white_yellow" name="album" onclick="on_header_click(this)" 
-			href="<?php echo("$query&clicked=album") ?>">Album</a>
+			<a class="<?php echo( ($clicked == "album" ? "yellow_white" : "white_yellow") ) ?>"
+			name="album" onclick="on_header_click(this)" 
+			href="<?php echo("$query&clicked=album") ?>">
+			Album
+			</a>
 		</th>
 		<th align="center">
-			<a class="white_yellow" name="artist" onclick="on_header_click(this)" 
+			<a class="<?php echo( ($clicked == "artist" ? "yellow_white" : "white_yellow") ) ?>"
+			name="artist" onclick="on_header_click(this)" 
 			href="<?php echo("$query&clicked=artist") ?>">
 			Artist
 			</a>
 		</th>
-		<th>download</th>
-		<th>cart</th>
+		<th>&nbsp;</th>
+		<th>&nbsp;</th>
 		</tr>
 	<?php		
 
