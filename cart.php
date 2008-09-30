@@ -1,18 +1,22 @@
 <?php
-session_start();
+// includes
 include_once("./config/config.php");
 include_once("./php/functions.php");
 include_once("./php/navbar.php");
-include_once("./php/html_functions.php");
-$uri = $_SERVER['REQUEST_URI'];
-$_SESSION['RETURN_PAGE'] = $uri;
-if(!assert_login())
+
+// session
+session_start();
+$_SESSION['RETURN_PAGE']  = $_SERVER['REQUEST_URI'];
+$_SESSION['RETURN_QUERY'] = $_SERVER['QUERY_STRING'];
+$logged_in = assert_login();
+$style = $logged_in ? $_SESSION['USER_STYLE'] : "./css/$style";
+
+if($logged_in == false)
 {
 	header( "Location: ./login.php" );
 	exit(); 		
 }
 $uid = $_SESSION['USER_ID'];
-$style = $_SESSION['USER_STYLE'];
 		?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -39,7 +43,7 @@ include("./module/top_toolbar.php");
 	
 $sql = get_my_cart($uid);
 $nav_row = isset($_GET['nav_row']) ? $_GET['nav_row'] : 0;
-printTable($sql, $db);
+print_results($sql, $db);
 mysql_close($db);
 
 include("./module/bottom_toolbar.php");

@@ -34,7 +34,7 @@ function get_playlist($pid)
 // get a serarch
 function get_search( $artist=null, $album=null, $title=null, 
 					 $genre=null,  $file=null,  $lyrics=null, 
-					 $order_by=null, $and=null )
+					 $order_by=null, $wildcard=null, $and=null )
 {
 	// check for wildcards & strip escape characters
 	if(isset($wildcard) && $wildcard == "on")

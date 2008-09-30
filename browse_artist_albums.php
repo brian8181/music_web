@@ -2,7 +2,7 @@
 session_start();
 include_once("./config/config.php");
 include_once("./php/functions.php");
-isset( $_SESSION['RETURN_PAGE'] ) ? $back = $_SESSION['RETURN_PAGE'] : $back = "./browse_artist.php";
+$back = isset( $_SESSION['RETURN_PAGE'] ) ? $_SESSION['RETURN_PAGE'] : "./browse_artist.php";
 $_SESSION['RETURN_PAGE'] = $_SERVER['REQUEST_URI'];
 $style = assert_login() ? $_SESSION['USER_STYLE'] : "./css/$style";
 		?>

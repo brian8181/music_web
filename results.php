@@ -1,13 +1,17 @@
 <?php
-session_start();
+// includes
 include_once("./config/config.php");
 include_once("./php/functions.php");
 include_once("./php/navbar.php");
-isset( $_SESSION['_SEARCH_PAGE'] ) ? $back = $_SESSION['_SEARCH_PAGE'] : $back = "./query.php";
+// session
+session_start();
 $_SESSION['RETURN_PAGE']  = $_SERVER['REQUEST_URI'];
 $_SESSION['RETURN_QUERY'] = $_SERVER['QUERY_STRING'];
 $logged_in = assert_login();
 $style = $logged_in ? $_SESSION['USER_STYLE'] : "./css/$style";
+
+//page specific
+$back = isset( $_SESSION['SEARCH_PAGE'] ) ? $_SESSION['SEARCH_PAGE'] : "./query.php";
 	?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -56,7 +60,7 @@ include("./module/top_toolbar.php");
 <?php
 // build the sql query
 $uid = isset($_SESSION['USER_ID']) ? $_SESSION['USER_ID'] : null;
-$sql = get_search($artist, $album, $title, $genre, $file, $lyrics, $order_by, $and);
+$sql = get_search($artist, $album, $title, $genre, $file, $lyrics, $order_by, $wildcard, $and);
 $nav_row = isset($_GET['nav_row']) ? $_GET['nav_row'] : 0;
 print_results($sql, $db);
 mysql_close($db);

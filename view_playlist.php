@@ -1,10 +1,16 @@
 <?php
-session_start();
+// includes
 include_once("./config/config.php");
 include_once("./php/functions.php");
 include_once("./php/navbar.php");
-$uri = $_SERVER['REQUEST_URI'];
-$style = assert_login() ? $_SESSION['USER_STYLE'] : "./css/$style";
+// session
+session_start();
+$_SESSION['RETURN_PAGE']  = $_SERVER['REQUEST_URI'];
+$_SESSION['RETURN_QUERY'] = $_SERVER['QUERY_STRING'];
+$logged_in = assert_login();
+$style = $logged_in ? $_SESSION['USER_STYLE'] : "./css/$style";
+
+// page
 $pid = isset($_GET['pid']) ? $_GET['pid'] : null;
 
 // std ini
