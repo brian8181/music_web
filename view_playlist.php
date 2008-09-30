@@ -7,8 +7,15 @@ $uri = $_SERVER['REQUEST_URI'];
 $style = assert_login() ? $_SESSION['USER_STYLE'] : "./css/$style";
 $pid = isset($_GET['pid']) ? $_GET['pid'] : null;
 
-$db = mysql_connect($db_address, $db_user_name, $db_password); mysql_select_db($db_name, $db);
+// std ini
+$db = mysql_connect($db_address, $db_user_name, $db_password);
+mysql_select_db($db_name, $db);
 mysql_query("SET NAMES 'utf8'");
+$order_by   = isset($_GET['order_by'])  ? $_GET['order_by']  : $default_order;
+//infer sort col from order_by
+$strs = explode(' ', $order_by);
+$clicked  = $strs[0];
+
 $result = mysql_query("SELECT name FROM playlists where id='$pid'");
 $playlist_name = "Playlist View";
 if($result)
@@ -41,7 +48,7 @@ include("./module/top_toolbar.php");
 
 $sql = get_playlist($pid);
 $nav_row = isset($_GET['nav_row']) ? $_GET['nav_row'] : 0;
-printTable($sql, $db);
+print_playlist($sql, $db);
 mysql_close($db);
 
 include("./module/footer.php");

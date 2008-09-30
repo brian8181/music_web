@@ -96,7 +96,7 @@ if($aid != null)
 						<tr>
 							<td id="lside" width="10">&nbsp;</td>
 							<td>
-							<a href="view_album.php?album_id=<?php echo( $album_id ) ?>">
+							<a href="view_album.php?album_id=<?php echo( $album_id ) ?>&order_by=<?php echo( $default_order )?>">
 							<img src="<?php echo( $art_location ) ?>/large/<?php echo($row[1]) ?>" 
 							title=<?php echo("\"$row[0]\""); ?> 
 							align="right" border="0" height="225" hspace="0" vspace="0" width="225" />

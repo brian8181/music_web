@@ -5,8 +5,9 @@ include_once("./php/functions.php");
 include_once("./php/navbar.php");
 isset( $_SESSION['_SEARCH_PAGE'] ) ? $back = $_SESSION['_SEARCH_PAGE'] : $back = "./query.php";
 $_SESSION['RETURN_PAGE']  = $_SERVER['REQUEST_URI'];
-$_SESSION['_QUERY'] = $_SERVER['QUERY_STRING'];
-$style = assert_login() ? $_SESSION['USER_STYLE'] : "./css/$style";
+$_SESSION['RETURN_QUERY'] = $_SERVER['QUERY_STRING'];
+$logged_in = assert_login();
+$style = $logged_in ? $_SESSION['USER_STYLE'] : "./css/$style";
 	?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -18,9 +19,16 @@ $style = assert_login() ? $_SESSION['USER_STYLE'] : "./css/$style";
 <body>
 <div class="text_area">
 <?php
+// std ini
 $db = mysql_connect($db_address, $db_user_name, $db_password);
 mysql_select_db($db_name, $db);
 mysql_query("SET NAMES 'utf8'");
+$order_by   = isset($_GET['order_by'])   ? $_GET['order_by']     : $default_order;
+//infer sort col from order_by
+$strs = explode(' ', $order_by);
+$clicked  = $strs[0];
+
+// page init
 $album      = isset($_GET['album'])      ? $_GET['album']      : null;
 $artist     = isset($_GET['artist'])     ? $_GET['artist']     : null;
 $title      = isset($_GET['title'])      ? $_GET['title']      : null;
@@ -30,11 +38,8 @@ $comments   = isset($_GET['comments'])   ? $_GET['comments']   : null;
 $lyrics     = isset($_GET['lyrics'])     ? $_GET['lyrics']     : null;
 $and        = isset($_GET['and'])        ? $_GET['and']        : null;
 $wildcard   = isset($_GET['wildcard'])   ? $_GET['wildcard']   : null;
-$order_by   = isset($_GET['order_by'])   ? $_GET['order_by']     : $default_order;
-//infer sort col from order_by
-$strs = explode(' ', $order_by);
-$clicked  = $strs[0];
 $pid        = isset($_GET['pid'])         ? $_GET['pid']         : null;
+
 include("./module/login_greeting.php");
 	?>
 <div class="box" style="text-align: center">
@@ -49,23 +54,14 @@ include("./module/top_toolbar.php");
 	?>
 <center><a href="<?php echo($back) ?>"><b>Back To Search</b></a></center>
 <?php
-
 // build the sql query
 $uid = isset($_SESSION['USER_ID']) ? $_SESSION['USER_ID'] : null;
-
-$order_sql = "";
 $sql = get_search($artist, $album, $title, $genre, $file, $lyrics, $order_by, $and);
 $nav_row = isset($_GET['nav_row']) ? $_GET['nav_row'] : 0;
-printTable($sql, $db);
+print_results($sql, $db);
 mysql_close($db);
-
-include("./module/bottom_toolbar.php");
-include("./module/contact_info.php");
+include("./module/footer.php");
 	?> 
-<br />
-<?php
-include("./module/version.php");
-	?>
 </div>
 </body>
 </html>
