@@ -29,7 +29,8 @@ $uid = $_SESSION['USER_ID'];
 	<body>
 	<div class="text_area">
 <?php 
-$db = mysql_connect($db_address, $db_user_name, $db_password); mysql_select_db($db_name, $db);
+$db = mysql_connect($db_address, $db_user_name, $db_password); 
+mysql_select_db($db_name, $db);
 mysql_query("SET NAMES 'utf8'");
 include("./module/login_greeting.php"); 
 	?> 
@@ -43,7 +44,7 @@ include("./module/top_toolbar.php");
 	
 $sql = get_my_cart($uid);
 $nav_row = isset($_GET['nav_row']) ? $_GET['nav_row'] : 0;
-print_results($sql, $db);
+print_cart($sql, $db);
 mysql_close($db);
 
 include("./module/bottom_toolbar.php");

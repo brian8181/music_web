@@ -1,9 +1,7 @@
 <?php
 session_start();
 include_once("../config/config.php");
-include_once("../php/results.php");
 $sid = isset($_GET['sid']) ? $_GET['sid'] : null;
-
 
 $db = mysql_connect($db_address, $db_user_name, $db_password);
 mysql_select_db($db_name, $db);

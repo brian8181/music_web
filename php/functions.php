@@ -710,6 +710,187 @@ function print_album($sql, $db)
 	}
 	echo("</center>");
 }
+// print cart table
+function print_cart($sql, $db)
+{
+	global $nav_row, $clicked, $order_dir;
+			
+	//nav bar
+	$nav = new navbar;
+	$nav->numrowsperpage = 50;
+	$result = $nav->execute($sql, $db, "mysql");
+	//get counts
+	$total = $nav->total;
+	$start_number = $nav->start_number;
+	$end_number = $nav->end_number;
+
+	// build a custom query string - for anchor tags
+	$query = "?";
+	foreach ($_GET as $key => $value)
+	{
+        switch ($key)
+        {
+			case "album":
+			case "artist":
+			case "title":
+			case "file":
+			case "genre":
+			case "comments":
+			case "listOption":
+			case "and":	
+			case "order_dir":						
+            	$query .= "$key=$value&";
+            	break;
+         }
+	}
+	$query = rtrim($query, '&'); // trim off last &
+
+	// print count
+	if($result) {
+		$num_rows = mysql_num_rows($result);
+		echo( "<br /><br /><b>Showing $start_number - $end_number of $total</b>" );
+	}
+	
+	// print headers
+	?>
+		<script src="./script/querystring.enhanced.js" type="text/javascript"></script>
+		<script src="./script/functions.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			function on_header_click(link, order) 
+			{
+				var qs = new Querystring();
+				var order = qs.get("order_by");
+				var cols = order.split(",");
+				var pair = cols[0].split(" ");
+				var ret;
+				
+				var name = new String(link.name);
+				if(name == pair[0])
+				{
+					if( pair[1] == "ASC" )
+						ret = order.replace("ASC", "DESC", "gi");
+					else
+						ret = order.replace("DESC", "ASC", "gi");
+				}
+				else
+				{
+					order = "";
+					for( var i in cols )
+					{
+						pair = cols[i].split(" "); 
+						if(pair[0] == link.name)
+							continue;
+						order += cols[i] + ",";	
+					}
+					order = order.substr( 0, order.length-1 );
+					ret = link.name +  " ASC," + order;
+				}
+				link.href += "&order_by=" + ret;
+			}
+		</script>
+	    <table id="result">
+	    <tr class="header_row">
+		<th align="center">&nbsp;</th>
+		<th align="center">
+			<a class="<?php echo( ($clicked == "track" ? "yellow_white" : "white_yellow") ) ?>"
+			name="track" onclick="on_header_click(this)" 
+			href="<?php echo("$query") ?>">
+			Track
+			</a>
+		</th>
+		<th align="center">
+			<a class="<?php echo( ($clicked == "title" ? "yellow_white" : "white_yellow") ) ?>"
+			name="title" onclick="on_header_click(this)"
+			href="<?php echo("$query") ?>">
+			Title
+			</a>
+		</th>
+		<th align="center">
+			<a class="<?php echo( ($clicked == "album" ? "yellow_white" : "white_yellow") ) ?>"
+			name="album" onclick="on_header_click(this)" 
+			href="<?php echo("$query") ?>">
+			Album
+			</a>
+		</th>
+		<th align="center">
+			<a class="<?php echo( ($clicked == "artist" ? "yellow_white" : "white_yellow") ) ?>"
+			name="artist" onclick="on_header_click(this)" 
+			href="<?php echo("$query&clicked=artist") ?>">
+			Artist
+			</a>
+		</th>
+		<th>&nbsp;</th>
+		<th>&nbsp;</th>
+		</tr>
+	<?php		
+
+	$enable_security = $GLOBALS['enable_security'];
+	$enable_direct_download = $GLOBALS['enable_direct_download'];
+	$art_location = $GLOBALS['art_location'];
+	$music_location = $GLOBALS['music_location'];
+	$authorized = $authorized = !$enable_security || 
+		(assert_login() && assert_group('power_user')); 
+	      
+	// print data
+	while( $row = mysql_fetch_assoc($result) )
+	{
+		$sid = $row['sid'];
+		$track = $row['track'];
+		$title = $row['title'];
+		$artist = $row['artist'];
+		$album = $row['album'];
+		$song_file = $row['song_file'];
+		$art_file = $row['art_file'];
+		
+		$row_html = 
+			"<td>
+				<a class=\"NoColor\" href=\"./results.php?album=$album&artist=$artist&amp;order_by=artist,album,track,title\">
+					<img src=\"$art_location/xsmall/$art_file\" width=\"50\" height=\"50\" alt=\"NA\"/>
+				</a>
+			</td>
+			<td>$track</td>
+			<td>
+			    <a href=\"details.php?sid=$sid\">$title</a>
+			</td>
+			<td>
+			    <a href=\"results.php?album=$album&amp;order_by=artist,album,track,title\">$album</a>
+			</td>
+			<td>
+			    <a href=\"results.php?artist=$artist&amp;order_by=artist,album,track,title\">$artist</a>
+			</td>";
+				
+		if( $authorized )
+		{
+			if($enable_direct_download)
+			{
+				$row_html =  "$row_html<td align='center'>
+					<a href=\"$music_location$song_file\">download</a></td>";
+			}
+			else
+			{
+				$row_html = "$row_html<td align='center'>
+					<a href=\"./php/download.php?sid=$sid\">download</a></td>";
+			}
+			$row_html =  "$row_html<td align='center'><a href=\"./php/delete_from_cart.php?sid=$sid\">delete</a></td>";	
+		}
+		echo("<tr id=\"table_row\">$row_html</tr>");
+	}
+	?>
+	</table>
+	<br />
+	<?php
+	
+	echo("<center>");
+	// print nav bar
+	$links = $nav->getlinks("all", "on");
+	if($links != null)
+	{
+		for ($y = 0; $y < count($links); $y++) {
+		  echo $links[$y] . "&nbsp;&nbsp;";
+		}
+	}
+	echo("</center>");
+}
 // get user row
 function get_user($user_name, $db)
 {
