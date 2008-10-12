@@ -4,8 +4,8 @@ include_once("./config/config.php");
 include_once("./php/functions.php");
 // session
 session_start();
-$_SESSION['RETURN_PAGE']  = $_SERVER['REQUEST_URI'];
-$_SESSION['SEARCH_PAGE'] = $_SESSION['RETURN_QUERY'];
+$_SESSION['RETURN_PAGE'] = $_SERVER['REQUEST_URI'];
+$_SESSION['SEARCH_PAGE'] = $_SESSION['RETURN_PAGE'];
 $logged_in = assert_login();
 $style = $logged_in ? $_SESSION['USER_STYLE'] : "./css/$style";
 

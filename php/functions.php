@@ -710,7 +710,7 @@ function print_album($sql, $db)
 	}
 	echo("</center>");
 }
-// print cart table
+// print cart table		
 function print_cart($sql, $db)
 {
 	global $nav_row, $clicked, $order_dir;

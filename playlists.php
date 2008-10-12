@@ -38,8 +38,8 @@ $sql = "SELECT id, name from playlists ORDER BY name";
 $result = mysql_query($sql);
 	?>
 	<!-- move formating to css -->
-	<center>
-	<table>
+	<div class="left">
+	<table class="info">
 	<tr>
 		<th style="text-align: left">Name</th>
 		<th style="text-align: center">Count</th>
@@ -61,7 +61,7 @@ while ( $row = mysql_fetch_array($result, MYSQL_NUM) )
 mysql_close($db);
 	?>
 	</table>			
-	</center>
+	</div>
 <?php
 include("./module/bottom_toolbar.php");
 include("./module/contact_info.php");

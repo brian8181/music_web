@@ -28,7 +28,6 @@ $style = assert_login() ? $_SESSION['USER_STYLE'] : "./css/$style";
 include("./module/top_toolbar.php");
 	?>
 
-<hr />
 <?php
 $db = mysql_connect($db_address, $db_user_name, $db_password);
 mysql_select_db($db_name, $db);
@@ -53,13 +52,8 @@ if( isset( $sid ) )
 }
 	?>
 </center>
-<br />
-<hr />
-
 <?php
-include("./module/bottom_toolbar.php");
-include("./module/contact_info.php");
-include("./module/version.php");
+include("./module/footer.php");
 	?>
 </div>
 </body>
