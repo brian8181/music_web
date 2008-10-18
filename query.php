@@ -7,7 +7,6 @@ session_start();
 $_SESSION['RETURN_PAGE'] = $_SERVER['REQUEST_URI'];
 $_SESSION['SEARCH_PAGE'] = $_SESSION['RETURN_PAGE'];
 $logged_in = assert_login();
-$style = $logged_in ? $_SESSION['USER_STYLE'] : "./css/$style";
 
 $last_query = isset($_SESSION['RETURN_QUERY']) ? $_SESSION['RETURN_QUERY'] : null;
 if($last_query != null)

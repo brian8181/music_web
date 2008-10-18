@@ -24,7 +24,7 @@ if(mysql_num_rows($result) == 1)
 }
 
 $id = $_SESSION['_USER_ID'];
-mysql_query("INSERT INTO download (user_id, song_id) VALUES( $id, $sid )", $db);
+//mysql_query("INSERT INTO download (user_id, song_id) VALUES( $id, $sid )", $db);
 // remove from cart
 delete_from_cart($uid, $sid, $db);
 

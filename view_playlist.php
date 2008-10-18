@@ -6,7 +6,6 @@ include_once("./php/navbar.php");
 // session
 session_start();
 $_SESSION['RETURN_PAGE']  = $_SERVER['REQUEST_URI'];
-$_SESSION['RETURN_QUERY'] = $_SERVER['QUERY_STRING'];
 $logged_in = assert_login();
 $style = $logged_in ? $_SESSION['USER_STYLE'] : "./css/$style";
 

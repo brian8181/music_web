@@ -148,8 +148,8 @@ function delete_from_cart($uid, $sid, $db)
 	$sql = "UPDATE user_cart SET removed_ts=NOW() WHERE user_id=$uid AND song_id=$sid";
 	mysql_query($sql, $db);
 }
-// print result table
-function print_results($sql, $db)
+//
+function init_navbar(&$nav)
 {
 	global $nav_row, $clicked, $order_dir;
 			
@@ -161,7 +161,12 @@ function print_results($sql, $db)
 	$total = $nav->total;
 	$start_number = $nav->start_number;
 	$end_number = $nav->end_number;
-
+	
+	return $result;
+}
+//
+function get_query_string()
+{
 	// build a custom query string - for anchor tags
 	$query = "?";
 	foreach ($_GET as $key => $value)
@@ -181,7 +186,32 @@ function print_results($sql, $db)
             	break;
          }
 	}
-	$query = rtrim($query, '&'); // trim off last &
+	return rtrim($query, '&'); // trim off last &
+}
+//
+function print_count()
+{
+	// print count
+	if($result) {
+		$num_rows = mysql_num_rows($result);
+		echo( "<br /><br /><b>Showing $start_number - $end_number of $total</b>" );
+	}	
+}
+// print result table
+function print_results($sql, $db)
+{
+	global $nav_row, $clicked, $order_dir;
+			
+	//nav bar
+	$nav = new navbar;
+	$nav->numrowsperpage = 50;
+	$result = $nav->execute($sql, $db, "mysql");
+	//get counts
+	$total = $nav->total;
+	$start_number = $nav->start_number;
+	$end_number = $nav->end_number;
+	
+	$query = get_query_string();
 
 	// print count
 	if($result) {
@@ -193,40 +223,7 @@ function print_results($sql, $db)
 	?>
 		<script src="./script/querystring.enhanced.js" type="text/javascript"></script>
 		<script src="./script/functions.js" type="text/javascript"></script>
-		<script type="text/javascript">
-			function on_header_click(link, order) 
-			{
-				var qs = new Querystring();
-				var order = qs.get("order_by");
-				var cols = order.split(",");
-				var pair = cols[0].split(" ");
-				var ret;
-				
-				var name = new String(link.name);
-				if(name == pair[0])
-				{
-					if( pair[1] == "ASC" )
-						ret = order.replace("ASC", "DESC", "gi");
-					else
-						ret = order.replace("DESC", "ASC", "gi");
-				}
-				else
-				{
-					order = "";
-					for( var i in cols )
-					{
-						pair = cols[i].split(" "); 
-						if(pair[0] == link.name)
-							continue;
-						order += cols[i] + ",";	
-					}
-					order = order.substr( 0, order.length-1 );
-					ret = link.name +  " ASC," + order;
-				}
-				link.href += "&order_by=" + ret;
-			}
-		</script>
-	    <table id="result">
+		<table id="result">
 	    <tr class="header_row">
 		<th align="center">&nbsp;</th>
 		<th align="center">
@@ -360,27 +357,8 @@ function print_playlist($sql, $db)
 	$start_number = $nav->start_number;
 	$end_number = $nav->end_number;
 
-	// build a custom query string - for anchor tags
-	$query = "?";
-	foreach ($_GET as $key => $value)
-	{
-        switch ($key)
-        {
-			case "album":
-			case "artist":
-			case "title":
-			case "file":
-			case "genre":
-			case "comments":
-			case "listOption":
-			case "and":	
-			case "order_dir":						
-            	$query .= "$key=$value&";
-            	break;
-         }
-	}
-	$query = rtrim($query, '&'); // trim off last &
-
+	$query = get_query_string();
+	
 	// print count
 	if($result) {
 		$num_rows = mysql_num_rows($result);
@@ -542,26 +520,7 @@ function print_album($sql, $db)
 	$start_number = $nav->start_number;
 	$end_number = $nav->end_number;
 
-	// build a custom query string - for anchor tags
-	$query = "?";
-	foreach ($_GET as $key => $value)
-	{
-        switch ($key)
-        {
-			case "album":
-			case "artist":
-			case "title":
-			case "file":
-			case "genre":
-			case "comments":
-			case "listOption":
-			case "and":	
-			case "order_dir":						
-            	$query .= "$key=$value&";
-            	break;
-         }
-	}
-	$query = rtrim($query, '&'); // trim off last &
+	$query = get_query_string();
 
 	// print count
 	if($result) {
@@ -724,26 +683,7 @@ function print_cart($sql, $db)
 	$start_number = $nav->start_number;
 	$end_number = $nav->end_number;
 
-	// build a custom query string - for anchor tags
-	$query = "?";
-	foreach ($_GET as $key => $value)
-	{
-        switch ($key)
-        {
-			case "album":
-			case "artist":
-			case "title":
-			case "file":
-			case "genre":
-			case "comments":
-			case "listOption":
-			case "and":	
-			case "order_dir":						
-            	$query .= "$key=$value&";
-            	break;
-         }
-	}
-	$query = rtrim($query, '&'); // trim off last &
+	$query = get_query_string();
 
 	// print count
 	if($result) {

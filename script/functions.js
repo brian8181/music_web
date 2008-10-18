@@ -1,10 +1,34 @@
-function on_header_click(anchor)
+function on_header_click(link, order) 
 {
-	var header = anchor.name;
-	var order;
-	//todo copy from functions.php
+	var qs = new Querystring();
+	var order = qs.get("order_by");
+	var cols = order.split(",");
+	var pair = cols[0].split(" ");
+	var ret;
+	
+	var name = new String(link.name);
+	if(name == pair[0])
+	{
+		if( pair[1] == "ASC" )
+			ret = order.replace("ASC", "DESC", "gi");
+		else
+			ret = order.replace("DESC", "ASC", "gi");
+	}
+	else
+	{
+		order = "";
+		for( var i in cols )
+		{
+			pair = cols[i].split(" "); 
+			if(pair[0] == link.name)
+				continue;
+			order += cols[i] + ",";	
+		}
+		order = order.substr( 0, order.length-1 );
+		ret = link.name +  " ASC," + order;
+	}
+	link.href += "&order_by=" + ret;
 }
-
 
 function lTrim(sString)
 {

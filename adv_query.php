@@ -3,7 +3,6 @@ session_start();
 include_once("./config/config.php");
 include_once("./php/functions.php");
 $_SESSION['RETURN_PAGE'] = $_SERVER['REQUEST_URI'];
-$_SESSION['SEARCH_PAGE'] = $_SESSION['RETURN_QUERY'];
 $logged_in = assert_login();
 $last_query = isset($_SESSION['RETURN_QUERY']) ? $_SESSION['RETURN_QUERY'] : null;
 if($last_query != null)
