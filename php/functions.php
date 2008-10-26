@@ -197,6 +197,81 @@ function print_count()
 		echo( "<br /><br /><b>Showing $start_number - $end_number of $total</b>" );
 	}	
 }
+function get_result_cells($row, $type)
+{
+	include_once("table_functions.php");
+	$art_location = $GLOBALS['art_location'];
+	
+	$sid = $row['sid'];
+	$track = $row['track'];
+	$title = $row['title'];
+	$artist = $row['artist'];
+	$album = $row['album'];
+	$song_file = $row['song_file'];
+	$art_file = $row['art_file'];
+	
+	$row_html = "";
+	switch($type)
+	{
+		case "result":
+			$row_html = $row_html . get_picture_cell($album, $artist, $art_location, $art_file);
+			$row_html = $row_html . get_track_cell($track);
+			$row_html = $row_html . get_title_cell($title, $sid);
+			$row_html = $row_html . get_album_cell($album);
+			$row_html = $row_html . get_artist_cell($artist);
+			break;
+		case "cart":
+			break;
+		case "playlist":
+			break;			
+	}
+	
+	return $row_html;
+}
+function get_result_row($row)
+{
+	include_once("table_functions.php");
+	$enable_security = $GLOBALS['enable_security'];
+	$enable_direct_download = $GLOBALS['enable_direct_download'];
+	$art_location = $GLOBALS['art_location'];
+	$music_location = $GLOBALS['music_location'];
+	
+	$sid = $row['sid'];
+	$track = $row['track'];
+	$title = $row['title'];
+	$artist = $row['artist'];
+	$album = $row['album'];
+	$song_file = $row['song_file'];
+	$art_file = $row['art_file'];
+
+	$row_html = "";
+	$row_html = get_result_cells($row, "result");
+	
+	$authorized = $authorized = !$enable_security || 
+		(assert_login() && assert_group('power_user')); 
+	if( $authorized )
+	{
+		$incart = $row['user_id'];
+		$removed = $row['removed_ts'];
+		if($incart && !$removed) //was in cart and not removed
+		{
+			$row_html =  "$row_html<td align='center'><i>added to cart</i></td>
+				<td align='center'><a href=\"./php/delete_from_cart.php?sid=$sid\">delete</a></td>";	
+		}
+		else
+		{
+			$row_html = "$row_html<td align='center'>
+					<a href=\"./php/download.php?sid=$sid\">download</a></td>";
+			return "$row_html<td align='center'>
+				<a href=\"./php/add_to_cart.php?sid=$sid\">add&nbsp;to&nbsp;cart</a></td>";
+		}
+	}
+	else
+	{
+		return "$row_html<td align='center'><em>download</em></td>
+				<td align='center'><em>add&nbsp;to&nbsp;cart</em></td>";
+	}
+}
 // print result table
 function print_results($sql, $db)
 {
@@ -258,74 +333,12 @@ function print_results($sql, $db)
 		<th>&nbsp;</th>
 		</tr>
 	<?php		
-
-	$enable_security = $GLOBALS['enable_security'];
-	$enable_direct_download = $GLOBALS['enable_direct_download'];
-	$art_location = $GLOBALS['art_location'];
-	$music_location = $GLOBALS['music_location'];
-	$authorized = $authorized = !$enable_security || 
-		(assert_login() && assert_group('power_user')); 
-	      
+	
 	// print data
 	while( $row = mysql_fetch_assoc($result) )
 	{
-		$sid = $row['sid'];
-		$track = $row['track'];
-		$title = $row['title'];
-		$artist = $row['artist'];
-		$album = $row['album'];
-		$song_file = $row['song_file'];
-		$art_file = $row['art_file'];
-		
-		$row_html = 
-			"<td>
-				<a class=\"NoColor\" href=\"./results.php?album=$album&artist=$artist&amp;order_by=artist,album,track,title\">
-					<img src=\"$art_location/xsmall/$art_file\" width=\"50\" height=\"50\" alt=\"NA\"/>
-				</a>
-			</td>
-			<td>$track</td>
-			<td>
-			    <a href=\"details.php?sid=$sid\">$title</a>
-			</td>
-			<td>
-			    <a href=\"results.php?album=$album&amp;order_by=artist,album,track,title\">$album</a>
-			</td>
-			<td>
-			    <a href=\"results.php?artist=$artist&amp;order_by=artist,album,track,title\">$artist</a>
-			</td>";
-				
-		if( $authorized )
-		{
-			$incart = $row['user_id'];
-			$removed = $row['removed_ts'];
-			if($incart && !$removed) //was in cart and not removed
-			{
-				$row_html =  "$row_html<td align='center'><i>added to cart</i></td>
-					<td align='center'><a href=\"./php/delete_from_cart.php?sid=$sid\">delete</a></td>";	
-			}
-			else
-			{
-				if($enable_direct_download)
-				{
-					$row_html =  "$row_html<td align='center'>
-						<a href=\"$music_location$song_file\">download</a></td>";
-				}
-				else
-				{
-					$row_html = "$row_html<td align='center'>
-						<a href=\"./php/download.php?sid=$sid\">download</a></td>";
-				}
-				$row_html = "$row_html<td align='center'>
-					<a href=\"./php/add_to_cart.php?sid=$sid\">add&nbsp;to&nbsp;cart</a></td>";
-			}
-		}
-		else
-		{
-			$row_html = "$row_html
-						<td align='center'><em>download</em></td>
-						<td align='center'><em>add&nbsp;to&nbsp;cart</em></td>";
-		}
-	   	echo("<tr id=\"table_row\">$row_html</tr>");
+		$row_html = get_result_row($row);
+		echo("<tr id=\"table_row\">$row_html</tr>");
 	}
 	?>
 	</table>
@@ -369,39 +382,6 @@ function print_playlist($sql, $db)
 	?>
 		<script src="./script/querystring.enhanced.js" type="text/javascript"></script>
 		<script src="./script/functions.js" type="text/javascript"></script>
-		<script type="text/javascript">
-			function on_header_click(link, order) 
-			{
-				var qs = new Querystring();
-				var order = qs.get("order_by");
-				var cols = order.split(",");
-				var pair = cols[0].split(" ");
-				var ret;
-				
-				var name = new String(link.name);
-				if(name == pair[0])
-				{
-					if( pair[1] == "ASC" )
-						ret = order.replace("ASC", "DESC", "gi");
-					else
-						ret = order.replace("DESC", "ASC", "gi");
-				}
-				else
-				{
-					order = "";
-					for( var i in cols )
-					{
-						pair = cols[i].split(" "); 
-						if(pair[0] == link.name)
-							continue;
-						order += cols[i] + ",";	
-					}
-					order = order.substr( 0, order.length-1 );
-					ret = link.name +  " ASC," + order;
-				}
-				link.href += "&order_by=" + ret;
-			}
-		</script>
 	    <table id="result">
 	    <tr class="header_row">
 		<th align="center">&nbsp;</th>
@@ -532,40 +512,7 @@ function print_album($sql, $db)
 	?>
 		<script src="./script/querystring.enhanced.js" type="text/javascript"></script>
 		<script src="./script/functions.js" type="text/javascript"></script>
-		<script type="text/javascript">
-			function on_header_click(link, order) 
-			{
-				var qs = new Querystring();
-				var order = qs.get("order_by");
-				var cols = order.split(",");
-				var pair = cols[0].split(" ");
-				var ret;
-				
-				var name = new String(link.name);
-				if(name == pair[0])
-				{
-					if( pair[1] == "ASC" )
-						ret = order.replace("ASC", "DESC", "gi");
-					else
-						ret = order.replace("DESC", "ASC", "gi");
-				}
-				else
-				{
-					order = "";
-					for( var i in cols )
-					{
-						pair = cols[i].split(" "); 
-						if(pair[0] == link.name)
-							continue;
-						order += cols[i] + ",";	
-					}
-					order = order.substr( 0, order.length-1 );
-					ret = link.name +  " ASC," + order;
-				}
-				link.href += "&order_by=" + ret;
-			}
-		</script>
-	    <table id="result">
+		<table id="result">
 	    <tr class="header_row">
 		<th align="center">&nbsp;</th>
 		<th align="center">
@@ -695,40 +642,7 @@ function print_cart($sql, $db)
 	?>
 		<script src="./script/querystring.enhanced.js" type="text/javascript"></script>
 		<script src="./script/functions.js" type="text/javascript"></script>
-		<script type="text/javascript">
-			function on_header_click(link, order) 
-			{
-				var qs = new Querystring();
-				var order = qs.get("order_by");
-				var cols = order.split(",");
-				var pair = cols[0].split(" ");
-				var ret;
-				
-				var name = new String(link.name);
-				if(name == pair[0])
-				{
-					if( pair[1] == "ASC" )
-						ret = order.replace("ASC", "DESC", "gi");
-					else
-						ret = order.replace("DESC", "ASC", "gi");
-				}
-				else
-				{
-					order = "";
-					for( var i in cols )
-					{
-						pair = cols[i].split(" "); 
-						if(pair[0] == link.name)
-							continue;
-						order += cols[i] + ",";	
-					}
-					order = order.substr( 0, order.length-1 );
-					ret = link.name +  " ASC," + order;
-				}
-				link.href += "&order_by=" + ret;
-			}
-		</script>
-	    <table id="result">
+		<table id="result">
 	    <tr class="header_row">
 		<th align="center">&nbsp;</th>
 		<th align="center">

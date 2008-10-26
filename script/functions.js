@@ -30,6 +30,46 @@ function on_header_click(link, order)
 	link.href += "&order_by=" + ret;
 }
 
+function on_query_submit(form)  // intialize all values
+{
+	var search_string = form.elements['album'].value;
+	var option = form.elements['listOption'].value;
+	form.elements['album'].value = "";
+	if(search_string.length > 1)
+	{
+		switch(option)
+		{
+		case "0":  // ALL
+			form.elements['album'].value = search_string;
+			form.elements['artist'].value = search_string;
+			form.elements['title'].value = search_string;
+			break;
+		case "1": // Title
+			form.elements['title'].value = search_string;
+			break;
+		case "2": // Album
+			form.elements['album'].value = search_string;
+			break;
+		case "3": // Artist
+			form.elements['artist'].value = search_string;
+			break;
+		case "4": // File
+			form.elements['file'].value = search_string;
+			break;
+		case "5": // File
+			form.elements['lyrics'].value = search_string;
+			break;	
+		default:
+			return false;
+		}
+	}
+	else
+	{
+		return false;
+	}
+	return true;
+}
+
 function lTrim(sString)
 {
 while (sString.substring(0,1) == ' ')

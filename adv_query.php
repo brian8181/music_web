@@ -1,16 +1,22 @@
 <?php
-session_start();
+// includes
 include_once("./config/config.php");
 include_once("./php/functions.php");
+// session
+session_start();
 $_SESSION['RETURN_PAGE'] = $_SERVER['REQUEST_URI'];
+$_SESSION['SEARCH_PAGE_URI'] = $_SESSION['RETURN_PAGE'];
 $logged_in = assert_login();
-$last_query = isset($_SESSION['RETURN_QUERY']) ? $_SESSION['RETURN_QUERY'] : null;
+$style = $logged_in ? $_SESSION['USER_STYLE'] : "./css/$style";
+
+$last_query = isset($_SESSION['SEARCH_PAGE_QUERY']) ? $_SESSION['SEARCH_PAGE_QUERY'] : null;
 if($last_query != null)
 {
 	parse_str($last_query);
 }
-$style = $logged_in ? $_SESSION['USER_STYLE'] : "./css/$style";
-	?>	
+$_SESSION['SEARCH_PAGE_QUERY'] = $_SERVER['QUERY_STRING'];
+	?>
+	
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>

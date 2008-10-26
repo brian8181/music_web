@@ -4,6 +4,7 @@ function add_data($data)
 {
 	echo("<td>$data</td>");
 }
+//
 
 function open_row()
 {

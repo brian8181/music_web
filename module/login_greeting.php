@@ -1,4 +1,5 @@
 <?php
+
 if( isset( $enable_security ) && $enable_security == true )
 {
 	?>
