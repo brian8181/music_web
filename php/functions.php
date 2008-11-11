@@ -126,7 +126,7 @@ function get_my_downloads($uid)
 		INNER JOIN song ON download.song_id=song.id
 		LEFT JOIN artist ON artist.id = song.artist_id
 		LEFT JOIN album ON album.id = song.album_id
-		LEFT JOIN art ON song.art_id = art.id WHERE `download`.user_id=$uid";
+		LEFT JOIN art ON song.art_id = art.id WHERE `download`.user_id=$uid ORDER BY download.insert_ts DESC";
 	return $sql;			
 }
 // add an item to user car
