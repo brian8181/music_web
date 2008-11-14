@@ -1,3 +1,4 @@
+// sets "ORDER BY" sting when header is clicked
 function on_header_click(link, order) 
 {
 	var qs = new Querystring();

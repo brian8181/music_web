@@ -33,9 +33,8 @@ function get_order_cell($order)
 {
 	return 	"<td>$order</td>";
 }
-//todo
-function get_checkbox_cell($order)
+function get_checkbox_cell($name, $checked)
 {
-	return 	"<td>TODO</td></td>";
+	return 	"<td><input name=\"$name\" type=\"checkbox\" value=\"on\" checked=\"$checked\" /></td>";
 }
 ?>
