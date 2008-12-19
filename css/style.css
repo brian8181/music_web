@@ -1,12 +1,20 @@
+/*MERGE TEST*/
 div.center
 {
 	text-align: center;
 }
 
+img.center 
+{
+display: block;
+margin-left: auto;
+margin-right: auto
+}
+
 table.info
 {
 	margin-left:auto;
-    margin-right:auto
+    margin-right:auto;
 }
 
 body
@@ -133,3 +141,52 @@ tr#table_row
 {
 	background-color:#BFBFBF;
 }
+
+/* Begin Nav menu */
+
+#navcontainer
+{
+font-family: Arial,Sans-Serif;
+margin: 0 auto;
+width: 70%;
+border-bottom: 1px solid #ddd;
+}
+
+#navlist
+{
+width: 60%;
+text-align: center;
+margin: 0 auto;
+padding: 0;
+text-indent: 0;
+list-style-type: none;
+}
+
+#navlist li
+{
+padding: 0;
+margin: 0;
+text-indent: 0;
+display: inline;
+}
+
+#navlist li a
+{
+letter-spacing: -1px;
+text-decoration: none;
+color: #333333;
+font-size: 1em;
+padding: 0 2px;
+border-top: .5em solid #eee;
+}
+
+#navlist li a:hover,#navlist a#current
+{
+color: #333;
+border-top: none;
+font-size: 1.5em;
+}
+
+#navlist a#current { color:#CC9966; }
+
+/* Here ends the nav menu */
