@@ -19,11 +19,11 @@ if( !isset( $_SESSION['USER_NAME'] ) || !isset( $_SESSION['USER_GROUPS'] ) )
 			{
 				$page = $_SESSION['RETURN_PAGE'];
 				header( "Location: $page" ); 
-			} 
+			}
 			else 
 			{
 				header( "Location: ./index.php" ); 
-			} 
+			}
 			mysql_select_db($db_name, $db);
 			mysql_query( "INSERT INTO login (user_id) VALUES( $id )", $db );
 		} 
