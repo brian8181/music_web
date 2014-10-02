@@ -59,7 +59,7 @@ $result = mysql_query($sql);
 $row = mysql_fetch_array($result, MYSQL_NUM);
 mysql_close($db);
 ?>
-<table class="Main" cellpadding="10" width="="100%">
+<table class="Main" cellpadding="10" width="100%">
 	<tr>
 		<td class="Padded" width="72%">
 		<h2>Song Details:</h2>
